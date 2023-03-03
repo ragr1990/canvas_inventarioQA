@@ -1,0 +1,142 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "new_inv_bepcatcomponentes",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "new_inv_bepcatcomponente",
+    "MaxGetRowsCount": 500,
+    "Name": "INV_BEPCatComponente",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "createdby": "Autor",
+      "createdon": "Fecha de creación",
+      "createdonbehalfby": "Autor (delegado)",
+      "importsequencenumber": "Número de secuencia de importación",
+      "modifiedby": "Modificado por",
+      "modifiedon": "Fecha de modificación",
+      "modifiedonbehalfby": "Modificado por (delegado)",
+      "new_inv_bep_optcategoriaservicio": "Categoria Servicio",
+      "new_INV_BEP_optComponenteComp": "INV_BEPComponentesSistema",
+      "new_inv_bep_opttipoactivoservicio": "Tipo Activo",
+      "new_inv_bep_scomponente": "Nombre Componente",
+      "new_inv_bep_surl": "URL",
+      "new_inv_bepcatcomponente_AsyncOperations": "System Jobs",
+      "new_inv_bepcatcomponente_BulkDeleteFailures": "Bulk Delete Failures",
+      "new_inv_bepcatcomponente_DuplicateBaseRecord": "Duplicate Records (new_inv_bepcatcomponente_DuplicateBaseRecord)",
+      "new_inv_bepcatcomponente_DuplicateMatchingRecord": "Duplicate Records (new_inv_bepcatcomponente_DuplicateMatchingRecord)",
+      "new_inv_bepcatcomponente_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "new_inv_bepcatcomponente_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "new_inv_bepcatcomponente_ProcessSession": "Process Sessions",
+      "new_inv_bepcatcomponente_SyncErrors": "Sync Errors",
+      "new_inv_bepcatcomponenteid": "INV_BEPCatComponente",
+      "new_name": "Name",
+      "organizationid": "Id. de la organización",
+      "overriddencreatedon": "Fecha de creación del registro",
+      "statecode": "Estado",
+      "statuscode": "Razón para el estado",
+      "timezoneruleversionnumber": "Número de versión de regla de zona horaria",
+      "utcconversiontimezonecode": "Código de zona horaria de conversión UTC",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "INV_BEPCatComponente",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "INV_BEPCatComponente (Vistas)",
+    "Name": "_new_inv_bepcatcomponente_views",
+    "RelatedEntityName": "INV_BEPCatComponente",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "1fc2d597-141f-4416-8097-d193fb3b0dcf": "Vista asociada de INV_BEPCatComponente",
+      "2a07142d-a394-49d1-8d3a-2257a867f7eb": "INV_BEPCatComponente inactivo",
+      "3553c3c8-b4a0-4cd9-ac82-c5d3ef0fd8f9": "Vista de búsqueda de INV_BEPCatComponente",
+      "521ebe16-dd2f-493a-b9b5-df6095e53dfb": "INV_BEPCatComponente activo",
+      "ad945205-adb5-47f9-a18f-795c2885b6ac": "Vista de búsqueda avanzada de INV_BEPCatComponente",
+      "e81a31fa-b490-ed11-aad1-00224823fb46": "Componente"
+    }
+  },
+  {
+    "DisplayName": "INV_BEP_optCategoriaServicio",
+    "Name": "new_inv_bep_optcategoriaservicio",
+    "OptionSetInfoNameMapping": {
+      "100000000": "(SW) Software/Aplicaciones",
+      "100000001": "(D) Datos/Información",
+      "100000002": "Servicios"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "new_inv_bep_optcategoriaservicio",
+        "OptionSetReferenceEntityName": "INV_BEPCatComponente"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "new_inv_bep_optcategoriaservicio",
+    "RelatedEntityName": "INV_BEPCatComponente",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "INV_BEP_optTipoActivoServicio",
+    "Name": "new_inv_bep_opttipoactivoservicio",
+    "OptionSetInfoNameMapping": {
+      "100000000": "Aplicación",
+      "100000001": "Software",
+      "100000002": "Servicio"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "new_inv_bep_opttipoactivoservicio",
+        "OptionSetReferenceEntityName": "INV_BEPCatComponente"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "new_inv_bep_opttipoactivoservicio",
+    "RelatedEntityName": "INV_BEPCatComponente",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Estado (INV_BEPCatComponente)",
+    "Name": "new_inv_bepcatcomponente_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Activo",
+      "1": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "INV_BEPCatComponente"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "INV_BEPCatComponente",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Razón para el estado (INV_BEPCatComponente)",
+    "Name": "new_inv_bepcatcomponente_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Activo",
+      "2": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "INV_BEPCatComponente"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "INV_BEPCatComponente",
+    "Type": "OptionSetInfo"
+  }
+]

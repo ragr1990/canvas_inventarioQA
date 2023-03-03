@@ -1,0 +1,1148 @@
+INV_ComponenteSistemaDet As screen:
+    OnVisible: |-
+        =Refresh(INV_BEPComponentesSistemaDet);
+        Refresh(INV_BEPCat_Servidores);
+        Refresh(INV_BEPCat_PersonalInventarios);
+        Refresh(INV_BEPCat_Compania);
+        Refresh(INV_BEPCat_Sucursal);
+        
+        UpdateContext({showModalCompDetSistemas: false});
+        UpdateContext({showModalCompDetSistemasEdit: false});
+        UpdateContext({showModalBloqCompDetSistema: false});
+        UpdateContext({showModalUnBloqCompDetSistema: false});
+
+    "Gallery1 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        Items: |
+            =
+            
+            //mySelectSystemCompDet
+            
+            
+            
+            
+            SortByColumns(
+            
+            Filter(
+            INV_BEPComponentesSistemaDet,
+             Componente. INV_BEPComponentesSistema=mySelectSystemCompDet.INV_BEPComponentesSistema
+            )
+            ,
+            "createdon",
+            Descending
+            )
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =47
+        Width: =1366
+        Y: =165
+        ZIndex: =1
+
+        btnEditarDetCompSist As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            DisplayMode: |-
+                =If(
+                ThisItem.Estado='Estado (INV_BEPComponentesSistemaDet)'.Inactivo
+                
+                Or
+                SuperAdmin=true
+                
+                ,
+                DisplayMode.Disabled,
+                DisplayMode.Edit)
+            Height: =44
+            Icon: =Icon.Edit
+            OnSelect: |+
+                =UpdateContext({showModalCompDetSistemasEdit: true});
+                
+                UpdateContext({myDetItmComponente: ThisItem});
+                
+                
+                
+                Reset(cmbServidorDetCompEdit);
+                Reset(cmbCompDetCompEdit);
+                Reset(cmbCompDetSucEdit);
+                Reset(cmbCompDetAutEdit);
+                Reset(txtNombreDetCompEdit);
+                Reset(txtVersionDetCompEdit);
+                Reset(txtDescDetCompEdit);
+                
+                
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            TabIndex: =0
+            Tooltip: ="Editar detalle del componente"
+            Width: =42
+            X: =Parent.TemplateWidth - Self.Width - 5
+            ZIndex: =2
+
+        Separator2 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =3
+
+        Label2 As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: =ThisItem.Componente.Name
+            Width: =292
+            ZIndex: =4
+
+        Label3 As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: =ThisItem.Compañía.Name
+            Width: =189
+            X: =292
+            ZIndex: =5
+
+        Label3_1 As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: =ThisItem.Sucursal.Name
+            Width: =283
+            X: =480
+            ZIndex: =6
+
+        Label3_2 As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: =ThisItem.Autorizador.Name
+            Width: =303
+            X: =763
+            ZIndex: =7
+
+        Label3_3 As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: =ThisItem.Version
+            Width: =118
+            X: =1066
+            ZIndex: =8
+
+        btnEditarDetCompSistUnBloq As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            DisplayMode: |-
+                =If(
+                ThisItem.Estado='Estado (INV_BEPComponentesSistemaDet)'.Activo
+                Or
+                SuperAdmin=true
+                ,
+                DisplayMode.Disabled,
+                DisplayMode.Edit)
+            Height: =44
+            Icon: =Icon.Reset
+            OnSelect: |
+                =UpdateContext({showModalUnBloqCompDetSistema: true});
+                UpdateContext({myDetItmComponente: ThisItem});
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            TabIndex: =0
+            Tooltip: ="Desbloquear detalle del componente"
+            Width: =42
+            X: =1277
+            ZIndex: =9
+
+        btnEditarDetCompSistBloq As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            DisplayMode: |-
+                =If(
+                ThisItem.Estado='Estado (INV_BEPComponentesSistemaDet)'.Inactivo
+                Or
+                SuperAdmin=true
+                ,
+                DisplayMode.Disabled,
+                DisplayMode.Edit)
+            Height: =44
+            Icon: =Icon.Blocked
+            OnSelect: |
+                =UpdateContext({showModalBloqCompDetSistema: true});
+                UpdateContext({myDetItmComponente: ThisItem});
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            TabIndex: =0
+            Tooltip: ="Bloquear detalle del componente"
+            Width: =42
+            X: =1230
+            ZIndex: =10
+
+    rHeaderSoporteSistema_3 As rectangle:
+        Fill: =ColorValue(  INV_ColorPrincipal)
+        Width: =1366
+        ZIndex: =2
+
+    lblHeadSoporteSystemUser_2 As label:
+        Align: =Align.Right
+        Color: =ColorValue(  INV_ColorFuente)
+        Height: =44
+        Text: =User().FullName
+        Width: =416
+        X: =942
+        Y: =56
+        ZIndex: =3
+
+    lblHeadSoporteSystemName_2 As label:
+        Align: =Align.Right
+        Color: =ColorValue(  INV_ColorFuente)
+        Height: =32
+        Text: =User().Email
+        Width: =429
+        X: =929
+        Y: =35
+        ZIndex: =4
+
+    lblTitleSoporteSistema_2 As label:
+        Align: =Align.Right
+        Color: =ColorValue(  INV_ColorFuente)
+        Height: =35
+        Size: =15
+        Text: ="Detalle del componente [ "& mySelectSystemCompDet.Name &" ] del [ " & mySelectSystemCompDet.Sistemas.Name & " ]"
+        Width: =1208
+        X: =150
+        ZIndex: =5
+
+    backSoporteSistemas_2 As icon.ChevronLeft:
+        Color: =ColorValue(  INV_ColorFuente)
+        Icon: =Icon.ChevronLeft
+        OnSelect: =Back()
+        PaddingBottom: =10
+        PaddingLeft: =10
+        PaddingRight: =10
+        PaddingTop: =10
+        Tooltip: ="Regresar a componente"
+        X: =2
+        Y: =19
+        ZIndex: =6
+
+    Rectangle1 As rectangle:
+        Fill: =ColorValue(  INV_ColorPrincipal)
+        Height: =62
+        Width: =1366
+        Y: =103
+        ZIndex: =7
+
+    btnAgregarDetCompSistema As icon.Add:
+        Color: =ColorValue(  INV_ColorFuente)
+        DisplayMode: |-
+            =If(
+            SuperAdmin=true,
+            DisplayMode.Disabled,
+            
+            DisplayMode.Edit)
+        Height: =51
+        Icon: =Icon.Add
+        OnSelect: |
+            =UpdateContext({showModalCompDetSistemas: true});
+            
+            Reset(cmbServidorDetComp);
+            Reset(cmbCompDetComp);
+            Reset(cmbCompDetSuc);
+            Reset(cmbCompDetAut);
+            Reset(txtNombreDetComp);
+            Reset(txtVersionDetComp);
+            Reset(txtDescripcionDetComp);
+        PaddingBottom: =10
+        PaddingLeft: =10
+        PaddingRight: =10
+        PaddingTop: =10
+        Tooltip: ="Agregar detalle al componente"
+        Width: =48
+        X: =1318
+        Y: =110
+        ZIndex: =8
+
+    Label4 As label:
+        Color: =ColorValue(  INV_ColorFuente)
+        Size: =10
+        Text: ="Componente"
+        Y: =120
+        ZIndex: =9
+
+    Label4_2 As label:
+        Align: =Align.Center
+        Color: =ColorValue(  INV_ColorFuente)
+        Size: =10
+        Text: ="Compañía"
+        X: =295
+        Y: =120
+        ZIndex: =10
+
+    Label4_3 As label:
+        Align: =Align.Center
+        Color: =ColorValue(  INV_ColorFuente)
+        Size: =10
+        Text: ="Sucursal"
+        X: =542
+        Y: =120
+        ZIndex: =11
+
+    Label4_4 As label:
+        Align: =Align.Center
+        Color: =ColorValue(  INV_ColorFuente)
+        Size: =10
+        Text: ="Autorizador"
+        X: =833
+        Y: =120
+        ZIndex: =12
+
+    Label4_6 As label:
+        Align: =Align.Center
+        Color: =ColorValue(  INV_ColorFuente)
+        Height: =41
+        Size: =10
+        Text: ="Versión"
+        Width: =117
+        X: =1064
+        Y: =120
+        ZIndex: =13
+
+    btnRegresarToMain_1 As icon.Add:
+        Color: =ColorValue(  INV_ColorFuente)
+        Height: =51
+        Icon: =Icon.Reset
+        OnSelect: =Navigate(INV_Sistemas,ScreenTransition.Cover)
+        PaddingBottom: =10
+        PaddingLeft: =10
+        PaddingRight: =10
+        PaddingTop: =10
+        Tooltip: ="Regresar a la pantalla principal"
+        Width: =48
+        X: =1255
+        Y: =108
+        ZIndex: =14
+
+    INV_BEP_ModalDetCompCrear As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0,0,0,0.4)
+        Height: =768
+        Visible: =showModalCompDetSistemas
+        Width: =1366
+        ZIndex: =15
+
+        INV_BEP_ModalDetCompHedCrear As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =72
+            Width: =602
+            X: =376
+            Y: =104
+            ZIndex: =1
+
+        INV_BEP_ModalDetCompBodyCrear As rectangle:
+            Fill: =White
+            Height: =490
+            Width: =602
+            X: =376
+            Y: =172
+            ZIndex: =2
+
+        INV_BEP_ModalDetCompCloseCrear As icon.Cancel:
+            Color: =ColorValue(  INV_ColorFuente)
+            Icon: =Icon.Cancel
+            OnSelect: |
+                =UpdateContext({showModalCompDetSistemas: false});
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            X: =895
+            Y: =108
+            ZIndex: =3
+
+        Label7 As label:
+            Color: =ColorValue(  INV_ColorFuente)
+            Height: =45
+            Text: ="Agregar detalle de componente"
+            Width: =325
+            X: =390
+            Y: =117
+            ZIndex: =4
+
+        cmbServidorDetComp As combobox:
+            BorderColor: |-
+                =If(IsBlank(cmbServidorDetComp.Selected) 
+                ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            DisplayFields: =["new_name"]
+            InputTextPlaceholder: ="Servidor"
+            Items: =INV_BEPCat_Servidores
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCat_Servidores,cmbServidorDetComp.SearchText,"new_name")
+            SelectMultiple: =false
+            Width: =260
+            X: =397
+            Y: =229
+            ZIndex: =5
+
+        Label8 As label:
+            Text: ="Servidor"
+            X: =397
+            Y: =189
+            ZIndex: =6
+
+        cmbCompDetComp As combobox:
+            BorderColor: |-
+                =If(IsBlank(cmbCompDetComp.Selected) 
+                ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            DisplayFields: =["new_name"]
+            InputTextPlaceholder: ="Compañía"
+            Items: =INV_BEPCat_Compania
+            OnChange: =Reset( cmbCompDetSuc);
+            OnSelect: =
+            Reset: =true
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCat_Compania,cmbCompDetComp.SearchText,"new_name")
+            SelectMultiple: =false
+            Width: =260
+            X: =696
+            Y: =229
+            ZIndex: =7
+
+        Label8_2 As label:
+            Text: ="Compañías"
+            X: =698
+            Y: =189
+            ZIndex: =8
+
+        cmbCompDetSuc As combobox:
+            BorderColor: |-
+                =If(IsBlank(cmbCompDetSuc.Selected) 
+                ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            DisplayFields: =["new_name"]
+            InputTextPlaceholder: ="Sucursal"
+            Items: =Filter(INV_BEPCat_Sucursal,Compañia.INV_BEPCat_Compania=cmbCompDetComp.Selected.INV_BEPCat_Compania)
+            Reset: =true
+            SearchFields: =["new_name"]
+            SearchItems: =Search(Filter(INV_BEPCat_Sucursal,Compañia.INV_BEPCat_Compania=cmbCompDetComp.Selected.INV_BEPCat_Compania),cmbCompDetSuc.SearchText,"new_name")
+            SelectMultiple: =false
+            Width: =260
+            X: =397
+            Y: =309
+            ZIndex: =9
+
+        Label8_3 As label:
+            Text: ="Sucursal"
+            X: =399
+            Y: =269
+            ZIndex: =10
+
+        cmbCompDetAut As combobox:
+            BorderColor: |-
+                =If(IsBlank(cmbCompDetAut.Selected) 
+                ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            DisplayFields: =["new_name"]
+            InputTextPlaceholder: ="Autorizador"
+            Items: =INV_BEPCat_PersonalInventarios
+            Reset: =true
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCat_PersonalInventarios,cmbCompDetAut.SearchText,"new_name")
+            SelectMultiple: =false
+            Width: =260
+            X: =691
+            Y: =309
+            ZIndex: =11
+
+        Label8_4 As label:
+            Text: ="Autorizador"
+            X: =693
+            Y: =269
+            ZIndex: =12
+
+        Label12 As label:
+            Text: ="Nombre"
+            X: =404
+            Y: =349
+            ZIndex: =13
+
+        txtNombreDetComp As text:
+            BorderColor: |-
+                =If(IsBlank(txtNombreDetComp.Text) 
+                ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =
+            HintText: ="Nombre"
+            Width: =253
+            X: =404
+            Y: =389
+            ZIndex: =14
+
+        Label12_2 As label:
+            Text: ="Versión"
+            X: =691
+            Y: =349
+            ZIndex: =15
+
+        txtVersionDetComp As text:
+            BorderColor: |-
+                =If(IsBlank(txtVersionDetComp.Text) 
+                ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =
+            HintText: ="Versión"
+            Width: =253
+            X: =691
+            Y: =389
+            ZIndex: =16
+
+        Label12_3 As label:
+            Text: ="Descripción"
+            X: =404
+            Y: =439
+            ZIndex: =17
+
+        txtDescripcionDetComp As text:
+            Default: =
+            Height: =98
+            HintText: ="Descripción"
+            Mode: =TextMode.MultiLine
+            Width: =540
+            X: =404
+            Y: =479
+            ZIndex: =18
+
+        btnAgregarDetComp As button:
+            OnSelect: |+
+                =If(CountRows(Filter(INV_BEPComponentesSistemaDet,
+                
+                
+                Componente.INV_BEPComponentesSistema=mySelectSystemCompDet.INV_BEPComponentesSistema
+                And
+                Compañía.INV_BEPCat_Compania=cmbCompDetComp.Selected.INV_BEPCat_Compania
+                And
+                Sucursal.INV_BEPCat_Sucursal=cmbCompDetSuc.Selected.INV_BEPCat_Sucursal
+                And
+                Nombre=txtNombreDetComp.Text
+                
+                
+                )) > 0,
+                
+                //Ya se ha definido un componente del tipo indicado para este sistema
+                Notify("Ya se ha definido un detalle con las datos indicados.",NotificationType.Error),
+                
+                
+                
+                /*
+                
+                                             Componente: mySelectSystemCompDet,
+                                            Servidor:cmbServidorDetComp.Selected,
+                                            Compañía:cmbCompDetComp.Selected,
+                                            Sucursal:cmbCompDetSuc.Selected,
+                                            Autorizador:cmbCompDetAut.Selected,
+                                            Nombre:txtNombreDetComp.Text,
+                                            Version:txtVersionDetComp.Text,
+                                            Descripción:txtDescripcionDetComp.Text,
+                                            Name:mySelectSystemCompDet.Name &"-"& txtNombreDetComp.Text
+                
+                */
+                
+                
+                     If(
+                            cmbServidorDetComp.BorderColor=Red    
+                            Or
+                            cmbCompDetComp.BorderColor=Red
+                            Or
+                            cmbCompDetSuc.BorderColor=Red
+                            Or
+                            cmbCompDetAut.BorderColor=Red
+                            Or 
+                            txtNombreDetComp.BorderColor=Red
+                            Or 
+                            txtVersionDetComp.BorderColor=Red
+                            Or 
+                            txtDescripcionDetComp.BorderColor=Red
+                            ,
+                
+                
+                
+                        UpdateContext({mensajeError: 
+                        Concatenate (
+                        If(cmbServidorDetComp.BorderColor=Red," Servidor,","" ) ,
+                        If(cmbCompDetComp.BorderColor=Red," Compañía,","" ) ,
+                        If(cmbCompDetSuc.BorderColor=Red," Sucursal,","" ) ,
+                        If(cmbCompDetAut.BorderColor=Red," Autorizador,","" ) ,
+                        If(txtNombreDetComp.BorderColor=Red," Nombre,","" )  ,
+                        If(txtVersionDetComp.BorderColor=Red," Versión,","" ) ,
+                        If(txtDescripcionDetComp.BorderColor=Red," Descripción,","" ) 
+                
+                        )
+                        });
+                        Notify("ERROR : Faltan llenar los datos de :"&Left(mensajeError,Len(mensajeError) -1));
+                        
+                        ,
+                
+                
+                
+                
+                                IfError(
+                                UpdateContext({
+                                lastPatchComponente:
+                                    Patch(INV_BEPComponentesSistemaDet,
+                                    Defaults(INV_BEPComponentesSistemaDet),
+                                        {
+                                            Componente: mySelectSystemCompDet,
+                                            Servidor:cmbServidorDetComp.Selected,
+                                            Compañía:cmbCompDetComp.Selected,
+                                            Sucursal:cmbCompDetSuc.Selected,
+                                            Autorizador:cmbCompDetAut.Selected,
+                                            Nombre:txtNombreDetComp.Text,
+                                            Version:txtVersionDetComp.Text,
+                                            Descripción:txtDescripcionDetComp.Text,
+                                            
+                                            
+                                            Name:
+                                            mySelectSystemCompDet.Name &"-"& 
+                                            cmbCompDetComp.Selected.Name &"-"& 
+                                            cmbCompDetSuc.Selected.Name &"-"& 
+                                            txtNombreDetComp.Text
+                                            
+                                            
+                                            ,
+                
+                                            Propietario:mySelectSystemCompDet.'Equipo propietario'
+                                        }
+                                    )
+                                });
+                
+                                /*
+                                Componente.INV_BEPComponentesSistema=mySelectSystemCompDet.INV_BEPComponentesSistema
+                                And
+                                Sucursal.INV_BEPCat_Sucursal=cmbCompDetSuc.Selected.INV_BEPCat_Sucursal
+                                And
+                                Nombre=txtNombreDetComp.Text
+                                */
+                
+                
+                                Refresh(INV_BEPComponentesSistemaDet);
+                                ,
+                                Notify("ERROR : " &FirstError.Message ,NotificationType.Error);,
+                
+                                Notify("Se creado un nuevo detalle para  componente " & mySelectSystemCompDet .Name ,Success);
+                                UpdateContext({showModalCompDetSistemas: false});
+                
+                                );
+                
+                
+                
+                     )
+                
+                
+                
+                
+                
+                
+                
+                
+                )
+                
+                
+                
+                
+                
+                
+            Text: ="Crear"
+            X: =784
+            Y: =600
+            ZIndex: =19
+
+    INV_BEP_ModalDetCompEdit As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0,0,0,0.4)
+        Height: =768
+        Visible: =showModalCompDetSistemasEdit
+        Width: =1366
+        ZIndex: =16
+
+        INV_BEP_ModalDetCompHeadEdit As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =73
+            Width: =605
+            X: =390
+            Y: =110
+            ZIndex: =1
+
+        INV_BEP_ModalDetCompBodyEdit As rectangle:
+            Fill: =White
+            Height: =498
+            Width: =605
+            X: =390
+            Y: =178
+            ZIndex: =2
+
+        INV_BEP_ModalDetCompCloseEdit As icon.Cancel:
+            Color: =ColorValue(  INV_ColorFuente)
+            Icon: =Icon.Cancel
+            OnSelect: |-
+                =UpdateContext({showModalCompDetSistemasEdit: false});
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            X: =924
+            Y: =114
+            ZIndex: =3
+
+        Label7_2 As label:
+            Color: =ColorValue(  INV_ColorFuente)
+            Height: =35
+            Size: =11
+            Text: ="Editar detalle [ "& myDetItmComponente.Name &" ]"
+            Width: =505
+            X: =405
+            Y: =126
+            ZIndex: =4
+
+        cmbServidorDetCompEdit As combobox:
+            BorderColor: |-
+                =If(IsBlank(cmbServidorDetCompEdit.Selected) 
+                ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =myDetItmComponente.Servidor
+            DefaultSelectedItems: =myDetItmComponente.Servidor
+            DisplayFields: =["new_name"]
+            InputTextPlaceholder: ="Servidor"
+            Items: =INV_BEPCat_Servidores
+            Reset: =true
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCat_Servidores,cmbServidorDetCompEdit.SearchText,"new_name")
+            SelectMultiple: =false
+            Width: =260
+            X: =412
+            Y: =238
+            ZIndex: =5
+
+        Label8_5 As label:
+            Text: ="Servidor"
+            X: =412
+            Y: =198
+            ZIndex: =6
+
+        cmbCompDetCompEdit As combobox:
+            BorderColor: |-
+                =If(IsBlank(cmbCompDetCompEdit.Selected) 
+                ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =myDetItmComponente.Compañía
+            DefaultSelectedItems: =myDetItmComponente.Compañía
+            DisplayFields: =["new_name"]
+            InputTextPlaceholder: ="Compañía"
+            Items: =INV_BEPCat_Compania
+            OnChange: =Reset(cmbCompDetSucEdit);
+            Reset: =true
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCat_Compania,cmbCompDetCompEdit.SearchText,"new_name")
+            SelectMultiple: =false
+            Width: =260
+            X: =711
+            Y: =238
+            ZIndex: =7
+
+        Label8_6 As label:
+            Text: ="Compañías"
+            X: =713
+            Y: =198
+            ZIndex: =8
+
+        cmbCompDetSucEdit As combobox:
+            BorderColor: |-
+                =If(IsBlank(cmbCompDetSucEdit.Selected) 
+                ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =myDetItmComponente.Sucursal
+            DefaultSelectedItems: =myDetItmComponente.Sucursal
+            DisplayFields: =["new_name"]
+            InputTextPlaceholder: ="Sucursal"
+            Items: |
+                =
+                
+                Filter(INV_BEPCat_Sucursal,Compañia.INV_BEPCat_Compania=cmbCompDetCompEdit.Selected.INV_BEPCat_Compania)
+            Reset: =true
+            SearchFields: =["new_name"]
+            SearchItems: |-
+                =Search(
+                
+                Filter(INV_BEPCat_Sucursal,Compañia.INV_BEPCat_Compania=cmbCompDetCompEdit.Selected.INV_BEPCat_Compania)
+                ,cmbCompDetSucEdit.SearchText,"new_name")
+            SelectMultiple: =false
+            Width: =260
+            X: =412
+            Y: =318
+            ZIndex: =9
+
+        Label8_7 As label:
+            Text: ="Sucursal"
+            X: =414
+            Y: =278
+            ZIndex: =10
+
+        cmbCompDetAutEdit As combobox:
+            BorderColor: |-
+                =If(IsBlank(cmbCompDetAutEdit.Selected) 
+                ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =myDetItmComponente.Autorizador
+            DefaultSelectedItems: =myDetItmComponente.Autorizador
+            DisplayFields: =["new_name"]
+            InputTextPlaceholder: ="Autorizador"
+            Items: =INV_BEPCat_PersonalInventarios
+            Reset: =true
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCat_PersonalInventarios,cmbCompDetAutEdit.SearchText,"new_name")
+            SelectMultiple: =false
+            Width: =260
+            X: =706
+            Y: =318
+            ZIndex: =11
+
+        Label8_8 As label:
+            Text: ="Autorizador"
+            X: =708
+            Y: =278
+            ZIndex: =12
+
+        Label12_4 As label:
+            Text: ="Nombre"
+            X: =419
+            Y: =358
+            ZIndex: =13
+
+        txtNombreDetCompEdit As text:
+            BorderColor: |-
+                =If(IsBlank(txtNombreDetCompEdit.Text) 
+                ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =myDetItmComponente.Nombre
+            HintText: ="Nombre"
+            Reset: =true
+            Width: =253
+            X: =419
+            Y: =398
+            ZIndex: =14
+
+        Label12_5 As label:
+            Text: ="Versión"
+            X: =706
+            Y: =358
+            ZIndex: =15
+
+        txtVersionDetCompEdit As text:
+            BorderColor: |-
+                =If(IsBlank(txtVersionDetCompEdit.Text) 
+                ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =myDetItmComponente.Version
+            HintText: ="Versión"
+            Reset: =true
+            Width: =253
+            X: =706
+            Y: =398
+            ZIndex: =16
+
+        Label12_6 As label:
+            Text: ="Descripción"
+            X: =419
+            Y: =448
+            ZIndex: =17
+
+        txtDescDetCompEdit As text:
+            Default: =myDetItmComponente.Descripción
+            Height: =98
+            HintText: ="Descripción"
+            Mode: =TextMode.MultiLine
+            Reset: =true
+            Width: =540
+            X: =419
+            Y: =488
+            ZIndex: =18
+
+        btnEditDetComp As button:
+            OnSelect: |+
+                =
+                
+                
+                     If(
+                            cmbServidorDetCompEdit.BorderColor=Red    
+                            Or
+                            cmbCompDetCompEdit.BorderColor=Red
+                            Or
+                            cmbCompDetSucEdit.BorderColor=Red
+                            Or
+                            cmbCompDetAutEdit.BorderColor=Red
+                            Or 
+                            txtNombreDetCompEdit.BorderColor=Red
+                            Or 
+                            txtVersionDetCompEdit.BorderColor=Red
+                            Or 
+                            txtDescDetCompEdit.BorderColor=Red
+                            ,
+                
+                
+                
+                        UpdateContext({mensajeError: 
+                        Concatenate (
+                        If(cmbServidorDetCompEdit.BorderColor=Red," Servidor,","" ) ,
+                        If(cmbCompDetCompEdit.BorderColor=Red," Compañía,","" ) ,
+                        If(cmbCompDetSucEdit.BorderColor=Red," Sucursal,","" ) ,
+                        If(cmbCompDetAutEdit.BorderColor=Red," Autorizador,","" ) ,
+                        If(txtNombreDetCompEdit.BorderColor=Red," Nombre,","" )  ,
+                        If(txtVersionDetCompEdit.BorderColor=Red," Versión,","" ) ,
+                        If(txtDescDetCompEdit.BorderColor=Red," Descripción,","" ) 
+                
+                        )
+                        });
+                        Notify("ERROR : Faltan llenar los datos de :"&Left(mensajeError,Len(mensajeError) -1));
+                        ,
+                
+                            If(CountRows(Filter(INV_BEPComponentesSistemaDet,
+                            
+                            Componente.INV_BEPComponentesSistema=mySelectSystemCompDet.INV_BEPComponentesSistema
+                            And
+                            Compañía.INV_BEPCat_Compania=cmbCompDetCompEdit.Selected.INV_BEPCat_Compania
+                            And
+                            Sucursal.INV_BEPCat_Sucursal=cmbCompDetSucEdit.Selected.INV_BEPCat_Sucursal 
+                            And
+                            
+                            Nombre=txtNombreDetCompEdit.Text
+                            And
+                            INV_BEPComponentesSistemaDet<>myDetItmComponente.INV_BEPComponentesSistemaDet
+                
+                            )) > 0,
+                
+                            //Ya se ha definido un componente del tipo indicado para este sistema
+                            Notify("Ya se ha definido con el nombre indicado.",NotificationType.Error),
+                
+                
+                                IfError(
+                                
+                                    UpdateIf(INV_BEPComponentesSistemaDet,
+                                    INV_BEPComponentesSistemaDet=myDetItmComponente.INV_BEPComponentesSistemaDet,
+                                        {
+                                            Componente: mySelectSystemCompDet,
+                                            Servidor:cmbServidorDetCompEdit.Selected,
+                                            Compañía:cmbCompDetCompEdit.Selected,
+                                            Sucursal:cmbCompDetSucEdit.Selected,
+                                            Autorizador:cmbCompDetAutEdit.Selected,
+                                            Nombre:txtNombreDetCompEdit.Text,
+                                            Version:txtVersionDetCompEdit.Text,
+                                            Descripción:txtDescDetCompEdit.Text,
+                
+                
+                                            Name:
+                                            mySelectSystemCompDet.Name &"-"& 
+                                            cmbCompDetCompEdit.Selected.Name  &"-"& 
+                                            cmbCompDetSucEdit.Selected.Name &"-"& 
+                                            txtNombreDetCompEdit.Text
+                
+                                            /*
+                                            mySelectSystemCompDet.Name &"-"& 
+                                            cmbCompDetComp.Selected.Name &"-"& 
+                                            cmbCompDetSuc.Selected.Name &"-"& 
+                                            txtNombreDetComp.Text
+                                            */
+                
+                
+                                        }
+                                    )
+                            ;
+                                Refresh(INV_BEPComponentesSistemaDet);
+                                ,
+                                Notify("ERROR : " &FirstError.Message ,NotificationType.Error);,
+                
+                                Notify("Se ha actualizado el detalle del  componente " & myDetItmComponente .Componente.Name ,Success);
+                                UpdateContext({showModalCompDetSistemasEdit: false});
+                
+                                );
+                        )
+                
+                )
+                
+                
+                
+                
+            Text: ="Editar"
+            X: =799
+            Y: =609
+            ZIndex: =19
+
+    INV_BEP_ModalDetCompBloq As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0,0,0,0.4)
+        Height: =768
+        Visible: =showModalBloqCompDetSistema
+        Width: =1366
+        ZIndex: =17
+
+        Rectangle6_1 As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =70
+            Width: =514
+            X: =428
+            Y: =152
+            ZIndex: =1
+
+        Rectangle7_1 As rectangle:
+            Fill: =White
+            Height: =130
+            Width: =514
+            X: =429
+            Y: =215
+            ZIndex: =2
+
+        btnConfBloqComp_1 As button:
+            OnSelect: |-
+                =IfError(
+                
+                    UpdateIf(INV_BEPComponentesSistemaDet,
+                      INV_BEPComponentesSistemaDet= myDetItmComponente.INV_BEPComponentesSistemaDet,
+                        {
+                         Estado:'Estado (INV_BEPComponentesSistemaDet)'.Inactivo
+                        }
+                    );
+                ,
+                Notify("ERROR : " &FirstError.Message ,NotificationType.Error);,
+                
+                Notify("Se ha actualizado el estado del sistema : " & myDetItmComponente .Name ,Success);
+                Refresh(INV_BEPComponentesSistema);
+                UpdateContext({showModalBloqCompDetSistema: false});
+                
+                )
+            Text: ="Continuar"
+            X: =506
+            Y: =289
+            ZIndex: =3
+
+        btnConfBloqCancelComp_1 As button:
+            OnSelect: |
+                =UpdateContext({showModalBloqCompDetSistema: false});
+            Text: ="Cancelar"
+            X: =711
+            Y: =289
+            ZIndex: =4
+
+        Label9_2 As label:
+            Color: =ColorValue(  INV_ColorFuente)
+            Text: ="Mensaje del sistema"
+            Width: =197
+            X: =610
+            Y: =159
+            ZIndex: =5
+
+        Label11_3 As label:
+            Align: =Align.Center
+            Height: =56
+            Text: ="¿Desea continuar con el bloqueo del registro?"
+            Width: =324
+            X: =522
+            Y: =222
+            ZIndex: =6
+
+    INV_BEP_ModalDetCompUnBloq As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0,0,0,0.4)
+        Height: =767
+        Visible: =showModalUnBloqCompDetSistema
+        Width: =1366
+        ZIndex: =18
+
+        Rectangle6_2 As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =70
+            Width: =514
+            X: =438
+            Y: =142
+            ZIndex: =1
+
+        Rectangle7_2 As rectangle:
+            Fill: =White
+            Height: =130
+            Width: =514
+            X: =439
+            Y: =205
+            ZIndex: =2
+
+        btnConfBloqComp_2 As button:
+            OnSelect: |-
+                =IfError(
+                
+                    UpdateIf(INV_BEPComponentesSistemaDet,
+                      INV_BEPComponentesSistemaDet= myDetItmComponente.INV_BEPComponentesSistemaDet,
+                        {
+                         Estado:'Estado (INV_BEPComponentesSistemaDet)'.Activo
+                        }
+                    );
+                ,
+                Notify("ERROR : " &FirstError.Message ,NotificationType.Error);,
+                
+                Notify("Se ha actualizado el estado del sistema : " & myDetItmComponente .Name ,Success);
+                Refresh(INV_BEPComponentesSistema);
+                UpdateContext({showModalUnBloqCompDetSistema: false});
+                
+                )
+            Text: ="Continuar"
+            X: =516
+            Y: =279
+            ZIndex: =3
+
+        btnConfBloqCancelComp_2 As button:
+            OnSelect: |
+                =UpdateContext({showModalUnBloqCompDetSistema: false});
+            Text: ="Cancelar"
+            X: =721
+            Y: =279
+            ZIndex: =4
+
+        Label9_3 As label:
+            Color: =ColorValue(  INV_ColorFuente)
+            Text: ="Mensaje del sistema"
+            Width: =197
+            X: =620
+            Y: =149
+            ZIndex: =5
+
+        Label11_4 As label:
+            Align: =Align.Center
+            Height: =59
+            Text: ="¿Desea continuar con el desbloqueo del registro?"
+            Width: =310
+            X: =533
+            Y: =205
+            ZIndex: =6
+

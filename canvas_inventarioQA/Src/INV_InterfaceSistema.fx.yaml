@@ -1,0 +1,2157 @@
+INV_InterfaceSistema As screen:
+    OnVisible: |+
+        =
+        Refresh(INV_BEPProcesosInterfaces);
+        Refresh(INV_BEPCat_Tecnologia);
+        Refresh(INV_BEPCat_PersonalInventarios);
+        Refresh(INV_BEPCat_Compania);
+        Refresh(INV_BEPCat_Servidores);
+        Refresh(INV_BEPCat_Sistemas);
+        
+        
+        UpdateContext({showModalIntProcSistemas: false});
+        UpdateContext({showModalIntProcEditSistemas: false});
+        UpdateContext({showModalBorrarIntProcSistema: false});
+        UpdateContext({showModalHabilitarIntProcSistema: false});
+        
+        
+        
+        
+        UpdateContext({myRowsCount : CountRows( INV_BEPProcesosInterfaces) });
+        UpdateContext({varPageInProNumber:1});
+        UpdateContext({varInProActivar:false})
+        
+
+    "Gallery2 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        Height: =527
+        Items: |+
+            =
+            /*
+            SortByColumns(
+            
+                Filter(
+                INV_BEPProcesosInterfaces,
+                    'Sistema de origen'.INV_BEPCat_Sistemas=
+            
+                mySelectSystemDet.INV_BEPCat_Sistemas
+                )
+                
+                ,"createdon",Descending)
+                */
+            
+                
+            If(varPageInProNumber=1,FirstN(
+              
+            SortByColumns(
+            /*
+            Filter(INV_BEPCat_Sistemas,'Equipo propietario'.'Nombre del equipo' in Split(Concat(cmbFiltroGrupoSis.SelectedItems,'Nombre del equipo'&"|"),"|"))*/
+            
+             
+                Filter(
+                INV_BEPProcesosInterfaces,
+                    'Sistema de origen'.INV_BEPCat_Sistemas=
+            
+                mySelectSystemDet.INV_BEPCat_Sistemas
+                )
+            
+            ,"createdon",Descending),10 *varPageInProNumber),LastN(FirstN(
+            
+            SortByColumns(
+            
+            /*
+            Filter(INV_BEPCat_Sistemas,'Equipo propietario'.'Nombre del equipo' in Split(Concat(cmbFiltroGrupoSis.SelectedItems,'Nombre del equipo'&"|"),"|"))*/
+            
+             
+                Filter(
+                INV_BEPProcesosInterfaces,
+                    'Sistema de origen'.INV_BEPCat_Sistemas=
+            
+                mySelectSystemDet.INV_BEPCat_Sistemas
+                )
+            
+            
+            ,"createdon",Descending)
+            ,
+              10 *varPageInProNumber),
+              10*1))
+            
+            
+            
+            
+            
+            
+            
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =47
+        Width: =1364
+        X: =2
+        Y: =165
+        ZIndex: =1
+
+        btnShowEditarIntProc As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            DisplayMode: |-
+                =If(
+                ThisItem.Estado='Estado (INV_BEPProcesosInterfaces)'.Inactivo
+                Or
+                SuperAdmin=true
+                ,
+                DisplayMode.Disabled,
+                DisplayMode.Edit)
+            Height: =45
+            Icon: =Icon.Edit
+            OnSelect: |+
+                =UpdateContext({showModalIntProcEditSistemas: true});
+                UpdateContext({myIntProcSelected: ThisItem});
+                
+                
+                Clear(myCompaniasIntProc);
+                
+                ForAll(
+                    Filter(INV_BEPCiasProcesosInterfaces,'Proceso/Interface'.INV_BEPProcesosInterfaces=ThisItem.INV_BEPProcesosInterfaces
+                    And
+                     Estado=  'Estado (INV_BEPCiasProcesosInterfaces)'.Activo
+                    
+                
+                    ) As aItem,
+                    Collect(
+                        myCompaniasIntProc,
+                        {Name: aItem.Compañía.Name}
+                    )
+                );
+                
+                
+                Clear(myServersIntProc);
+                
+                ForAll(
+                    Filter(INV_BEPProcesosInterfacesDet, 
+                    'Proceso/Interface'.INV_BEPProcesosInterfaces=ThisItem.INV_BEPProcesosInterfaces
+                      And
+                   Estado=  'Estado (INV_BEPProcesosInterfacesDet)'.Activo
+                    
+                    ) As aItem,
+                    Collect(
+                        myServersIntProc,
+                        {Name: aItem.Servidor.Name}
+                    )
+                );
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            TabIndex: =0
+            Tooltip: ="Actualizar proceso/interface"
+            Width: =42
+            X: =1240
+            ZIndex: =2
+
+        Separator4 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =3
+
+        Label14 As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: =ThisItem.Name
+            Width: =170
+            ZIndex: =4
+
+        Label14_1 As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: =ThisItem.Tipo
+            Width: =90
+            X: =170
+            ZIndex: =5
+
+        Label14_3 As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: =ThisItem.'Sistema de origen'.Name
+            X: =410
+            ZIndex: =6
+
+        Label14_4 As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: =ThisItem.Nombre
+            X: =260
+            ZIndex: =7
+
+        Label14_5 As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: =ThisItem.'Sistema de destino'.Name
+            X: =560
+            ZIndex: =8
+
+        Label14_6 As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: =ThisItem.Descripción
+            X: =710
+            ZIndex: =9
+
+        Label14_7 As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: =ThisItem.Tecnología.Name
+            X: =860
+            ZIndex: =10
+
+        Label14_8 As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: =ThisItem.'Modo de ejecución'
+            X: =1010
+            ZIndex: =11
+
+        btnShowBloqIntProc As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            DisplayMode: |-
+                =If(
+                ThisItem.Estado='Estado (INV_BEPProcesosInterfaces)'.Inactivo
+                Or
+                SuperAdmin=true
+                ,
+                DisplayMode.Disabled,
+                DisplayMode.Edit)
+            Height: =45
+            Icon: =Icon.Blocked
+            OnSelect: |
+                =UpdateContext({showModalBorrarIntProcSistema: true});
+                UpdateContext({myIntProcSelected: ThisItem});
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            TabIndex: =0
+            Tooltip: ="Bloquear proceso/interface"
+            Width: =42
+            X: =1281
+            ZIndex: =12
+
+        btnShowUnBloqIntProc As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            DisplayMode: |-
+                =If(
+                ThisItem.Estado='Estado (INV_BEPProcesosInterfaces)'.Activo
+                
+                Or
+                SuperAdmin=true
+                ,
+                DisplayMode.Disabled,
+                DisplayMode.Edit
+                )
+            Height: =45
+            Icon: =Icon.Reset
+            OnSelect: |-
+                =UpdateContext({showModalHabilitarIntProcSistema: true});
+                
+                UpdateContext({myIntProcSelected: ThisItem});
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            TabIndex: =0
+            Tooltip: ="Desbloquear proceso/interface"
+            Width: =42
+            X: =1312
+            ZIndex: =13
+
+    rHeaderSoporteSistema_2 As rectangle:
+        Fill: =ColorValue(  INV_ColorPrincipal)
+        Width: =1366
+        ZIndex: =2
+
+    lblHeadInterfaceSystemUser As label:
+        Align: =Align.Right
+        Color: =ColorValue(  INV_ColorFuente)
+        Height: =44
+        Text: =User().FullName
+        Width: =416
+        X: =942
+        Y: =56
+        ZIndex: =3
+
+    lblHeadInterfaceSystemName As label:
+        Align: =Align.Right
+        Color: =ColorValue(  INV_ColorFuente)
+        Height: =32
+        Text: =User().Email
+        Width: =429
+        X: =929
+        Y: =35
+        ZIndex: =4
+
+    lblTitleInterfaceSistema As label:
+        Align: =Align.Right
+        Color: =ColorValue(  INV_ColorFuente)
+        Height: =35
+        Size: =17
+        Text: ="Interfaces y procesos del sistema ["& mySelectSystemDet.Name &"]"
+        Width: =1206
+        X: =151
+        ZIndex: =5
+
+    backInterfaceSistemas As icon.ChevronLeft:
+        Color: =ColorValue(  INV_ColorFuente)
+        Icon: =Icon.ChevronLeft
+        OnSelect: =Back()
+        PaddingBottom: =10
+        PaddingLeft: =10
+        PaddingRight: =10
+        PaddingTop: =10
+        Tooltip: ="Regresar a sistemas"
+        X: =2
+        Y: =19
+        ZIndex: =6
+
+    Rectangle5_1 As rectangle:
+        Fill: =ColorValue(  INV_ColorPrincipal)
+        Height: =62
+        Width: =1366
+        Y: =103
+        ZIndex: =7
+
+    Label28 As label:
+        Color: =ColorValue(  INV_ColorFuente)
+        Size: =10
+        Text: ="Interface/Proceso"
+        Y: =125
+        ZIndex: =8
+
+    Label28_1 As label:
+        Color: =ColorValue(  INV_ColorFuente)
+        Size: =10
+        Text: ="Tipo"
+        Width: =90
+        X: =177
+        Y: =125
+        ZIndex: =9
+
+    Label28_2 As label:
+        Color: =ColorValue(  INV_ColorFuente)
+        Size: =10
+        Text: ="Nombre"
+        X: =261
+        Y: =125
+        ZIndex: =10
+
+    Label28_6 As label:
+        Color: =ColorValue(  INV_ColorFuente)
+        Size: =10
+        Text: ="Sistema Origen"
+        X: =411
+        Y: =125
+        ZIndex: =11
+
+    Label28_7 As label:
+        Color: =ColorValue(  INV_ColorFuente)
+        Size: =10
+        Text: ="Sistema destino"
+        X: =561
+        Y: =125
+        ZIndex: =12
+
+    Label28_8 As label:
+        Color: =ColorValue(  INV_ColorFuente)
+        Size: =10
+        Text: ="Descripción"
+        X: =711
+        Y: =125
+        ZIndex: =13
+
+    Label28_9 As label:
+        Color: =ColorValue(  INV_ColorFuente)
+        Size: =10
+        Text: ="Tecnología"
+        X: =861
+        Y: =125
+        ZIndex: =14
+
+    Label28_10 As label:
+        Color: =ColorValue(  INV_ColorFuente)
+        Size: =10
+        Text: ="Modo ejecución"
+        X: =1011
+        Y: =125
+        ZIndex: =15
+
+    Icon1 As icon.Add:
+        Color: =ColorValue(  INV_ColorFuente)
+        DisplayMode: |-
+            =If(
+            SuperAdmin=true,
+            DisplayMode.Disabled,
+            DisplayMode.Edit)
+        Height: =51
+        Icon: =Icon.Add
+        OnSelect: |
+            =
+            UpdateContext({showModalIntProcSistemas: true});
+            
+            
+            
+            Reset(txtProcIntNombre);
+            Reset(ddlSistDestino);
+            Reset(cmbTipoIntProc);
+            Reset(cmbTecnologia);
+            Reset(cmbModoEjecucion);
+            Reset(ddlEspAppPICrear);
+            Reset(ddLiderTiPICrear);
+            Reset(ddlGerDeTIPICrear);
+            Reset(txtProcIntPrimeraAccReal);
+            Reset(txtProcIntSegAccReal);
+            Reset(txtProcIntsrEsp);
+            Reset(txtProcIntPuerto);
+            Reset(txtProcIntPuerto_1);
+            Reset(cmbModoEjecucion);
+            Reset(cmbCompaniaProInt);
+            Reset(cmbServProcInt);
+        PaddingBottom: =10
+        PaddingLeft: =10
+        PaddingRight: =10
+        PaddingTop: =10
+        Tooltip: ="Crear proceso/interface"
+        Width: =48
+        X: =1302
+        Y: =110
+        ZIndex: =16
+
+    Icon9_3 As icon.ArrowLeft:
+        DisplayMode: =If(varPageInProNumber = 1  /*Or varActivar=false*/, Disabled, Edit)
+        Height: =40
+        Icon: =Icon.ArrowLeft
+        OnSelect: |-
+            =UpdateContext({varInProActivar:false});
+            
+            UpdateContext({varPageInProNumber: varPageInProNumber - 1});
+            
+            UpdateContext({varInProActivar:true});
+        PaddingBottom: =10
+        PaddingLeft: =10
+        PaddingRight: =10
+        PaddingTop: =10
+        Width: =52
+        X: =574
+        Y: =677
+        ZIndex: =17
+
+    Icon10_3 As icon.ChevronLeft:
+        DisplayMode: |-
+            =If(
+              10  /*PageSize_Dropdown.SelectedText.Value*/
+                
+                *varPageInProNumber<CountRows(
+                
+              Filter(
+                INV_BEPProcesosInterfaces,
+                    'Sistema de origen'.INV_BEPCat_Sistemas=
+            
+                mySelectSystemDet.INV_BEPCat_Sistemas
+                )
+            
+            )
+            
+            //And varActivar=false
+            
+            
+            , DisplayMode.Edit,Disabled)
+        Height: =40
+        Icon: =Icon.ArrowRight
+        OnSelect: |
+            =UpdateContext({varInProActivar:false});
+            
+            UpdateContext({varPageInProNumber: varPageInProNumber + 1});
+            
+            UpdateContext({varInProActivar:true});
+        PaddingBottom: =10
+        PaddingLeft: =10
+        PaddingRight: =10
+        PaddingTop: =10
+        Width: =45
+        X: =739
+        Y: =677
+        ZIndex: =18
+
+    Label55_3 As label:
+        Align: =Align.Center
+        FontWeight: =FontWeight.Semibold
+        Height: =33
+        Text: |-
+            =varPageInProNumber & " de " & RoundUp(CountRows(
+            /*   
+            Filter(
+            INV_BEPCat_Sistemas,
+            'Equipo propietario'.'Nombre del equipo' in 
+            
+            Split(Concat(cmbFiltroGrupoSis.SelectedItems,'Nombre del equipo' & "|" ),"|")
+            
+            )*/
+            
+                Filter(
+                INV_BEPProcesosInterfaces,
+                    'Sistema de origen'.INV_BEPCat_Sistemas=
+            
+                mySelectSystemDet.INV_BEPCat_Sistemas
+                )
+                
+            
+            )/ 10/*PageSize_Dropdown.SelectedText.Value*/,0)
+        Width: =113
+        X: =626
+        Y: =677
+        ZIndex: =19
+
+    INV_InterfaceModalSistemaCrear As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0,0,0,0.4)
+        Height: =768
+        Visible: =showModalIntProcSistemas
+        Width: =1366
+        ZIndex: =20
+
+        INV_InterfaceModalSisHeadCrear As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =67
+            Width: =908
+            X: =234
+            Y: =48
+            ZIndex: =1
+
+        INV_InterfaceModalSisBodyCrear As rectangle:
+            Fill: =White
+            Height: =600
+            Width: =908
+            X: =234
+            Y: =115
+            ZIndex: =2
+
+        INV_InterfaceModalSisCloseCrear As icon.Cancel:
+            Color: =ColorValue(  INV_ColorFuente)
+            Icon: =Icon.Cancel
+            OnSelect: |-
+                =
+                UpdateContext({showModalIntProcSistemas: false});
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Width: =50
+            X: =1092
+            Y: =51
+            ZIndex: =3
+
+        Label30 As label:
+            Color: =ColorValue(  INV_ColorFuente)
+            Height: =30
+            Text: ="Crear interface/proceso para [ " & mySelectSystemDet.Name & " ]"
+            Width: =544
+            X: =262
+            Y: =68
+            ZIndex: =4
+
+        Label33 As label:
+            Text: ="Tipo"
+            X: =842
+            Y: =121
+            ZIndex: =5
+
+        Label33_1 As label:
+            Text: ="Nombre"
+            X: =253
+            Y: =121
+            ZIndex: =6
+
+        Label33_5 As label:
+            Text: ="Sistema destino"
+            Width: =229
+            X: =544
+            Y: =121
+            ZIndex: =7
+
+        cmbTipoIntProc As dropdown:
+            AllowEmptySelection: =true
+            BorderColor: |-
+                =If(IsBlank(cmbTipoIntProc.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: |-
+                =If(IsBlank(ddlSistDestino.Selected),
+                 INV_BEP_optTipoProInt.Proceso,
+                 INV_BEP_optTipoProInt.Interface
+                )
+            DisplayMode: =DisplayMode.Disabled
+            Height: =39
+            Items: =Choices( INV_BEP_optTipoProInt)
+            Reset: =true
+            Width: =272
+            X: =842
+            Y: =161
+            ZIndex: =8
+
+        txtProcIntNombre As text:
+            BorderColor: |-
+                =If(IsBlank(txtProcIntNombre.Text),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =
+            Height: =39
+            HintText: ="Nombre"
+            Width: =272
+            X: =253
+            Y: =161
+            ZIndex: =10
+
+        Label33_4 As label:
+            Text: ="Tecnología"
+            X: =253
+            Y: =200
+            ZIndex: =11
+
+        cmbTecnologia As dropdown:
+            AllowEmptySelection: =true
+            BorderColor: |-
+                =If(IsBlank(cmbTecnologia.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =
+            Height: =39
+            Items: =INV_BEPCat_Tecnologia
+            Reset: =true
+            Width: =272
+            X: =253
+            Y: =238
+            ZIndex: =12
+
+        Label33_6 As label:
+            Text: ="Modo ejecución"
+            X: =544
+            Y: =202
+            ZIndex: =13
+
+        cmbModoEjecucion As dropdown:
+            AllowEmptySelection: =true
+            BorderColor: |-
+                =If(IsBlank(cmbModoEjecucion.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =
+            Height: =39
+            Items: =Choices(INV_BEP_optModoEjecucion)
+            Reset: =true
+            Width: =272
+            X: =544
+            Y: =238
+            ZIndex: =14
+
+        Label33_7 As label:
+            Height: =39
+            Text: ="Especialista de aplicaciones"
+            Width: =259
+            X: =842
+            Y: =199
+            ZIndex: =15
+
+        Label33_8 As label:
+            Height: =38
+            Text: ="Líder TI"
+            Width: =231
+            X: =253
+            Y: =279
+            ZIndex: =17
+
+        Label33_9 As label:
+            Height: =38
+            Text: ="Gerencia de TI"
+            Width: =231
+            X: =544
+            Y: =279
+            ZIndex: =19
+
+        Label33_10 As label:
+            Text: ="Primera acción a realizar"
+            Width: =217
+            X: =257
+            Y: =446
+            ZIndex: =21
+
+        txtProcIntPrimeraAccReal As text:
+            BorderColor: |-
+                =If(IsBlank(txtProcIntPrimeraAccReal.Text),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =
+            Height: =66
+            HintText: ="Primera acción a realizar"
+            Mode: =TextMode.MultiLine
+            Reset: =true
+            Width: =563
+            X: =253
+            Y: =490
+            ZIndex: =22
+
+        Label33_11 As label:
+            Text: ="Segunda acción a realizar"
+            Width: =217
+            X: =257
+            Y: =556
+            ZIndex: =23
+
+        txtProcIntSegAccReal As text:
+            BorderColor: |-
+                =If(IsBlank(txtProcIntSegAccReal.Text),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =
+            Height: =68
+            HintText: ="Segunda acción a realizar"
+            Mode: =TextMode.MultiLine
+            Reset: =true
+            Width: =563
+            X: =253
+            Y: =600
+            ZIndex: =24
+
+        Label33_12 As label:
+            Text: ="Usuario especial"
+            Width: =225
+            X: =842
+            Y: =277
+            ZIndex: =25
+
+        txtProcIntsrEsp As text:
+            BorderColor: |-
+                =  RGBA(0, 18, 107, 1)
+                
+                /*If(IsBlank(txtProcIntsrEsp.Text),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )*/
+            Default: =
+            HintText: ="Usuario especial"
+            Reset: =true
+            Width: =272
+            X: =842
+            Y: =319
+            ZIndex: =26
+
+        Label33_13 As label:
+            Text: ="Puerto"
+            Width: =225
+            X: =253
+            Y: =362
+            ZIndex: =27
+
+        txtProcIntPuerto As text:
+            BorderColor: |-
+                =  RGBA(0, 18, 107, 1)
+                  /*If(IsBlank(txtProcIntPuerto.Text),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )*/
+            Default: =
+            HintText: ="Puerto"
+            Reset: =true
+            Width: =272
+            X: =253
+            Y: =404
+            ZIndex: =28
+
+        Label33_14 As label:
+            Text: ="Protocolo"
+            Width: =225
+            X: =544
+            Y: =362
+            ZIndex: =29
+
+        txtProcIntPuerto_1 As text:
+            BorderColor: |-
+                =/*If(IsBlank(txtProcIntPuerto_1.Text),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )*/
+                    RGBA(0, 18, 107, 1)
+            Default: =
+            HintText: ="Protocolo"
+            Reset: =true
+            Width: =272
+            X: =544
+            Y: =404
+            ZIndex: =30
+
+        btnCrearIntProc As button:
+            OnSelect: |+
+                =UpdateContext({lasIntProctPatch: Blank()});
+                UpdateContext({errorInsertIntProc: false});
+                ClearCollect(
+                    errorInsertComp,
+                    false
+                );
+                ClearCollect(
+                    errorInsertServ,
+                    false
+                );
+                
+                
+                
+                If(
+                    ddlSistDestino.BorderColor = Red Or cmbTipoIntProc.BorderColor = Red Or txtProcIntNombre.BorderColor = Red Or txtProcIntsrEsp.BorderColor = Red Or cmbModoEjecucion.BorderColor = Red Or txtProcIntPuerto.BorderColor = Red Or txtProcIntPuerto_1.BorderColor = Red Or ddlEspAppPICrear.BorderColor = Red Or ddLiderTiPICrear.BorderColor = Red Or ddlGerDeTIPICrear.BorderColor = Red Or txtProcIntPrimeraAccReal.BorderColor = Red Or txtProcIntSegAccReal.BorderColor = Red Or cmbServProcInt.BorderColor = Red Or
+                     cmbCompaniaProInt.BorderColor = Red
+                     Or
+                     cmbTecnologia.BorderColor = Red
+                     
+                     ,
+                
+                    UpdateContext(
+                        {
+                            mensajeError: Concatenate(
+                                If(
+                                    txtProcIntNombre.BorderColor = Red,
+                                    " Nombre,",
+                                    ""
+                                ),
+                                If(
+                                    cmbTecnologia.BorderColor = Red,
+                                    " Tecnología,",
+                                    ""
+                                ),
+                
+                                If(
+                                    cmbModoEjecucion.BorderColor = Red,
+                                    " Modo ejecución,",
+                                    ""
+                                ),
+                                If(
+                                    txtProcIntsrEsp.BorderColor = Red,
+                                    " Usuario especial,",
+                                    ""
+                                ),
+                                If(
+                                    txtProcIntPuerto.BorderColor = Red,
+                                    " Puerto,",
+                                    ""
+                                ),
+                                If(
+                                    txtProcIntPuerto_1.BorderColor = Red,
+                                    " Protocolo,",
+                                    ""
+                                ),
+                                If(
+                                    ddlEspAppPICrear.BorderColor = Red,
+                                    " Especialista de aplicaciones,",
+                                    ""
+                                ),
+                                If(
+                                    ddLiderTiPICrear.BorderColor = Red,
+                                    " Lider TI,",
+                                    ""
+                                ),
+                                If(
+                                    ddlGerDeTIPICrear.BorderColor = Red,
+                                    " Dirección/ Gerencia de TI,",
+                                    ""
+                                ),
+                                If(
+                                    txtProcIntPrimeraAccReal.BorderColor = Red,
+                                    " 1era acción a realizar,",
+                                    ""
+                                ),
+                                If(
+                                    txtProcIntSegAccReal.BorderColor = Red,
+                                    " 2da acción a realizar,",
+                                    ""
+                                ),
+                                If(
+                                    cmbCompaniaProInt.BorderColor = Red,
+                                    " Compañía,",
+                                    ""
+                                ),
+                                If(
+                                    cmbServProcInt.BorderColor = Red,
+                                    " Servidor,",
+                                    ""
+                                )
+                            )
+                        }
+                    );
+                    Notify(
+                        "ERROR : Faltan llenar los datos de :" & Left(
+                            mensajeError,
+                            Len(mensajeError) - 1
+                        )
+                    );
+                    ,
+                
+                
+                
+                
+                    If(
+                        CountRows(
+                            Filter(
+                                INV_BEPProcesosInterfaces,
+                                'Sistema de origen'.INV_BEPCat_Sistemas = mySelectSystemDet.INV_BEPCat_Sistemas And 
+                                Tipo = cmbTipoIntProc.Selected.Value And
+                                 Nombre = txtProcIntNombre.Text
+                            )
+                        ) > 0,
+                
+                        Notify(
+                            "Ya se ha definido una interface/proceso nombrado de la misma forma para este sistema.",
+                            NotificationType.Error
+                        )
+                        
+                        
+                        ,
+                               
+                        IfError(
+                            UpdateContext(
+                                {
+                                    lasIntProctPatch: Patch(
+                                        INV_BEPProcesosInterfaces,
+                                        Defaults(INV_BEPProcesosInterfaces),
+                                        {
+                                            'Sistema de destino': ddlSistDestino.Selected,
+                                            'Sistema de origen': mySelectSystemDet,
+                                            Tipo: cmbTipoIntProc.Selected.Value/*INV_BEP_optTipoProInt.Interfaz*/,
+                
+                
+                                            Name: 
+                                            mySelectSystemDet.Name  &"-"&
+                                            cmbTipoIntProc.Selected.Value  & "-" & 
+                                            txtProcIntNombre.Text,
+                
+                
+                                            'Modo de ejecución': cmbModoEjecucion.Selected.Value,
+                                            'Usuario especial': txtProcIntsrEsp.Text,
+                                            Puerto: txtProcIntPuerto.Text,
+                                            Protocolo: txtProcIntPuerto_1.Text,
+                                            Nombre: txtProcIntNombre.Text,
+                                            
+                                            Tecnología:cmbTecnologia.Selected,
+                
+                                            'Especialista de aplicaciones': ddlEspAppPICrear.Selected,
+                                            'Lider TI': ddLiderTiPICrear.Selected,
+                                            'Dirección/ Gerencia de TI': ddlGerDeTIPICrear.Selected,
+                                            '1era acción a realizar': txtProcIntPrimeraAccReal.Text,
+                                            '2da acción a realizar': txtProcIntSegAccReal.Text,
+                                            Propietario: mySelectSystemDet.'Equipo propietario'
+                                        }
+                                    )
+                                }
+                            ),
+                            Notify(
+                                "error : " & FirstError.Message,
+                                NotificationType.Error
+                            ),
+                
+                      
+                
+                            If(
+                                IsEmpty(Errors(INV_BEPProcesosInterfaces)),
+                                Blank(),
+                                UpdateContext({errorInsertIntProc: true});
+                            );
+                
+                
+                
+                         If(errorInsertIntProc=false,
+                
+                            ForAll(
+                                cmbCompaniaProInt.SelectedItems As aItem,
+                                If(
+                                    CountRows(
+                                        Filter(
+                                            INV_BEPCiasProcesosInterfaces,
+                                            Compañía.INV_BEPCat_Compania = aItem.INV_BEPCat_Compania And
+                                            'Proceso/Interface'.INV_BEPProcesosInterfaces =        
+                                            lasIntProctPatch.INV_BEPProcesosInterfaces
+                                        )
+                                    ) > 0,
+                                    Blank(),
+                                    If(
+                                        CountRows(
+                                            Filter(
+                                                errorInsertComp,
+                                                Value = true
+                                            )
+                                        ) > 0,
+                                        Blank(),
+                                        Collect(
+                                            lastPatchComp,
+                                            Patch(
+                                                INV_BEPCiasProcesosInterfaces,
+                                                Defaults(INV_BEPCiasProcesosInterfaces),
+                                                {
+                                                    'Proceso/Interface': lasIntProctPatch,
+                                                     Compañía: aItem,
+                                                      Propietario: mySelectSystemDet.'Equipo propietario'
+                                                     , Name: lasIntProctPatch.Name & "-" & aItem.Name
+                                                          
+                                                }
+                                            )
+                                        );
+                                        If(
+                                            IsEmpty(Errors(INV_BEPCiasProcesosInterfaces)),
+                                            Blank(),
+                                            Collect(
+                                                errorInsertComp,
+                                                true
+                                            );
+                                        );
+                                    );
+                                );
+                            );
+                
+                
+                
+                
+                            ForAll(
+                                cmbServProcInt.SelectedItems As aItem,
+                                If(
+                                    CountRows(
+                                        Filter(
+                                            INV_BEPProcesosInterfacesDet,
+                                             Servidor.INV_BEPCat_Servidores= aItem.INV_BEPCat_Servidores And 
+                
+                                            'Proceso/Interface'.INV_BEPProcesosInterfaces =
+                                             lasIntProctPatch.INV_BEPProcesosInterfaces
+                                        )
+                                    ) > 0,
+                                    Blank(),
+                                    If(
+                                        CountRows(
+                                            Filter(
+                                                errorInsertServ,
+                                                Value = true
+                                            )
+                                        ) > 0,
+                                        Blank(),
+                                        Collect(
+                                            lastPatchServ,
+                                            Patch(
+                                                INV_BEPProcesosInterfacesDet,
+                                                Defaults(INV_BEPProcesosInterfacesDet),
+                                                { 
+                                                    'Proceso/Interface': lasIntProctPatch,
+                                                    Propietario: mySelectSystemDet.'Equipo propietario',
+                                                    Servidor:aItem
+                                                    ,Name: lasIntProctPatch.Name & "-" & aItem.Name
+                                                   
+                                                   
+                                                    /*
+                                                    'Proceso/Interface': lasIntProctPatch,
+                                                     Compañía: aItem,
+                                                      Propietario: mySelectSystemDet.'Equipo propietario',
+                                                      Name: lasIntProctPatch.Name & "-" & aItem.Name
+                                                      */
+                                                          
+                                                }
+                                            )
+                                        );
+                                        If(
+                                            IsEmpty(Errors(INV_BEPProcesosInterfacesDet)),
+                                            Blank(),
+                                            Collect(
+                                                errorInsertServ,
+                                                true
+                                            );
+                                        );
+                                    );
+                                );
+                            );,
+                
+                            Blank();
+                
+                          )
+                
+                
+                        );
+                
+                
+                
+                    If(
+                        CountRows(Filter(errorInsertServ,Value=true  ))>0 Or
+                        CountRows(Filter(errorInsertComp,Value=true  ))>0 Or
+                        errorInsertIntProc=true,
+                       
+                            If(
+                                CountRows(Filter(errorInsertComp,Value=true  ))>0
+                                Or
+                                CountRows(Filter(errorInsertServ,Value=true  ))>0  ,
+                
+                
+                                RemoveIf( INV_BEPCiasProcesosInterfaces,
+                                    'Proceso/Interface'.INV_BEPProcesosInterfaces =
+                                    lasIntProctPatch.INV_BEPProcesosInterfaces );
+                
+                                RemoveIf( INV_BEPProcesosInterfacesDet,
+                                    'Proceso/Interface'.INV_BEPProcesosInterfaces =
+                                    lasIntProctPatch.INV_BEPProcesosInterfaces );
+                
+                
+                
+                                ,
+                            Blank());
+                         
+                            Remove(INV_BEPProcesosInterfaces, lasIntProctPatch);
+                            ,
+                
+                              Notify("Se ha creado un nuevo " & cmbTipoIntProc.Selected.Value & " al sistema " &
+                               mySelectSystemDet.Name,
+                                NotificationType.Success
+                            );
+                            UpdateContext({showModalIntProcSistemas: false});
+                    );
+                
+                
+                
+                
+                
+                
+                
+                    );
+                
+                
+                
+                  
+                
+                
+                
+                
+                
+                
+                
+                )
+                
+                
+                
+                
+            Text: ="Crear"
+            X: =891
+            Y: =564
+            ZIndex: =31
+
+        Label33_28 As label:
+            Height: =38
+            Text: ="Compañía"
+            Width: =232
+            X: =842
+            Y: =362
+            ZIndex: =32
+
+        Label33_29 As label:
+            Height: =38
+            Text: ="Servidor"
+            Width: =232
+            X: =842
+            Y: =446
+            ZIndex: =34
+
+        cmbCompaniaProInt As combobox:
+            BorderColor: |-
+                =If(IsBlank(cmbCompaniaProInt.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            DisplayFields: =["new_name"]
+            Height: =37
+            InputTextPlaceholder: ="Compañía"
+            Items: =INV_BEPCat_Compania
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCat_Compania,cmbCompaniaProInt.SearchText,"new_name")
+            Width: =272
+            X: =842
+            Y: =404
+            ZIndex: =35
+
+        cmbServProcInt As combobox:
+            BorderColor: |-
+                =If(IsBlank(cmbServProcInt.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            DisplayFields: =["new_name"]
+            Height: =37
+            InputTextPlaceholder: ="Servidores"
+            Items: =INV_BEPCat_Servidores
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCat_Servidores,cmbServProcInt.SearchText,"new_name")
+            Width: =272
+            X: =842
+            Y: =490
+            ZIndex: =36
+
+        ddlEspAppPICrear As combobox:
+            DisplayFields: =["new_name"]
+            Height: =39
+            InputTextPlaceholder: ="Especialista de aplicaciones"
+            Items: =INV_BEPCat_PersonalInventarios
+            Reset: =true
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCat_PersonalInventarios,ddlEspAppPICrear.SearchText,"new_name")
+            SelectMultiple: =false
+            Size: =11
+            Width: =272
+            X: =842
+            Y: =238
+            ZIndex: =37
+
+        ddLiderTiPICrear As combobox:
+            DisplayFields: =["new_name"]
+            Height: =39
+            InputTextPlaceholder: ="Líder TI"
+            Items: =INV_BEPCat_PersonalInventarios
+            Reset: =true
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCat_PersonalInventarios,ddLiderTiPICrear.SearchText,"new_name")
+            SelectMultiple: =false
+            Width: =272
+            X: =253
+            Y: =319
+            ZIndex: =38
+
+        ddlGerDeTIPICrear As combobox:
+            DisplayFields: =["new_name"]
+            InputTextPlaceholder: ="Gerencia de TI"
+            Items: =INV_BEPCat_PersonalInventarios
+            Reset: =true
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCat_PersonalInventarios,ddlGerDeTIPICrear.SearchText,"new_name")
+            SelectMultiple: =false
+            Width: =272
+            X: =544
+            Y: =319
+            ZIndex: =39
+
+        ddlSistDestino As combobox:
+            BorderColor: |-
+                =RGBA(0, 18, 107, 1)
+                  
+            DisplayFields: =["new_name"]
+            Height: =37
+            InputTextPlaceholder: ="Sistema destino"
+            Items: =INV_BEPCat_Sistemas
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCat_Sistemas,ddlSistDestino.SearchText,"new_name")
+            SelectMultiple: =false
+            Width: =272
+            X: =544
+            Y: =161
+            ZIndex: =40
+
+    INV_InterfaceModalSistemaEdit As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0,0,0,0.4)
+        Height: =766
+        Visible: =showModalIntProcEditSistemas
+        Width: =1364
+        ZIndex: =21
+
+        INV_InterfaceModalSisHeadEdit As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =70
+            Width: =908
+            X: =235
+            Y: =44
+            ZIndex: =1
+
+        INV_InterfaceModalSisBodyEdit As rectangle:
+            Fill: =White
+            Height: =600
+            Width: =908
+            X: =234
+            Y: =115
+            ZIndex: =2
+
+        INV_InterfaceModalSistemaCloseEdit As icon.Cancel:
+            Color: =ColorValue(  INV_ColorFuente)
+            Icon: =Icon.Cancel
+            OnSelect: |
+                =UpdateContext({showModalIntProcEditSistemas: false});
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Width: =50
+            X: =1086
+            Y: =50
+            ZIndex: =3
+
+        Label31 As label:
+            Color: =ColorValue(  INV_ColorFuente)
+            Height: =37
+            Text: ="Editar proceso/interface [ "&myIntProcSelected.Name & " ]" 
+            Width: =575
+            X: =256
+            Y: =60
+            ZIndex: =4
+
+        Label33_15 As label:
+            Text: ="Tipo"
+            X: =842
+            Y: =121
+            ZIndex: =5
+
+        Label33_16 As label:
+            Height: =41
+            Text: ="Nombre"
+            Width: =178
+            X: =253
+            Y: =121
+            ZIndex: =6
+
+        Label33_17 As label:
+            Text: ="Sistema destino"
+            X: =544
+            Y: =121
+            ZIndex: =7
+
+        cmbTipoIntProcEdit As dropdown:
+            Default: |+
+                =
+                
+                If(IsBlank(ddlSistDestinoEdit.Selected),
+                 INV_BEP_optTipoProInt.Proceso,
+                 INV_BEP_optTipoProInt.Interface
+                )
+                
+            DisplayMode: =DisplayMode.Disabled
+            Items: =Choices( INV_BEP_optTipoProInt)
+            Width: =272
+            X: =842
+            Y: =161
+            ZIndex: =8
+
+        txtProcIntNombreEdit As text:
+            BorderColor: |-
+                =If(IsBlank(txtProcIntNombreEdit.Text),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =myIntProcSelected.Nombre
+            Height: =39
+            HintText: ="Nombre"
+            Width: =272
+            X: =253
+            Y: =161
+            ZIndex: =10
+
+        cmbTecnologiaEdit As dropdown:
+            BorderColor: |-
+                =If(IsBlank(cmbTecnologiaEdit.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =myIntProcSelected.Tecnología.Name
+            Height: =39
+            Items: =INV_BEPCat_Tecnologia
+            Width: =272
+            X: =253
+            Y: =238
+            ZIndex: =11
+
+        Label33_18 As label:
+            Text: ="Modo ejecución"
+            X: =544
+            Y: =200
+            ZIndex: =12
+
+        cmbModoEjecucionEdit As dropdown:
+            BorderColor: |-
+                =If(IsBlank(cmbModoEjecucionEdit.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =myIntProcSelected.'Modo de ejecución'
+            Items: =Choices(INV_BEP_optModoEjecucion)
+            Width: =272
+            X: =544
+            Y: =238
+            ZIndex: =13
+
+        Label33_19 As label:
+            Height: =38
+            Text: ="Especialista de aplicaciones"
+            Width: =276
+            X: =842
+            Y: =200
+            ZIndex: =14
+
+        Label33_20 As label:
+            Height: =38
+            Text: ="Líder TI"
+            Width: =231
+            X: =253
+            Y: =279
+            ZIndex: =15
+
+        Label33_21 As label:
+            Height: =38
+            Text: ="Dirección/ Gerencia de TI"
+            Width: =275
+            X: =544
+            Y: =279
+            ZIndex: =17
+
+        Label33_22 As label:
+            Text: ="Primera acción a realizar"
+            Width: =225
+            X: =253
+            Y: =454
+            ZIndex: =18
+
+        txtProcIntPrimeraAccRealEdit As text:
+            BorderColor: |-
+                =If(IsBlank(txtProcIntPrimeraAccRealEdit.Text),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =myIntProcSelected.'1era acción a realizar'
+            Height: =66
+            HintText: ="Primera acción a realizar"
+            Mode: =TextMode.MultiLine
+            Width: =566
+            X: =253
+            Y: =494
+            ZIndex: =19
+
+        Label33_23 As label:
+            Text: ="Segunda acción a realizar"
+            Width: =225
+            X: =253
+            Y: =563
+            ZIndex: =20
+
+        txtProcIntSegAccRealEdit As text:
+            BorderColor: |-
+                =If(IsBlank(txtProcIntSegAccRealEdit.Text),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =myIntProcSelected.'2da acción a realizar'
+            Height: =66
+            HintText: ="Segunda acción a realizar"
+            Mode: =TextMode.MultiLine
+            Width: =566
+            X: =253
+            Y: =603
+            ZIndex: =21
+
+        Label33_24 As label:
+            Text: ="Usuario especial"
+            Width: =225
+            X: =842
+            Y: =279
+            ZIndex: =22
+
+        Label33_25 As label:
+            Height: =41
+            Text: ="Puerto"
+            Width: =268
+            X: =253
+            Y: =362
+            ZIndex: =23
+
+        txtProcIntPuertoEdit As text:
+            Default: =myIntProcSelected.Puerto
+            Height: =41
+            HintText: ="Puerto"
+            Width: =272
+            X: =253
+            Y: =404
+            ZIndex: =24
+
+        Label33_26 As label:
+            Text: ="Protocolo"
+            Width: =225
+            X: =544
+            Y: =362
+            ZIndex: =25
+
+        txtProcIntProtEdit As text:
+            Default: =myIntProcSelected.Protocolo
+            HintText: ="Protocolo"
+            Width: =272
+            X: =544
+            Y: =404
+            ZIndex: =26
+
+        btnEditIntProc As button:
+            OnSelect: |-
+                =UpdateContext({errorInsertIntProc: false});
+                ClearCollect(
+                    errorInsertComp,
+                    false
+                );
+                ClearCollect(
+                    errorInsertServ,
+                    false
+                );
+                If(
+                    ddlSistDestinoEdit.BorderColor = Red Or cmbTipoIntProcEdit.BorderColor = Red Or txtProcIntNombreEdit.BorderColor = Red Or txtProcIntsrEspEdit.BorderColor = Red Or cmbModoEjecucionEdit.BorderColor = Red Or txtProcIntPuertoEdit.BorderColor = Red Or txtProcIntProtEdit.BorderColor = Red Or ddlEspAppPIEdit.BorderColor = Red Or ddLiderTiPIEdit.BorderColor = Red Or ddlGerDeTIPIEdit.BorderColor = Red Or txtProcIntPrimeraAccRealEdit.BorderColor = Red Or txtProcIntSegAccRealEdit.BorderColor = Red Or cmbServProcIntEdit.BorderColor = Red Or cmbCompaniaProIntEdit.BorderColor = Red
+                Or
+                cmbTecnologiaEdit.BorderColor = Red
+                    
+                    ,
+                    UpdateContext(
+                        {
+                            mensajeError: Concatenate(
+                                If(
+                                    txtProcIntNombreEdit.BorderColor = Red,
+                                    " Nombre,",
+                                    ""
+                                ),
+                                If(
+                                    cmbTecnologiaEdit.BorderColor = Red,
+                                    " Tecnología,",
+                                    ""
+                                ),
+                
+                
+                                If(
+                                    cmbModoEjecucionEdit.BorderColor = Red,
+                                    " Modo ejecución,",
+                                    ""
+                                ),
+                                If(
+                                    txtProcIntsrEspEdit.BorderColor = Red,
+                                    " Usuario especial,",
+                                    ""
+                                ),
+                                If(
+                                    txtProcIntPuertoEdit.BorderColor = Red,
+                                    " Puerto,",
+                                    ""
+                                ),
+                                If(
+                                    txtProcIntProtEdit.BorderColor = Red,
+                                    " Protocolo,",
+                                    ""
+                                ),
+                                If(
+                                    ddlEspAppPIEdit.BorderColor = Red,
+                                    " Especialista de aplicaciones,",
+                                    ""
+                                ),
+                                If(
+                                    ddLiderTiPIEdit.BorderColor = Red,
+                                    " Lider TI,",
+                                    ""
+                                ),
+                                If(
+                                    ddlGerDeTIPIEdit.BorderColor = Red,
+                                    " Dirección/ Gerencia de TI,",
+                                    ""
+                                ),
+                                If(
+                                    txtProcIntPrimeraAccRealEdit.BorderColor = Red,
+                                    " 1era acción a realizar,",
+                                    ""
+                                ),
+                                If(
+                                    txtProcIntSegAccRealEdit.BorderColor = Red,
+                                    " 2da acción a realizar,",
+                                    ""
+                                ),
+                                If(
+                                    cmbCompaniaProIntEdit.BorderColor = Red,
+                                    " Compañía,",
+                                    ""
+                                ),
+                                If(
+                                    cmbServProcIntEdit.BorderColor = Red,
+                                    " Servidor,",
+                                    ""
+                                )
+                            )
+                        }
+                    );
+                    Notify(
+                        "ERROR : Faltan llenar los datos de :" & Left(
+                            mensajeError,
+                            Len(mensajeError) - 1
+                        )
+                    );
+                    ,
+                    If(
+                        CountRows(
+                            Filter(
+                                INV_BEPProcesosInterfaces,
+                
+                /*
+                  mySelectSystemDet.Name  &"-"&
+                                            cmbTipoIntProc.Selected.Value  & "-" & 
+                                            txtProcIntNombre.Text,
+                */
+                
+                                'Sistema de origen'.INV_BEPCat_Sistemas = mySelectSystemDet.INV_BEPCat_Sistemas And 
+                                Tipo = cmbTipoIntProcEdit.Selected.Value And 
+                                Nombre = txtProcIntNombreEdit.Text And 
+                                INV_BEPProcesosInterfaces <> myIntProcSelected.INV_BEPProcesosInterfaces
+                            )
+                        ) > 0,
+                        Notify(
+                            "Ya se ha definido una interface/proceso nombrado de la misma forma para este sistema.",
+                            NotificationType.Error
+                        ),
+                        IfError(
+                            UpdateIf(
+                                INV_BEPProcesosInterfaces,
+                                INV_BEPProcesosInterfaces = myIntProcSelected.INV_BEPProcesosInterfaces,
+                                {
+                                    'Sistema de destino': ddlSistDestinoEdit.Selected,
+                                    'Sistema de origen': myIntProcSelected.'Sistema de origen',
+                                     Tipo:cmbTipoIntProcEdit.Selected.Value /*INV_BEP_optTipoProInt.Interfaz*/,
+                
+                
+                                    Name:  
+                                     mySelectSystemDet.Name & "-" & 
+                                     cmbTipoIntProcEdit.Selected.Value & "-" & 
+                                     txtProcIntNombreEdit.Text ,
+                
+                                        /*
+                                            Name: 
+                                            mySelectSystemDet.Name  &"-"&
+                                            cmbTipoIntProc.Selected.Value  & "-" & 
+                                            txtProcIntNombre.Text,
+                
+                
+                                    */
+                
+                
+                
+                                    'Modo de ejecución': cmbModoEjecucionEdit.Selected.Value,
+                                    'Usuario especial': txtProcIntsrEspEdit.Text,
+                                    Puerto: txtProcIntPuertoEdit.Text,
+                                    Protocolo: txtProcIntProtEdit.Text,
+                                    Nombre: txtProcIntNombreEdit.Text,
+                                    Tecnología: cmbTecnologiaEdit.Selected,
+                                    'Especialista de aplicaciones': ddlEspAppPIEdit.Selected,
+                                    'Lider TI': ddLiderTiPIEdit.Selected,
+                                    'Dirección/ Gerencia de TI': ddlGerDeTIPIEdit.Selected,
+                                    '1era acción a realizar': txtProcIntPrimeraAccRealEdit.Text,
+                                    '2da acción a realizar': txtProcIntSegAccRealEdit.Text,
+                                    Propietario: mySelectSystemDet.'Equipo propietario'
+                                }
+                            ),
+                            Notify(
+                                "error : " & FirstError.Message,
+                                NotificationType.Error
+                            ),
+                                        /*
+                                        Notify("Se ha creado un nuevo " & 
+                                        cmbTipoIntProcEdit.Selected.Value & " al sistema " & mySelectSystemDet.Name  ,
+                                        NotificationType.Success);
+                                        */
+                            UpdateIf(
+                                INV_BEPCiasProcesosInterfaces,
+                                'Proceso/Interface'.INV_BEPProcesosInterfaces = myIntProcSelected.INV_BEPProcesosInterfaces,
+                                {Estado: 'Estado (INV_BEPCiasProcesosInterfaces)'.Inactivo}
+                            );
+                            UpdateIf(
+                                INV_BEPProcesosInterfacesDet,
+                                'Proceso/Interface'.INV_BEPProcesosInterfaces = myIntProcSelected.INV_BEPProcesosInterfaces,
+                                {Estado: 'Estado (INV_BEPProcesosInterfacesDet)'.Inactivo}
+                            );
+                
+                
+                
+                
+                            ForAll(
+                                cmbCompaniaProIntEdit.SelectedItems As aItem,
+                                If(
+                                    CountRows(
+                                        Filter(
+                                            INV_BEPCiasProcesosInterfaces,
+                                            Compañía.INV_BEPCat_Compania = aItem.INV_BEPCat_Compania And 'Proceso/Interface'.INV_BEPProcesosInterfaces = myIntProcSelected.INV_BEPProcesosInterfaces And Estado = 'Estado (INV_BEPCiasProcesosInterfaces)'.Inactivo
+                                        )
+                                    ) > 0,
+                                    UpdateIf(
+                                        INV_BEPCiasProcesosInterfaces,
+                                            // INV_BEP_optSistemas.INV_BEPCat_Sistemas =mySelectSystem.INV_BEPCat_Sistemas 
+                                        'Proceso/Interface'.INV_BEPProcesosInterfaces =
+                                         myIntProcSelected.INV_BEPProcesosInterfaces And
+                                            // INV_BEP_optDivision.Nombre=aItem.Nombre
+                
+                                        Compañía.INV_BEPCat_Compania = aItem.INV_BEPCat_Compania,
+                                        {
+                                            Name: /*mySelectSystem .Name*/txtProcIntNombreEdit.Text & "-" & aItem.Name/* aItem.Nombre*/,
+                                            Estado: 'Estado (INV_BEPCiasProcesosInterfaces)'.Activo
+                                        }
+                                    );
+                                    Blank();
+                                    ,
+                                    If(
+                                        CountRows(
+                                            Filter(
+                                                errorInsertComp,
+                                                Value = true
+                                            )
+                                        ) > 0,
+                                        Blank(),
+                                        If(
+                                            IsEmpty(
+                                                Errors(
+                                                    INV_BEPCiasProcesosInterfaces,
+                                                    Patch(
+                                                        INV_BEPCiasProcesosInterfaces,
+                                                        Defaults(INV_BEPCiasProcesosInterfaces),
+                                                        {
+                                                            /*
+                                                                        INV_BEP_optSistemas:mySelectSystemDet ,
+                                                                        INV_BEP_optDivision:aItem ,
+                                                                        Name:mySelectSystem .Name & "-" &  aItem.Nombre,
+                                                                        Propietario: mySelectSystemDet.'Equipo propietario'
+                                                                        */
+                                                            'Proceso/Interface': myIntProcSelected,
+                                                            Compañía: aItem,
+                                                            Propietario: mySelectSystemDet.'Equipo propietario',
+                                                            Name: myIntProcSelected.Name & "-" & aItem.Name
+                                                        }
+                                                    )
+                                                )
+                                            ),
+                                            {},/*Notify("Se han agregado las divisiones a los sistemas",NotificationType.Success)*/
+                                            {}/* Notify("Error al hacer patch",NotificationType.Error)*/
+                                        )
+                                    );
+                                );
+                            );
+                
+                
+                
+                
+                    ForAll(
+                                cmbServProcIntEdit.SelectedItems As aItem,
+                                If(
+                                    CountRows(
+                                        Filter(
+                                            INV_BEPProcesosInterfacesDet,
+                                            Servidor.INV_BEPCat_Servidores = aItem.INV_BEPCat_Servidores And 
+                
+                                            'Proceso/Interface'.INV_BEPProcesosInterfaces =
+                                             myIntProcSelected.INV_BEPProcesosInterfaces And 
+                                             
+                                             Estado =  'Estado (INV_BEPProcesosInterfacesDet)'.Inactivo
+                                        )
+                                    ) > 0,
+                                    UpdateIf(
+                                        INV_BEPProcesosInterfacesDet,
+                                      
+                                        'Proceso/Interface'.INV_BEPProcesosInterfaces =
+                                             myIntProcSelected.INV_BEPProcesosInterfaces And
+                                          
+                                            Servidor.INV_BEPCat_Servidores = aItem.INV_BEPCat_Servidores,
+                                        {
+                                            Name: txtProcIntNombreEdit.Text & "-" & aItem.Name,
+                                            Estado: 'Estado (INV_BEPProcesosInterfacesDet)'.Activo
+                                        }
+                                    );
+                                    Blank();
+                                    ,
+                                    If(
+                                        CountRows(
+                                            Filter(
+                                                errorInsertServ,
+                                                Value = true
+                                            )
+                                        ) > 0,
+                                        Blank(),
+                                        If(
+                                            IsEmpty(
+                                                Errors(
+                                                    INV_BEPProcesosInterfacesDet,
+                                                    Patch(
+                                                        INV_BEPProcesosInterfacesDet,
+                                                        Defaults(INV_BEPProcesosInterfacesDet),
+                                                        {
+                                                            'Proceso/Interface': myIntProcSelected,
+                                                            Servidor: aItem,
+                                                            Propietario: mySelectSystemDet.'Equipo propietario',
+                                                            Name: myIntProcSelected.Name & "-" & aItem.Name
+                                                        }
+                                                    )
+                                                )
+                                            ),
+                                            {},/*Notify("Se han agregado las divisiones a los sistemas",NotificationType.Success)*/
+                                            {}/* Notify("Error al hacer patch",NotificationType.Error)*/
+                                        )
+                                    );
+                                );
+                            );
+                
+                
+                            If(
+                                CountRows(
+                                    Filter(
+                                        errorInsertComp,
+                                        Value = true
+                                    )
+                                ) > 0    Or
+                                     CountRows(
+                                        Filter(
+                                            errorInsertServ,
+                                            Value = true
+                                        )
+                                    ) > 0 Or errorInsertIntProc = true,
+                                If(
+                                    CountRows(
+                                        Filter(
+                                            errorInsertComp,
+                                            Value = true
+                                        )
+                                    ) > 0
+                                    Or
+                                     CountRows(
+                                        Filter(
+                                            errorInsertServ,
+                                            Value = true
+                                        )
+                                    ) > 0
+                                    ,
+                                    Blank()/*RemoveIf(INV_BEPCnfSistemaDivisiones,INV_BEP_optSistemas .Name=lastPatch.Name );*/,
+                                    Blank()
+                                );
+                                Blank()/* Remove(INV_BEPCat_Sistemas, lastPatch);*/,
+                                    //UpdateContext({checkPatchSystem:true});
+                                Notify(
+                                    "Se actualizó correctamente el sistema",
+                                    NotificationType.Success
+                                );
+                            );
+                            UpdateContext({showModalIntProcEditSistemas: false});
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                        )
+                    )
+                )
+            Text: ="Editar"
+            X: =891
+            Y: =564
+            ZIndex: =27
+
+        txtProcIntsrEspEdit As text:
+            Default: =myIntProcSelected.'Usuario especial'
+            HintText: ="Usuario especial"
+            Width: =272
+            X: =842
+            Y: =319
+            ZIndex: =28
+
+        Label33_27 As label:
+            Height: =41
+            Text: ="Tecnología"
+            Width: =178
+            X: =253
+            Y: =200
+            ZIndex: =29
+
+        cmbCompaniaProIntEdit As combobox:
+            BorderColor: |-
+                =If(IsBlank(cmbCompaniaProIntEdit.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            DefaultSelectedItems: |-
+                =Filter(INV_BEPCat_Compania,
+                Name in
+                myCompaniasIntProc
+                
+                )
+            DisplayFields: =["new_name"]
+            InputTextPlaceholder: ="Compañía"
+            Items: =INV_BEPCat_Compania
+            Reset: =true
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCat_Compania,cmbCompaniaProIntEdit.SearchText,"new_name")
+            Width: =272
+            X: =842
+            Y: =404
+            ZIndex: =33
+
+        cmbServProcIntEdit As combobox:
+            BorderColor: |-
+                =If(IsBlank(cmbServProcIntEdit.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            DefaultSelectedItems: =Filter(INV_BEPCat_Servidores,Name in myServersIntProc)
+            DisplayFields: =["new_name"]
+            InputTextPlaceholder: ="Servidores"
+            Items: =INV_BEPCat_Servidores
+            Reset: =true
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCat_Servidores,cmbServProcIntEdit.SearchText,"new_name")
+            Width: =272
+            X: =842
+            Y: =490
+            ZIndex: =34
+
+        Label33_30 As label:
+            Height: =38
+            Text: ="Compañía"
+            Width: =232
+            X: =842
+            Y: =362
+            ZIndex: =35
+
+        Label33_31 As label:
+            Height: =38
+            Text: ="Servidor"
+            Width: =232
+            X: =842
+            Y: =446
+            ZIndex: =36
+
+        ddlEspAppPIEdit As combobox:
+            Default: =myIntProcSelected.'Especialista de aplicaciones'
+            DefaultSelectedItems: =myIntProcSelected.'Especialista de aplicaciones'
+            DisplayFields: =["new_name"]
+            Height: =39
+            InputTextPlaceholder: ="Especialista de aplicaciones"
+            Items: =INV_BEPCat_PersonalInventarios
+            Reset: =true
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCat_PersonalInventarios,ddlEspAppPIEdit.SearchText,"new_name")
+            SelectMultiple: =false
+            Size: =10
+            Width: =272
+            X: =842
+            Y: =238
+            ZIndex: =37
+
+        ddLiderTiPIEdit As combobox:
+            Default: =myIntProcSelected.'Lider TI'
+            DefaultSelectedItems: =myIntProcSelected.'Lider TI'
+            DisplayFields: =["new_name"]
+            Height: =39
+            InputTextPlaceholder: ="Líder TI"
+            Items: =INV_BEPCat_PersonalInventarios
+            Reset: =true
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCat_PersonalInventarios,ddLiderTiPIEdit.SearchText,"new_name")
+            SelectMultiple: =false
+            Width: =272
+            X: =253
+            Y: =319
+            ZIndex: =38
+
+        ddlGerDeTIPIEdit As combobox:
+            Default: =myIntProcSelected.'Dirección/ Gerencia de TI'
+            DefaultSelectedItems: =myIntProcSelected.'Dirección/ Gerencia de TI'
+            DisplayFields: =["new_name"]
+            InputTextPlaceholder: ="Gerencia de TI"
+            Items: =INV_BEPCat_PersonalInventarios
+            Reset: =true
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCat_PersonalInventarios,ddlGerDeTIPIEdit.SearchText,"new_name")
+            SelectMultiple: =false
+            Width: =272
+            X: =544
+            Y: =319
+            ZIndex: =39
+
+        ddlSistDestinoEdit As combobox:
+            DefaultSelectedItems: =myIntProcSelected.'Sistema de destino'
+            DisplayFields: =["new_name"]
+            InputTextPlaceholder: ="Sistema destino"
+            Items: |-
+                =INV_BEPCat_Sistemas
+                /*Filter(
+                INV_BEPCat_Sistemas,
+                Propietario=mySelectSystemDet.'Equipo propietario')*/
+            Reset: =true
+            SearchFields: =["new_name"]
+            SearchItems: |-
+                =Search(INV_BEPCat_Sistemas
+                /*Filter(
+                INV_BEPCat_Sistemas,
+                Propietario=mySelectSystemDet.'Equipo propietario')*/,ddlSistDestinoEdit.SearchText,"new_name")
+            SelectMultiple: =false
+            Width: =272
+            X: =544
+            Y: =161
+            ZIndex: =40
+
+    INV_BEP_ModalConfirmBloqProcInt As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0,0,0,0.4)
+        Height: =766
+        Visible: =showModalBorrarIntProcSistema
+        Width: =1366
+        ZIndex: =22
+
+        Rectangle2_6 As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =70
+            Width: =614
+            X: =384
+            Y: =165
+            ZIndex: =1
+
+        Rectangle3_6 As rectangle:
+            Fill: =White
+            Height: =130
+            Width: =614
+            X: =384
+            Y: =235
+            ZIndex: =2
+
+        Label38_6 As label:
+            Align: =Align.Center
+            Color: =ColorValue(  INV_ColorFuente)
+            Height: =47
+            Text: ="Mensaje del sistema"
+            Width: =258
+            X: =569
+            Y: =182
+            ZIndex: =4
+
+        Label42_6 As label:
+            Align: =Align.Center
+            Height: =60
+            Text: ="¿Desea continuar con el bloqueo del registro?"
+            Width: =318
+            X: =539
+            Y: =235
+            ZIndex: =5
+
+        Button2_6 As button:
+            OnSelect: |
+                =//mySelectSystem
+                UpdateIf(INV_BEPProcesosInterfaces,
+                /*Name=myIntProcSelected.Name
+                And*/
+                INV_BEPProcesosInterfaces=myIntProcSelected.INV_BEPProcesosInterfaces
+                ,
+                {
+                    Estado:'Estado (INV_BEPProcesosInterfaces)'.Inactivo
+                }
+                );
+                Refresh(INV_BEPProcesosInterfaces);
+                
+                UpdateContext({showModalBorrarIntProcSistema: false});
+            Text: ="Continuar"
+            X: =528
+            Y: =306
+            ZIndex: =6
+
+        Button3_6 As button:
+            OnSelect: |-
+                =UpdateContext({showModalBorrarIntProcSistema: false});
+            Text: ="Cancelar"
+            X: =731
+            Y: =306
+            ZIndex: =7
+
+    INV_BEP_ModalConfirmUnBloqProcInt As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0,0,0,0.4)
+        Height: =766
+        Visible: =showModalHabilitarIntProcSistema
+        Width: =1366
+        Y: =2
+        ZIndex: =23
+
+        Rectangle2_7 As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =70
+            Width: =614
+            X: =384
+            Y: =165
+            ZIndex: =1
+
+        Rectangle3_7 As rectangle:
+            Fill: =White
+            Height: =130
+            Width: =614
+            X: =384
+            Y: =235
+            ZIndex: =2
+
+        Label38_7 As label:
+            Align: =Align.Center
+            Color: =ColorValue(  INV_ColorFuente)
+            Height: =47
+            Text: ="Mensaje del sistema"
+            Width: =258
+            X: =569
+            Y: =182
+            ZIndex: =4
+
+        Label42_7 As label:
+            Align: =Align.Center
+            Height: =60
+            Text: ="¿Desea continuar con el desbloqueo del registro?"
+            Width: =318
+            X: =539
+            Y: =235
+            ZIndex: =5
+
+        Button2_7 As button:
+            OnSelect: |
+                =//mySelectSystem
+                UpdateIf(INV_BEPProcesosInterfaces,
+                Name=myIntProcSelected.Name
+                And
+                INV_BEPProcesosInterfaces=myIntProcSelected.INV_BEPProcesosInterfaces
+                ,
+                {
+                    Estado:'Estado (INV_BEPProcesosInterfaces)'.Activo
+                }
+                );
+                UpdateContext({showModalHabilitarIntProcSistema: false});
+            Text: ="Continuar"
+            X: =528
+            Y: =306
+            ZIndex: =6
+
+        Button3_7 As button:
+            OnSelect: |-
+                =UpdateContext({showModalHabilitarIntProcSistema: false});
+            Text: ="Cancelar"
+            X: =731
+            Y: =306
+            ZIndex: =7
+

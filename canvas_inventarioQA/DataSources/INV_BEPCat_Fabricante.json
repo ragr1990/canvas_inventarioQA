@@ -1,0 +1,97 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "new_inv_bepcat_fabricantes",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "new_inv_bepcat_fabricante",
+    "MaxGetRowsCount": 500,
+    "Name": "INV_BEPCat_Fabricante",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "createdby": "Autor",
+      "createdon": "Fecha de creación",
+      "createdonbehalfby": "Autor (delegado)",
+      "importsequencenumber": "Número de secuencia de importación",
+      "modifiedby": "Modificado por",
+      "modifiedon": "Fecha de modificación",
+      "modifiedonbehalfby": "Modificado por (delegado)",
+      "new_INV_BEP_optFabricanteComp": "INV_BEPComponentesSistema",
+      "new_inv_bep_sfabricante": "Descripción de fabricante",
+      "new_inv_bepcat_fabricante_AsyncOperations": "System Jobs",
+      "new_inv_bepcat_fabricante_BulkDeleteFailures": "Bulk Delete Failures",
+      "new_inv_bepcat_fabricante_DuplicateBaseRecord": "Duplicate Records (new_inv_bepcat_fabricante_DuplicateBaseRecord)",
+      "new_inv_bepcat_fabricante_DuplicateMatchingRecord": "Duplicate Records (new_inv_bepcat_fabricante_DuplicateMatchingRecord)",
+      "new_inv_bepcat_fabricante_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "new_inv_bepcat_fabricante_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "new_inv_bepcat_fabricante_ProcessSession": "Process Sessions",
+      "new_inv_bepcat_fabricante_SyncErrors": "Sync Errors",
+      "new_inv_bepcat_fabricanteid": "INV_BEPCat_Fabricante",
+      "new_name": "Name",
+      "organizationid": "Id. de la organización",
+      "overriddencreatedon": "Fecha de creación del registro",
+      "statecode": "Estado",
+      "statuscode": "Razón para el estado",
+      "timezoneruleversionnumber": "Número de versión de regla de zona horaria",
+      "utcconversiontimezonecode": "Código de zona horaria de conversión UTC",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "INV_BEPCat_Fabricante",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "INV_BEPCat_Fabricante (Vistas)",
+    "Name": "_new_inv_bepcat_fabricante_views",
+    "RelatedEntityName": "INV_BEPCat_Fabricante",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "37ea9241-ad60-4902-923f-2219339fee56": "Vista asociada de INV_BEPCat_Fabricante",
+      "44510d67-ef2b-4561-a34e-0d5b2dea66c0": "INV_BEPCat_Fabricante inactivo",
+      "5ec43577-4b4b-4e17-819c-7da7bd62568f": "INV_BEPCat_Fabricante activo",
+      "6ca7a03b-9362-41bf-b826-725177f80b44": "Vista de búsqueda de INV_BEPCat_Fabricante",
+      "dce63528-de82-4773-a3ff-e6348b095af3": "Vista de búsqueda avanzada de INV_BEPCat_Fabricante",
+      "eb6abada-e291-ed11-aad1-00224824e59e": "Fabricante"
+    }
+  },
+  {
+    "DisplayName": "Estado (INV_BEPCat_Fabricante)",
+    "Name": "new_inv_bepcat_fabricante_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Activo",
+      "1": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "INV_BEPCat_Fabricante"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "INV_BEPCat_Fabricante",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Razón para el estado (INV_BEPCat_Fabricante)",
+    "Name": "new_inv_bepcat_fabricante_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Activo",
+      "2": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "INV_BEPCat_Fabricante"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "INV_BEPCat_Fabricante",
+    "Type": "OptionSetInfo"
+  }
+]

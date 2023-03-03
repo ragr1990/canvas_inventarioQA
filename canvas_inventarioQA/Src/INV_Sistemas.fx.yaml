@@ -1,0 +1,2454 @@
+INV_Sistemas As screen:
+    OnVisible: |+
+        =Refresh(INV_BEPCat_Sistemas);
+        Refresh(INV_BEPCnfSistemaDivisiones);
+        //Reset(ddlMenuNavSis);
+        
+        
+        /*
+        ClearCollect(myTeamsCurUser,
+        Split( Concat(   First(  Filter(  Usuarios,'Correo electrónico principal'=User().Email  )).'Equipos (teammembership_association)','Nombre del equipo',"|"),"|")
+           
+        );
+        
+        ClearCollect(
+            Gpos,
+            Equipos
+        );
+        
+        ClearCollect(UserRoles,LookUp(Usuarios,domainname = User().Email).'Roles de seguridad (systemuserroles_association)');
+        */
+        
+        
+        UpdateContext({showModalSistemas: false});
+        UpdateContext({showModalDivSistemas: false});
+        UpdateContext({showModalBorrarSistema: false});
+        UpdateContext({showModalHabilitarSistema: false});
+        
+        
+        
+        
+        
+        UpdateContext({myRowsCount : CountRows( INV_BEPCat_Sistemas) });
+        UpdateContext({varPageNumber:1});
+        UpdateContext({varActivar:false})
+        
+
+    rHeaderSistemas As rectangle:
+        Fill: =ColorValue(  INV_ColorPrincipal)
+        Width: =1366
+        ZIndex: =1
+
+    rHeaderGridSistema As rectangle:
+        Fill: =ColorValue(  INV_ColorPrincipal)
+        Height: =62
+        Width: =1366
+        Y: =103
+        ZIndex: =2
+
+    Label1_1 As label:
+        Color: =ColorValue(  INV_ColorFuente)
+        FontWeight: =FontWeight.Semibold
+        Size: =10
+        Text: ="Sistema"
+        Width: =204
+        Y: =122
+        ZIndex: =3
+
+    Label1_2 As label:
+        Align: =Align.Center
+        Color: =ColorValue(  INV_ColorFuente)
+        FontWeight: =FontWeight.Semibold
+        Size: =10
+        Text: |
+            ="Fecha instalación"
+        Width: =131
+        X: =204
+        Y: =122
+        ZIndex: =4
+
+    Label1_3 As label:
+        Align: =Align.Center
+        Color: =ColorValue(  INV_ColorFuente)
+        FontWeight: =FontWeight.Semibold
+        Size: =10
+        Text: |
+            ="Fecha vencimiento"
+        Width: =135
+        X: =345
+        Y: =122
+        ZIndex: =5
+
+    Label1_4 As label:
+        Align: =Align.Center
+        Color: =ColorValue(  INV_ColorFuente)
+        FontWeight: =FontWeight.Semibold
+        Height: =38
+        Size: =10
+        Text: ="Versión"
+        Width: =74
+        X: =490
+        Y: =122
+        ZIndex: =6
+
+    Label1_5 As label:
+        Align: =Align.Center
+        Color: =ColorValue(  INV_ColorFuente)
+        FontWeight: =FontWeight.Semibold
+        Size: =10
+        Text: ="Grupo"
+        Width: =143
+        X: =582
+        Y: =122
+        ZIndex: =7
+
+    btnAddNuevoSistema As icon.Save:
+        Color: =ColorValue(  INV_ColorFuente)
+        DisplayMode: |+
+            =If(SuperAdmin<>true,
+            DisplayMode.Disabled,
+            DisplayMode.Edit)
+            
+            
+        Height: =51
+        Icon: =Icon.Add
+        OnSelect: |+
+            =
+            /*
+            ForAll( Collection,
+                Patch( DataSource, 
+                    LookUp( DataSource, Id = Collection[@Id] ),
+                    { Column: Value }
+                )
+            )
+            */
+            ClearCollect(
+                Gpos,
+                Equipos
+            );
+            
+            UpdateContext({checkPatchSystem:false});
+            UpdateContext({showModalSistemas: true});
+            
+            Reset(cmbGrupoResponsableSis);
+            Reset(cmbTipoLicSis);
+            Reset(cmbTipoSolucionSis);
+            Reset(dtFechaInstalacion);
+            Reset(dtFechaVencimiento);
+            Reset(txtNombreSistemaCrea);
+            Reset(txtVersion);
+            Reset(txtDescripcionSistema);
+            Reset(cmbDivisionCrear);
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        PaddingBottom: =10
+        PaddingLeft: =10
+        PaddingRight: =10
+        PaddingTop: =10
+        Tooltip: ="Agregar sistema"
+        Width: =48
+        X: =1310
+        Y: =110
+        ZIndex: =8
+
+    "glCatSistemas As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        Height: =489
+        Items: |+
+            =
+            If(varPageNumber=1,FirstN(
+               /*
+            
+            Filter(
+            INV_BEPCat_Sistemas,
+            'Equipo propietario'.'Nombre del equipo' in 
+            
+            Split(Concat(cmbFiltroGrupoSis.SelectedItems,'Nombre del equipo' & "|" ),"|")
+            
+            )
+             */
+            SortByColumns(Filter(INV_BEPCat_Sistemas,'Equipo propietario'.'Team Name' in Split(Concat(cmbFiltroGrupoSis.SelectedItems,'Team Name'&"|"),"|")),"createdon",Descending),/*PageSize_Dropdown.SelectedText.Value*/ 10 *varPageNumber),LastN(FirstN(
+            /*
+            Filter(
+            INV_BEPCat_Sistemas,
+            'Equipo propietario'.'Nombre del equipo' in 
+            
+            Split(Concat(cmbFiltroGrupoSis.SelectedItems,'Nombre del equipo' & "|" ),"|")
+            
+            )*/
+            
+             /*   */
+            SortByColumns(Filter(INV_BEPCat_Sistemas,'Equipo propietario'.'Team Name' in Split(Concat(cmbFiltroGrupoSis.SelectedItems,'Team Name'&"|"),"|")),"createdon",Descending),/*PageSize_Dropdown.SelectedText.Value*/  10 *varPageNumber),/*PageSize_Dropdown.SelectedText.Value*/ 10*1))
+            
+            
+            
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =45
+        Width: =1366
+        Y: =171
+        ZIndex: =9
+
+        tSistemaNombre As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Size: =10
+            Text: =ThisItem.Name
+            Width: =204
+            ZIndex: =1
+
+        Separator2_1 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =3
+
+        tFechaInstalacion As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Size: =10
+            Text: |-
+                =If(IsBlank(ThisItem.'Fecha de Instalacion'),
+                Blank(),
+                Text(ThisItem.'Fecha de Instalacion', "dd/mm/yyyy")
+                )
+            Width: =134
+            X: =204
+            ZIndex: =4
+
+        tFechaVencimiento As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Size: =10
+            Text: |-
+                =
+                
+                If(IsBlank(ThisItem.'Fecha de Vencimiento de Licenciamiento'
+                ),
+                Blank(),
+                Text(ThisItem.'Fecha de Vencimiento de Licenciamiento'
+                , "dd/mm/yyyy")
+                )
+            X: =338
+            ZIndex: =5
+
+        tVersion As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Size: =10
+            Text: =ThisItem.Version
+            Width: =78
+            X: =488
+            ZIndex: =6
+
+        tGrupo As label:
+            BorderThickness: =1
+            Fill: |-
+                =
+                RGBA(0, 0, 0, 0)
+            Height: =39
+            OnSelect: =Select(Parent)
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Size: =8
+            Text: =ThisItem.'Equipo propietario'.'Team Name'
+            Width: =175
+            X: =565
+            ZIndex: =7
+
+        btnUptDivision As icon.AddLibrary:
+            DisplayMode: |-
+                =If(
+                ThisItem.Estado='Estado (INV_BEPCat_Sistemas)'.Inactivo
+                
+                Or
+                (
+                IsBlank(
+                            First(
+                                Filter(myTeamsCurUser,Result = ThisItem.'Equipo propietario'.'Team Name')
+                            )
+                        )
+                        And SuperAdmin<>true
+                
+                
+                )
+                
+                ,
+                DisplayMode.Disabled,
+                DisplayMode.Edit)
+            Fill: |
+                =
+                If(
+                    
+                     //ThisItem.'Equipo propietario'.'Nombre del equipo'/*.teamid */ in  myTeamsCurUser
+                
+                IsBlank(
+                            First(
+                                Filter(myTeamsCurUser,Result = ThisItem.'Equipo propietario'.'Team Name')
+                            )
+                        )
+                
+                ,
+                RGBA(0, 0, 0, 0),
+                Green
+                )
+            Height: =44
+            Icon: =Icon.Edit
+            OnSelect: |
+                =UpdateContext({showModalDivSistemas: true});
+                UpdateContext({mySelectSystem: ThisItem});
+                UpdateContext({myAllowEditSystem: false});
+                ClearCollect(
+                    Gpos,
+                    Equipos
+                );
+                ClearCollect(
+                    mySelectSystemsDivision,
+                    Filter(
+                        INV_BEPCnfSistemaDivisiones,
+                /*INV_BEP_optSistemas.Name = ThisItem.Name */ 
+                        INV_BEP_optSistemas.INV_BEPCat_Sistemas = ThisItem.INV_BEPCat_Sistemas And Estado = 'Estado (INV_BEPCnfSistemaDivisiones)'.Activo
+                    )
+                );
+                Clear(divisionesSystemas);
+                ForAll(
+                    mySelectSystemsDivision As aItem,
+                    Collect(
+                        divisionesSystemas,
+                        {Name: aItem.INV_BEP_optDivision.Name}
+                    )
+                );
+                If(
+                    /*
+                 IsBlank(
+                            First(
+                                Filter(gpoUsuarioGlobal,Grupo.Name = ThisItem.'Grupo Responsable'.Name)
+                            )
+                        )*/
+                    IsBlank(
+                        First(
+                            Filter(
+                                myTeamsCurUser,
+                                Result = ThisItem.'Equipo propietario'.'Team Name'
+                            )
+                        )
+                    ),
+                    UpdateContext({myAllowEditSystem: false});
+                    ,
+                    UpdateContext({myAllowEditSystem: true});
+                    
+                );
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Tooltip: ="Editar sistema"
+            Width: =44
+            X: =1055
+            Y: =1
+            ZIndex: =10
+
+        Label4_1 As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: |-
+                =
+                
+                //ThisItem.'Descripción de Sistema'
+                //Left(Concat(ListBox1.SelectedItems.Value, Concatenate(Text(Value), ";")),Len(Concat(ListBox1.SelectedItems.Value, Concatenate(Text(Value), ";"))) - 1)
+                
+                /*
+                Concat(
+                Filter(INV_BEPCnfSistemaDivisiones,INV_BEP_optSistemas.Name in ThisItem.Name),Name &Char(10) & Char(10)
+                )
+                
+                */
+                
+                Left(
+                Concat( Filter(INV_BEPCnfSistemaDivisiones,
+                INV_BEP_optSistemas.INV_BEPCat_Sistemas=ThisItem.INV_BEPCat_Sistemas
+                And 
+                Estado='Estado (INV_BEPCnfSistemaDivisiones)'.Activo
+                
+                /*INV_BEP_optSistemas.Name =ThisItem.Name*/), 
+                            INV_BEP_optDivision.Name &"," /*&Char(10) */      
+                ),
+                
+                If(
+                (
+                Len(
+                Concat(
+                     Filter(INV_BEPCnfSistemaDivisiones,
+                     INV_BEP_optSistemas.INV_BEPCat_Sistemas=ThisItem.INV_BEPCat_Sistemas
+                     And 
+                Estado='Estado (INV_BEPCnfSistemaDivisiones)'.Activo
+                     /*INV_BEP_optSistemas.Name = ThisItem.Name*/), 
+                            INV_BEP_optDivision.Name &"," /*&Char(10) */
+                ))-1)>0,
+                (
+                Len(
+                  
+                Concat(
+                     Filter(INV_BEPCnfSistemaDivisiones,
+                     INV_BEP_optSistemas.INV_BEPCat_Sistemas=ThisItem.INV_BEPCat_Sistemas
+                     And 
+                Estado='Estado (INV_BEPCnfSistemaDivisiones)'.Activo
+                     /*INV_BEP_optSistemas.Name = ThisItem.Name*/), 
+                            INV_BEP_optDivision.Name &"," /*&Char(10) */
+                ))-1),0)
+                
+                
+                
+                )
+            VerticalAlign: =VerticalAlign.Top
+            Width: =153
+            X: =740
+            ZIndex: =11
+
+        btnBorrarSistema As icon.AddLibrary:
+            DisplayMode: |-
+                =If(
+                ThisItem.Estado='Estado (INV_BEPCat_Sistemas)'.Inactivo
+                
+                Or
+                (
+                IsBlank(
+                            First(
+                                Filter(myTeamsCurUser,Result = ThisItem.'Equipo propietario'.'Team Name')
+                            )
+                        )
+                        And SuperAdmin<>true
+                
+                
+                )
+                
+                ,
+                DisplayMode.Disabled,
+                DisplayMode.Edit)
+            Height: =45
+            Icon: =Icon.Blocked
+            OnSelect: |+
+                =
+                
+                        /*
+                        UpdateContext({showModalDivSistemas: true});
+                        UpdateContext({mySelectSystem: ThisItem});
+                
+                        ClearCollect(mySelectSystemsDivision,
+                        Filter(INV_BEPCnfSistemaDivisiones,INV_BEP_optSistemas.Name = ThisItem.Name ));
+                
+                        Clear(divisionesSystemas);
+                
+                        ForAll(  mySelectSystemsDivision As aItem ,
+                        Collect(divisionesSystemas, {Name:aItem.INV_BEP_optDivision.Nombre })
+                        )
+                        */
+                
+                
+                        If(
+                            IsBlank(
+                                    First(
+                                        Filter(myTeamsCurUser,Result = ThisItem.'Equipo propietario'.'Team Name')
+                                    )
+                                )
+                            /*
+                        IsBlank(
+                                    First(
+                                        Filter(gpoUsuarioGlobal,Grupo.Name = ThisItem.'Grupo Responsable'.Name)
+                                    )
+                                )*/
+                        ,
+                        UpdateContext({showModalBorrarSistema: false});
+                
+                        ,
+                
+                        UpdateContext({mySelectSystem: ThisItem});
+                        UpdateContext({showModalBorrarSistema: true});
+                
+                        );
+                
+                
+                
+                        UpdateContext({mySelectSystem: ThisItem});
+                        UpdateContext({showModalBorrarSistema: true});
+                
+                
+                        /*
+                        UpdateContext({mySelectSystem: ThisItem});
+                        UpdateContext({showModalBorrarSistema: true});
+                        */
+                
+                
+                
+                
+                
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Tooltip: ="Bloquear sistema"
+            Visible: |+
+                =If(SuperAdmin<>true,
+                false,
+                true)
+                
+            Width: =42
+            X: =1218
+            ZIndex: =12
+
+        Label4_5 As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: |
+                =
+                
+                ThisItem.'Descripcion de Sistema'
+            VerticalAlign: =VerticalAlign.Top
+            Width: =162
+            X: =893
+            ZIndex: =13
+
+        btnGoToModulos As icon.AddLibrary:
+            DisplayMode: |-
+                =If(
+                ThisItem.Estado='Estado (INV_BEPCat_Sistemas)'.Inactivo
+                
+                Or
+                (
+                IsBlank(
+                            First(
+                                Filter(myTeamsCurUser,Result = ThisItem.'Equipo propietario'.'Team Name')
+                            )
+                        )
+                        And SuperAdmin<>true
+                
+                
+                )
+                
+                
+                
+                ,
+                DisplayMode.Disabled,
+                DisplayMode.Edit)
+            Height: =45
+            Icon: =Icon.Publish
+            OnSelect: |+
+                =
+                
+                        ClearCollect(mySelectSystemsDivision,
+                        Filter(INV_BEPCnfSistemaDivisiones,
+                
+                        /*INV_BEP_optSistemas.Name = ThisItem.Name */
+                        INV_BEP_optSistemas.INV_BEPCat_Sistemas=ThisItem.INV_BEPCat_Sistemas
+                
+                        ));
+                
+                
+                        Clear(divisionesDetSystemas);
+                
+                        ForAll(  mySelectSystemsDivision As aItem ,
+                        Collect(divisionesDetSystemas, {Name:aItem.INV_BEP_optDivision.Name })
+                        );
+                
+                
+                        If(
+                
+                                IsBlank(
+                                    First(
+                                        Filter(myTeamsCurUser,Result = ThisItem.'Equipo propietario'.'Team Name')
+                                    )
+                                )
+                        ,
+                        UpdateContext({myAllowEditSystem: false});,
+                        UpdateContext({myAllowEditSystem: true});
+                        );
+                
+                
+                        Navigate(INV_ModulosSistemaDetalle,ScreenTransition.UnCover,{
+                        mySelectSystemDet:ThisItem,
+                        myAllowEditDetSystem:myAllowEditSystem,
+                        divisionesDetSystemas:divisionesDetSystemas
+                        });
+                
+                
+                
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Tooltip: ="Agregar módulo"
+            Width: =42
+            X: =1099
+            ZIndex: =14
+
+        btnGoToSoporteNA As icon.AddLibrary:
+            DisplayMode: |-
+                =If(ThisItem.Estado='Estado (INV_BEPCat_Sistemas)'.Inactivo,
+                DisplayMode.Disabled,
+                DisplayMode.Edit)
+            Height: =45
+            Icon: =Icon.Support
+            OnSelect: |
+                =
+                Navigate(INV_SoporteSistemas,ScreenTransition.UnCover,{
+                mySelectSystemDet:ThisItem,
+                myAllowEditDetSystem:myAllowEditSystem,
+                divisionesDetSystemas:divisionesDetSystemas
+                });
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Tooltip: ="Agregar soporte técnico"
+            Visible: =false
+            Width: =42
+            X: =1324
+            ZIndex: =15
+
+        btnGoToInterface As icon.AddLibrary:
+            DisplayMode: |-
+                =If(
+                ThisItem.Estado='Estado (INV_BEPCat_Sistemas)'.Inactivo
+                
+                Or
+                (
+                IsBlank(
+                            First(
+                                Filter(myTeamsCurUser,Result = ThisItem.'Equipo propietario'.'Team Name')
+                            )
+                        )
+                        And SuperAdmin<>true
+                
+                
+                )
+                
+                
+                ,
+                DisplayMode.Disabled,
+                DisplayMode.Edit)
+            Height: =45
+            Icon: =Icon.Sort
+            OnSelect: |
+                =
+                        Navigate(INV_InterfaceSistema,
+                        ScreenTransition.UnCover,{
+                            mySelectSystemDet:ThisItem,
+                            myAllowEditDetSystem:myAllowEditSystem,
+                            divisionesDetSystemas:divisionesDetSystemas
+                        });
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Tooltip: ="Agregar interface"
+            Width: =42
+            X: =1133
+            ZIndex: =16
+
+        btnGoToComponente As icon.AddLibrary:
+            DisplayMode: |-
+                =If(
+                ThisItem.Estado='Estado (INV_BEPCat_Sistemas)'.Inactivo
+                
+                Or
+                (
+                IsBlank(
+                            First(
+                                Filter(myTeamsCurUser,Result = ThisItem.'Equipo propietario'.'Team Name')
+                            )
+                        )
+                        And SuperAdmin<>true
+                
+                
+                )
+                
+                ,
+                DisplayMode.Disabled,
+                DisplayMode.Edit)
+            Height: =45
+            Icon: =Icon.Items
+            OnSelect: |+
+                =
+                
+                
+                    Navigate(INV_ComponenteSistema,
+                    ScreenTransition.UnCover,{
+                        mySelectSystemDet:ThisItem,
+                        myAllowEditDetSystem:myAllowEditSystem,
+                        divisionesDetSystemas:divisionesDetSystemas
+                    });
+                    
+                
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Tooltip: ="Agregar componente"
+            Width: =42
+            X: =1177
+            ZIndex: =17
+
+        btnHabilitarSistema As icon.AddLibrary:
+            DisplayMode: |-
+                =If(ThisItem.Estado='Estado (INV_BEPCat_Sistemas)'.Inactivo,
+                DisplayMode.Edit,
+                DisplayMode.Disabled)
+            Height: =45
+            Icon: =Icon.Reset
+            OnSelect: |+
+                =
+                If(
+                    IsBlank(
+                            First(
+                                Filter(myTeamsCurUser,Result = ThisItem.'Equipo propietario'.'Team Name')
+                            )
+                        )
+                ,
+                UpdateContext({showModalHabilitarSistema: true});
+                ,
+                UpdateContext({mySelectSystem: ThisItem});
+                UpdateContext({showModalHabilitarSistema: true});
+                );
+                
+                UpdateContext({mySelectSystem: ThisItem});
+                UpdateContext({showModalHabilitarSistema: true});
+                
+                
+                
+                
+                
+                
+                
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Tooltip: ="Desbloquear sistema"
+            Visible: |+
+                =If(SuperAdmin<>true,
+                false,
+                true)
+                
+            Width: =42
+            X: =1263
+            ZIndex: =18
+
+    Label1_6 As label:
+        Align: =Align.Center
+        Color: =ColorValue(  INV_ColorFuente)
+        FontWeight: =FontWeight.Semibold
+        Size: =10
+        Text: ="División"
+        Width: =108
+        X: =760
+        Y: =122
+        ZIndex: =10
+
+    Label1_7 As label:
+        Align: =Align.Center
+        Color: =ColorValue(  INV_ColorFuente)
+        FontWeight: =FontWeight.Semibold
+        Size: =10
+        Text: ="Descripción"
+        Width: =108
+        X: =911
+        Y: =122
+        ZIndex: =11
+
+    lblHeadSystemUser As label:
+        Align: =Align.Right
+        Color: =ColorValue(  INV_ColorFuente)
+        Height: =44
+        Text: =User().FullName
+        Width: =416
+        X: =942
+        Y: =56
+        ZIndex: =12
+
+    lblHeadSystemName As label:
+        Align: =Align.Right
+        Color: =ColorValue(  INV_ColorFuente)
+        Height: =32
+        Text: =User().Email
+        Width: =429
+        X: =929
+        Y: =35
+        ZIndex: =13
+
+    lblTitleSistema As label:
+        Align: =Align.Right
+        Color: =ColorValue(  INV_ColorFuente)
+        Height: =32
+        Size: =17
+        Text: ="Inventario de sistemas"
+        Width: =524
+        X: =834
+        Y: =3
+        ZIndex: =14
+
+    cmbFiltroGrupoSis As combobox:
+        DefaultSelectedItems: |-
+            =Filter(Equipos,
+            'Team Name' in 
+            myTeamsCurUser)
+        DisplayFields: =["name"]
+        Height: =52
+        InputTextPlaceholder: ="Grupos responsables"
+        Items: =Equipos
+        OnSelect: =
+        Reset: =true
+        SearchFields: =["name"]
+        SearchItems: =Search(Equipos,cmbFiltroGrupoSis.SearchText,"name")
+        Size: =10
+        Tooltip: ="Grupo responsable"
+        Width: =632
+        X: =239
+        Y: =27
+        ZIndex: =15
+
+    Label27 As label:
+        Color: =ColorValue(  INV_ColorFuente)
+        FontWeight: =FontWeight.Semibold
+        Height: =54
+        Text: |-
+            ="Grupo responsable : "
+        Width: =216
+        X: =21
+        Y: =27
+        ZIndex: =16
+
+    PageSize_Dropdown As dropdown:
+        Items: =["10","20","30","40"]
+        Visible: =false
+        Width: =113
+        X: =600
+        Y: =717
+        ZIndex: =17
+
+    Icon9 As icon.ArrowLeft:
+        DisplayMode: =If(varPageNumber = 1  /*Or varActivar=false*/, Disabled, Edit)
+        Height: =40
+        Icon: =Icon.ArrowLeft
+        OnSelect: |-
+            =UpdateContext({varActivar:false});
+            
+            UpdateContext({varPageNumber: varPageNumber - 1});
+            
+            UpdateContext({varActivar:true});
+        PaddingBottom: =10
+        PaddingLeft: =10
+        PaddingRight: =10
+        PaddingTop: =10
+        Width: =52
+        X: =574
+        Y: =677
+        ZIndex: =18
+
+    Icon10 As icon.ChevronLeft:
+        DisplayMode: |-
+            =If(
+              10  /*PageSize_Dropdown.SelectedText.Value*/
+                
+                *varPageNumber<CountRows(
+                
+                Filter(
+            INV_BEPCat_Sistemas,
+            'Equipo propietario'.'Team Name' in 
+            
+            Split(Concat(cmbFiltroGrupoSis.SelectedItems,'Team Name' & "|" ),"|")
+            
+            )
+            
+            )
+            
+            //And varActivar=false
+            
+            
+            , DisplayMode.Edit,Disabled)
+        Height: =40
+        Icon: =Icon.ArrowRight
+        OnSelect: |
+            =UpdateContext({varActivar:false});
+            
+            UpdateContext({varPageNumber: varPageNumber + 1});
+            
+            UpdateContext({varActivar:true});
+        PaddingBottom: =10
+        PaddingLeft: =10
+        PaddingRight: =10
+        PaddingTop: =10
+        Width: =45
+        X: =739
+        Y: =677
+        ZIndex: =19
+
+    Label55 As label:
+        Align: =Align.Center
+        FontWeight: =FontWeight.Semibold
+        Height: =33
+        Text: |-
+            =varPageNumber & " de " & RoundUp(CountRows(
+                
+            Filter(
+            INV_BEPCat_Sistemas,
+            'Equipo propietario'.'Team Name'  in 
+            
+            Split(Concat(cmbFiltroGrupoSis.SelectedItems,'Team Name' & "|" ),"|")
+            
+            )
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            )/ 10/*PageSize_Dropdown.SelectedText.Value*/,0)
+        Width: =113
+        X: =626
+        Y: =677
+        ZIndex: =20
+
+    INV_BEP_ModalSistema As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0,0,0,0.4)
+        Height: =767
+        Visible: =showModalSistemas
+        Width: =1366
+        Y: =1
+        ZIndex: =21
+
+        INV_BEP_HeaderModalSist As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =64
+            Width: =723
+            X: =298
+            Y: =114
+            ZIndex: =1
+
+        INV_BEP_BodyModalSist As rectangle:
+            BorderStyle: =BorderStyle.None
+            Fill: =White
+            Height: =537
+            Width: =723
+            X: =298
+            Y: =178
+            ZIndex: =2
+
+        Icon4_1 As icon.Cancel:
+            Color: =ColorValue(  INV_ColorFuente)
+            Icon: =Icon.Cancel
+            OnSelect: |-
+                =UpdateContext({showModalSistemas: false});
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            X: =944
+            Y: =114
+            ZIndex: =3
+
+        cmbDivisionCrear As combobox:
+            BorderColor: |
+                =If(
+                    
+                    IsBlank(cmbDivisionCrear.Selected)
+                   /* And
+                SuperAdmin=false*/
+                     ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            DisplayFields: =["name"]
+            DisplayMode: |
+                =
+                DisplayMode.Edit
+            Height: =37
+            InputTextPlaceholder: ="División"
+            Items: |-
+                =Filter('Unidades de negocio', 
+                'Parent Business'.Name = "orga3b1d869"/* ESTE ES DE BEPENSA : "unqeb8eeb861abd4d16883c71907cd59"*/
+                )
+            NoSelectionText: ="División"
+            Reset: =true
+            SearchFields: =["name"]
+            SearchItems: |-
+                =Search(Filter('Unidades de negocio', 
+                'Parent Business'.Name = "orga3b1d869"/* ESTE ES DE BEPENSA : "unqeb8eeb861abd4d16883c71907cd59"*/
+                ),cmbDivisionCrear.SearchText,"name")
+            Tooltip: |-
+                =If(IsBlank(cmbDivisionCrear.Selected),
+                    "La división es requerida",
+                  Blank()
+                  )
+            Width: =315
+            X: =327
+            Y: =314
+            ZIndex: =5
+
+        Label2_1 As label:
+            FontWeight: =FontWeight.Semibold
+            Text: ="División"
+            X: =327
+            Y: =274
+            ZIndex: =6
+
+        cmbGrupoResponsableSis As combobox:
+            BorderColor: |
+                =
+                
+                If(
+                    
+                    IsBlank(cmbGrupoResponsableSis.Selected)
+                     ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            DisplayFields: =["name"]
+            DisplayMode: |
+                =
+                DisplayMode.Edit
+            Height: =42
+            InputTextPlaceholder: ="Grupo responsable"
+            Items: =Equipos
+            SearchFields: =["name"]
+            SearchItems: =Search(Equipos,cmbGrupoResponsableSis.SearchText,"name")
+            SelectMultiple: =false
+            Tooltip: |-
+                =If(IsBlank(cmbGrupoResponsableSis.Selected),
+                    "El grupo es requerido",
+                  Blank()
+                  )
+            Width: =316
+            X: =691
+            Y: =229
+            ZIndex: =7
+
+        Label5_1 As label:
+            FontWeight: =FontWeight.Semibold
+            Text: ="Grupo"
+            X: =680
+            Y: =189
+            ZIndex: =8
+
+        Label7_1 As label:
+            FontWeight: =FontWeight.Semibold
+            Text: ="Nombre sistema"
+            Width: =172
+            X: =328
+            Y: =189
+            ZIndex: =9
+
+        Label8_1 As label:
+            FontWeight: =FontWeight.Semibold
+            Text: ="Versión"
+            X: =680
+            Y: =431
+            ZIndex: =10
+
+        Label9_1 As label:
+            FontWeight: =FontWeight.Semibold
+            Text: ="Descripción de sistema"
+            Width: =205
+            X: =325
+            Y: =514
+            ZIndex: =11
+
+        Label10_1 As label:
+            FontWeight: =FontWeight.Semibold
+            Text: ="Tipo licenciamiento"
+            Width: =206
+            X: =325
+            Y: =350
+            ZIndex: =12
+
+        Label11_1 As label:
+            FontWeight: =FontWeight.Semibold
+            Text: ="Tipo plataforma"
+            X: =680
+            Y: =271
+            ZIndex: =13
+
+        cmbTipoLicSis As dropdown:
+            AllowEmptySelection: =true
+            BorderColor: |
+                =If(
+                    
+                    IsBlank(cmbDivisionCrear.Selected)
+                    And
+                SuperAdmin=false
+                     ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =
+            DisplayMode: |
+                =
+                DisplayMode.Edit
+            Items: =Choices(INV_BEP_optTipoLicenciamiento)
+            Reset: =true
+            Width: =315
+            X: =325
+            Y: =389
+            ZIndex: =14
+
+        cmbTipoSolucionSis As dropdown:
+            AllowEmptySelection: =true
+            BorderColor: |
+                =If(
+                    
+                    IsBlank(cmbDivisionCrear.Selected)
+                    And
+                SuperAdmin=false
+                     ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =
+            DisplayMode: |
+                =
+                DisplayMode.Edit
+            Height: =42
+            Items: =Choices(INV_BEP_optTipoSolucion)
+            Reset: =true
+            Width: =316
+            X: =692
+            Y: =314
+            ZIndex: =15
+
+        Label12_1 As label:
+            FontWeight: =FontWeight.Semibold
+            Text: ="Fecha instalación"
+            Width: =172
+            X: =691
+            Y: =356
+            ZIndex: =16
+
+        Label13 As label:
+            FontWeight: =FontWeight.Semibold
+            Text: ="Fecha vencimiento"
+            Width: =172
+            X: =328
+            Y: =429
+            ZIndex: =17
+
+        dtFechaInstalacion As datepicker:
+            BorderColor: |
+                =If(
+                    dtFechaInstalacion.SelectedDate >
+                    dtFechaVencimiento.SelectedDate
+                    /* And
+                SuperAdmin=false*/
+                     ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            DefaultDate: =
+            DisplayMode: |
+                =
+                DisplayMode.Edit
+            Height: =37
+            Tooltip: |-
+                =If(
+                    dtFechaInstalacion.SelectedDate >
+                    dtFechaVencimiento.SelectedDate
+                     ,
+                    "La fecha de instalación no puede ser mayor a la fecha vencimiento",
+                  Blank()
+                  )
+            Width: =315
+            X: =691
+            Y: =402
+            ZIndex: =18
+
+        dtFechaVencimiento As datepicker:
+            BorderColor: |
+                =
+                
+                If(
+                    dtFechaInstalacion.SelectedDate >
+                    dtFechaVencimiento.SelectedDate
+                /*And
+                SuperAdmin=false*/  ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            DefaultDate: =
+            DisplayMode: |
+                =
+                DisplayMode.Edit
+            Height: =42
+            Tooltip: |
+                =
+                If(
+                    dtFechaInstalacion.SelectedDate >
+                    dtFechaVencimiento.SelectedDate
+                     ,
+                    "La fecha de instalación no puede ser mayor a la fecha vencimiento",
+                  Blank()
+                  )
+            Width: =316
+            X: =340
+            Y: =471
+            ZIndex: =19
+
+        txtNombreSistemaCrea As text:
+            BorderColor: |-
+                =If(IsBlank(txtNombreSistemaCrea.Text) 
+                ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =
+            DisplayMode: |
+                =
+                DisplayMode.Edit
+            Height: =42
+            Tooltip: |-
+                =If(IsBlank(txtNombreSistemaCrea.Text) ,
+                    "El nombre del sistema es requerido",
+                  Blank()
+                  )
+            Width: =308
+            X: =328
+            Y: =229
+            ZIndex: =20
+
+        txtDescripcionSistema As text:
+            BorderColor: |-
+                =If(
+                    
+                    IsBlank(txtDescripcionSistema.Text)
+                     ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =
+            DisplayMode: |
+                =
+                DisplayMode.Edit
+            Height: =80
+            MaxLength: =600
+            Mode: =TextMode.MultiLine
+            Width: =675
+            X: =325
+            Y: =554
+            ZIndex: =21
+
+        txtVersion As text:
+            BorderColor: |-
+                =If(IsBlank(txtVersion.Text)
+                 And
+                SuperAdmin=false
+                ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =
+            DisplayMode: |
+                =
+                DisplayMode.Edit
+            Height: =42
+            MaxLength: =15
+            Tooltip: |-
+                =If(IsBlank(txtVersion.Text),
+                    "La versión es requerida",
+                  Blank()
+                  )
+            Width: =308
+            X: =691
+            Y: =471
+            ZIndex: =22
+
+        btnGuardarSistema As button:
+            DisplayMode: |
+                =If(
+                SuperAdmin<>true
+                /*
+                (myAllowEditSystem=false And  SuperAdmin<>true)
+                Or
+                SuperAdmin<>true
+                Or
+                (checkPatchSystem=true And SuperAdmin=true)
+                */
+                ,
+                DisplayMode.Disabled,
+                DisplayMode.Edit
+                )
+            OnSelect: |+
+                =UpdateContext({lastPatch:Blank()});
+                
+                UpdateContext({errorInserSistema:false});
+                ClearCollect(errorInsertDivision,false);
+                
+                If(CountRows(Filter(INV_BEPCat_Sistemas,
+                Name=txtNombreSistemaCrea.Text 
+                /*And
+                'Tipo de Licenciamiento'=cmbTipoLicSis.Selected.Value And
+                'Tipo Plataforma'=cmbTipoSolucionSis.Selected.Value*/
+                
+                )) > 0,
+                
+                Notify("Ya se ha definido un sistema con este nombre",NotificationType.Error),
+                
+                
+                If(
+                    txtVersion.BorderColor=Red
+                    
+                   /*Or
+                    dtFechaVencimiento.BorderColor=Red
+                    Or
+                    dtFechaInstalacion.BorderColor=Red*/
+                    Or
+                    txtNombreSistemaCrea.BorderColor=Red
+                    Or
+                    cmbDivisionCrear.BorderColor=Red
+                    Or
+                    cmbGrupoResponsableSis.BorderColor=Red
+                   Or 
+                   txtDescripcionSistema.BorderColor=Red
+                
+                ,
+                
+                
+                UpdateContext({mensajeError: 
+                Concatenate (
+                 If(txtVersion.BorderColor=Red," Versión,","" ) ,
+                 If(txtNombreSistemaCrea.BorderColor=Red," Nombre sistema,","" ) ,
+                 If(cmbDivisionCrear.BorderColor=Red," División,","" ) ,
+                 If(cmbGrupoResponsableSis.BorderColor=Red,"Grupo,","" )  ,
+                 If(txtDescripcionSistema.BorderColor=Red," Descripción de sistema,","" ) 
+                )
+                });
+                Notify("ERROR : Faltan llenar los datos de :"&Left(mensajeError,Len(mensajeError) -1));
+                 ,
+                 
+                   UpdateContext({lastPatch:
+                            Patch( INV_BEPCat_Sistemas,
+                            Defaults( INV_BEPCat_Sistemas),
+                                    { 
+                                        /**/
+                                         Name:txtNombreSistemaCrea.Text,
+                                        'Descripcion de Sistema':txtDescripcionSistema.Text,
+                                         Version:txtVersion.Text,
+                                        'Fecha de Instalacion':dtFechaInstalacion.SelectedDate,
+                                        'Fecha de Vencimiento de Licenciamiento':dtFechaVencimiento.SelectedDate,
+                                        'Tipo de Licenciamiento':cmbTipoLicSis.Selected.Value,
+                                        'Tipo Plataforma':cmbTipoSolucionSis.Selected.Value,
+                                         Propietario: LookUp(
+                                                    Gpos,
+                                                    'Team Name'=cmbGrupoResponsableSis.Selected.'Team Name'
+                                                )
+                                    }
+                
+                            )
+                         }
+                        );
+                
+                
+                If(
+                    IsEmpty(
+                	Errors(INV_BEPCat_Sistemas
+                    ) 
+                
+                ),
+                    Blank(),
+                    UpdateContext({errorInserSistema:true});
+                );
+                
+                
+                
+                
+                
+                
+                
+                ForAll(  cmbDivisionCrear.SelectedItems As aItem ,
+                    If(CountRows(Filter(INV_BEPCnfSistemaDivisiones,
+                    INV_BEP_optDivision.Name =aItem.Name
+                    And 
+                    INV_BEP_optSistemas .Name=lastPatch.Name
+                    )) > 0 ,
+                 Blank() ,
+                
+                
+                        If(
+                        CountRows(Filter(errorInsertDivision,Value=true  ))>0 ,
+                        Blank(),
+                                Collect(lastPatchDivSistem,
+                                    Patch( INV_BEPCnfSistemaDivisiones,Defaults( INV_BEPCnfSistemaDivisiones),
+                                            { 
+                                                INV_BEP_optSistemas: lastPatch,
+                                                INV_BEP_optDivision:aItem , 
+                                                Name:/*mySelectSystem .Name*/lastPatch.Name & "-" &  aItem.Name,
+                                                Propietario: LookUp(
+                                                Gpos,
+                                               'Team Name'= cmbGrupoResponsableSis.Selected.'Team Name'
+                                                )
+                                            } )
+                                );
+                
+                                If(
+                                    IsEmpty( Errors(INV_BEPCnfSistemaDivisiones)  ),
+                                    Blank(),
+                                    Collect(errorInsertDivision,true);
+                                
+                                );
+                        );
+                
+                    );
+                );
+                
+                
+                
+                    If(CountRows(Filter(errorInsertDivision,Value=true  ))>0 Or errorInserSistema=true ,
+                
+                            If(CountRows(Filter(errorInsertDivision,Value=true  ))>0 ,
+                            RemoveIf(INV_BEPCnfSistemaDivisiones,INV_BEP_optSistemas .Name=lastPatch.Name );,
+                            Blank() );
+                            
+                            Remove(INV_BEPCat_Sistemas, lastPatch);,
+                            UpdateContext({checkPatchSystem:true});
+                            Notify("Se creó correctamente el sistema",NotificationType.Success);
+                
+                
+                           
+                            Reset(cmbGrupoResponsableSis);
+                            Reset(cmbTipoLicSis);
+                            Reset(cmbTipoSolucionSis);
+                            Reset(dtFechaInstalacion);
+                            Reset(dtFechaVencimiento);
+                            Reset(txtNombreSistemaCrea);
+                            Reset(txtVersion);
+                            Reset(txtDescripcionSistema);
+                            Reset(cmbDivisionCrear);
+                
+                            UpdateContext({showModalSistemas: false});
+                
+                    );
+                
+                
+                    
+                 );
+                
+                Refresh(INV_BEPCat_Sistemas);
+                Refresh(INV_BEPCnfSistemaDivisiones);
+                
+                
+                
+                
+                );
+                
+                
+                
+                
+                
+            Text: ="Crear"
+            X: =818
+            Y: =662
+            ZIndex: =23
+
+        Label26 As label:
+            Color: =ColorValue(  INV_ColorFuente)
+            Size: =14
+            Text: ="Crear nuevo sistema"
+            Width: =355
+            X: =325
+            Y: =126
+            ZIndex: =24
+
+        Icon5 As icon.AddDocument:
+            Color: =ColorValue(  INV_ColorFuente)
+            Icon: =Icon.AddDocument
+            OnSelect: |-
+                =If(IsBlank( lastPatch),
+                Notify("No se ha epecificado el sistema",NotificationType.Information);
+                ,
+                
+                ClearCollect(mySelectSystemsDivision,
+                Filter(INV_BEPCnfSistemaDivisiones,INV_BEP_optSistemas.Name = lastPatch.Name ));
+                Clear(divisionesDetSystemas);
+                
+                ForAll(  mySelectSystemsDivision As aItem ,
+                 Collect(divisionesDetSystemas, {Name:aItem.INV_BEP_optDivision.Name })
+                );
+                
+                
+                If(
+                
+                        IsBlank(
+                            First(
+                                Filter(myTeamsCurUser,Result = lastPatch.'Equipo propietario'.'Team Name')
+                            )
+                        )
+                ,
+                UpdateContext({myAllowEditSystem: false});,
+                UpdateContext({myAllowEditSystem: true});
+                );
+                
+                
+                Navigate(INV_ModulosSistemaDetalle,ScreenTransition.UnCover,{
+                mySelectSystemDet:lastPatch,
+                myAllowEditDetSystem:myAllowEditSystem,
+                divisionesDetSystemas:divisionesDetSystemas
+                });
+                )
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Tooltip: ="Agregar Modulo"
+            Visible: =false
+            X: =530
+            Y: =114
+            ZIndex: =25
+
+    INV_BEP_ModalDivisionSist As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0,0,0,0.4)
+        Height: =765
+        Visible: =showModalDivSistemas
+        Width: =1366
+        Y: =3
+        ZIndex: =22
+
+        INV_BEP_HeaderModalDivSist As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =64
+            Width: =688
+            X: =324
+            Y: =107
+            ZIndex: =1
+
+        INV_BEP_CloseModalDivSist As icon.Cancel:
+            Color: =ColorValue(  INV_ColorFuente)
+            Icon: =Icon.Cancel
+            OnSelect: |-
+                =UpdateContext({showModalDivSistemas: false});
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Width: =50
+            X: =951
+            Y: =106
+            ZIndex: =2
+
+        INV_BEP_BodyModalDivSist As rectangle:
+            Fill: =White
+            Height: =537
+            Width: =688
+            X: =324
+            Y: =171
+            ZIndex: =3
+
+        cmbEditarDivisionSistema As combobox:
+            BorderColor: |
+                =If(
+                    
+                    IsBlank(cmbEditarDivisionSistema.Selected)
+                     ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            DefaultSelectedItems: |+
+                =Filter('Unidades de negocio', 
+                Name in divisionesSystemas.Name
+                )
+                
+            DisplayFields: =["name"]
+            DisplayMode: |+
+                =
+                If(
+                /*myAllowEditSystem=true
+                Or*/
+                SuperAdmin=true
+                ,
+                DisplayMode.Edit,
+                DisplayMode.Disabled)
+                
+                
+            Items: |
+                =Filter('Unidades de negocio', 
+                
+                'Parent Business'.Name = "unqeb8eeb861abd4d16883c71907cd59"
+                
+                
+                )
+            OnSelect: |
+                =
+                //cmbDivisionSistema.Selected
+            SearchFields: =["name"]
+            SearchItems: |-
+                =Search(Filter('Unidades de negocio', 
+                
+                'Parent Business'.Name = "unqeb8eeb861abd4d16883c71907cd59"
+                
+                
+                )
+                ,cmbEditarDivisionSistema.SearchText,"name")
+            Width: =288
+            X: =353
+            Y: =296
+            ZIndex: =4
+
+        Label15 As label:
+            Text: ="División"
+            X: =353
+            Y: =256
+            ZIndex: =5
+
+        Label16 As label:
+            Text: ="Grupo"
+            X: =684
+            Y: =180
+            ZIndex: =6
+
+        cmbEditarGpoSis As combobox:
+            BorderColor: |
+                =If(
+                    
+                    IsBlank(cmbEditarGpoSis.Selected)
+                     ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =/*mySelectSystem.'Grupo Responsable'*/
+            DefaultSelectedItems: |-
+                =//mySelectSystem.'Grupo Responsable'
+                 //Filter(myTeamsCurUser,Result = ThisItem.'Equipo propietario'.'Nombre del equipo')
+                 
+                
+                 mySelectSystem.'Equipo propietario'
+            DisplayFields: =["name"]
+            DisplayMode: |+
+                =If(
+                /*myAllowEditSystem=true
+                Or*/
+                SuperAdmin=true
+                ,
+                DisplayMode.Edit,
+                DisplayMode.Disabled)
+                
+            IsSearchable: =false
+            Items: =Equipos
+            Reset: =true
+            SearchFields: =["name"]
+            SearchItems: =[]
+            SelectMultiple: =false
+            Width: =281
+            X: =684
+            Y: =220
+            ZIndex: =7
+
+        cmbEditarTipoLicenciamiento As dropdown:
+            BorderColor: |
+                =If(
+                    
+                    IsBlank(cmbEditarTipoLicenciamiento.Selected)
+                    And
+                SuperAdmin=false
+                     ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =mySelectSystem.'Tipo de Licenciamiento'
+            DisplayMode: |
+                =If(myAllowEditSystem=true Or
+                SuperAdmin=true,
+                DisplayMode.Edit,
+                DisplayMode.Disabled)
+            Items: =Choices(INV_BEP_optTipoLicenciamiento)
+            Reset: =true
+            Width: =288
+            X: =353
+            Y: =380
+            ZIndex: =8
+
+        Label17 As label:
+            Text: ="Tipo licenciamiento"
+            Width: =262
+            X: =353
+            Y: =340
+            ZIndex: =9
+
+        Label18 As label:
+            Text: ="Tipo plataforma"
+            X: =684
+            Y: =261
+            ZIndex: =10
+
+        cmbEditarTipoSolucion As dropdown:
+            BorderColor: |
+                =If(
+                    
+                    IsBlank(cmbEditarTipoSolucion.Selected)
+                    And
+                SuperAdmin=false
+                     ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =mySelectSystem.'Tipo Plataforma'
+            DisplayMode: |
+                =If(myAllowEditSystem=true Or
+                SuperAdmin=true,
+                DisplayMode.Edit,
+                DisplayMode.Disabled)
+            Items: =Choices(INV_BEP_optTipoSolucion)
+            Reset: =true
+            Width: =281
+            X: =684
+            Y: =301
+            ZIndex: =11
+
+        dtEditarFechaInst As datepicker:
+            BorderColor: |
+                =
+                If(
+                    dtEditarFechaInst.SelectedDate >
+                    dtEditarFechaVenc.SelectedDate
+                     ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            DefaultDate: =mySelectSystem.'Fecha de Instalacion'
+            DisplayMode: |
+                =If(myAllowEditSystem=true Or
+                SuperAdmin=true,
+                DisplayMode.Edit,
+                DisplayMode.Disabled)
+            Tooltip: |
+                =If(
+                    dtEditarFechaInst.SelectedDate >
+                    dtEditarFechaVenc.SelectedDate
+                     ,
+                    "La fecha de instalación no puede ser mayor a la fecha vencimiento",
+                  Blank()
+                  )
+            Width: =288
+            X: =684
+            Y: =394
+            ZIndex: =12
+
+        Label19 As label:
+            Text: ="Fecha instalación "
+            X: =684
+            Y: =342
+            ZIndex: =13
+
+        dtEditarFechaVenc As datepicker:
+            BorderColor: |+
+                =
+                
+                If(
+                    dtEditarFechaInst.SelectedDate >
+                    dtEditarFechaVenc.SelectedDate
+                     ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+                
+                
+            DefaultDate: =mySelectSystem.'Fecha de Vencimiento de Licenciamiento'
+            DisplayMode: |
+                =If(myAllowEditSystem=true Or
+                SuperAdmin=true,
+                DisplayMode.Edit,
+                DisplayMode.Disabled)
+            Tooltip: |
+                =
+                If(
+                    dtEditarFechaInst.SelectedDate >
+                    dtEditarFechaVenc.SelectedDate
+                     ,
+                    "La fecha de instalación no puede ser mayor a la fecha vencimiento",
+                  Blank()
+                  )
+            Width: =281
+            X: =353
+            Y: =460
+            ZIndex: =14
+
+        Label21 As label:
+            Text: ="Nombre de sistema"
+            Width: =288
+            X: =353
+            Y: =180
+            ZIndex: =15
+
+        Label22 As label:
+            Text: ="Versión"
+            Width: =303
+            X: =685
+            Y: =433
+            ZIndex: =16
+
+        txtEditNombreSistema As text:
+            BorderColor: |
+                =If(
+                    
+                    IsBlank(txtEditNombreSistema.Text)
+                     ,
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: |-
+                =//mySelectSystem.'Nombre de Sistema'
+                mySelectSystem.Name
+            DisplayMode: |
+                =If(
+                /*myAllowEditSystem=true
+                Or*/
+                SuperAdmin=true
+                ,
+                DisplayMode.Edit,
+                DisplayMode.Disabled)
+            Height: =42
+            Width: =288
+            X: =353
+            Y: =218
+            ZIndex: =17
+
+        txtEditaVersion As text:
+            BorderColor: |
+                =If(IsBlank(txtEditaVersion.Text),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: |-
+                =
+                
+                mySelectSystem.Version
+                
+                /*mySelectSystem.Version*/
+            DisplayMode: |
+                =If(myAllowEditSystem=true Or
+                SuperAdmin=true,
+                DisplayMode.Edit,
+                DisplayMode.Disabled)
+            MaxLength: =15
+            OnChange: =
+            Width: =281
+            X: =685
+            Y: =473
+            ZIndex: =18
+
+        Label24 As label:
+            Text: ="Descripción"
+            X: =353
+            Y: =503
+            ZIndex: =19
+
+        txtEdItDescripcion As text:
+            BorderColor: |
+                =If(IsBlank(txtEdItDescripcion.Text),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =mySelectSystem.'Descripcion de Sistema'
+            DisplayMode: |
+                =If(myAllowEditSystem=true Or
+                SuperAdmin=true,
+                DisplayMode.Edit,
+                DisplayMode.Disabled)
+            Height: =87
+            MaxLength: =600
+            Mode: =TextMode.MultiLine
+            Width: =635
+            X: =353
+            Y: =543
+            ZIndex: =20
+
+        btnEditar As button:
+            DisplayMode: |
+                =/*
+                If(myAllowEditSystem=true,
+                DisplayMode.Edit,
+                DisplayMode.Disabled)
+                
+                */
+                
+                If(myAllowEditSystem=true Or
+                SuperAdmin=true,
+                DisplayMode.Edit,
+                DisplayMode.Disabled)
+            OnSelect: |+
+                =
+                If(
+                    txtEditaVersion.BorderColor=Red
+                    Or
+                    txtEditNombreSistema.BorderColor=Red
+                    Or
+                    cmbEditarTipoLicenciamiento.BorderColor=Red
+                   Or 
+                   txtEdItDescripcion.BorderColor=Red
+                     Or 
+                   cmbEditarDivisionSistema.BorderColor=Red
+                   Or
+                   cmbEditarGpoSis.BorderColor=Red
+                   Or 
+                   cmbEditarTipoSolucion.BorderColor=Red
+                ,
+                /*
+                 If(txtVersion.BorderColor=Red," Versión,","" ) ,
+                 If(txtNombreSistemaCrea.BorderColor=Red," Nombre sistema,","" ) ,
+                 If(cmbDivisionCrear.BorderColor=Red," División,","" ) ,
+                 If(cmbGrupoResponsableSis.BorderColor=Red,"Grupo,","" )  ,
+                 If(txtDescripcionSistema.BorderColor=Red," Descripción de sistema,","" ) 
+                */
+                
+                UpdateContext({mensajeError: 
+                Concatenate (
+                 If(txtEditaVersion.BorderColor=Red," Versión,","" ) ,
+                 If(txtEditNombreSistema.BorderColor=Red," Nombre sistema,","" ) ,
+                 If(txtEdItDescripcion.BorderColor=Red," Descripción de sistema,","" ) ,
+                 If(cmbEditarDivisionSistema.BorderColor=Red," División,","" ) ,
+                 If(cmbEditarGpoSis.BorderColor=Red,"Grupo,","" )  ,
+                 If(cmbEditarTipoLicenciamiento.BorderColor=Red,"Tipo licenciamiento,","" ) ,
+                 If(cmbEditarTipoSolucion.BorderColor=Red,"Tipo plataforma,","" ) 
+                
+                )
+                });
+                Notify("ERROR : Faltan llenar los datos de :"&Left(mensajeError,Len(mensajeError) -1));
+                
+                ,
+                
+                If(CountRows(Filter(INV_BEPCat_Sistemas,
+                Name=txtEditNombreSistema.Text 
+                And 
+                INV_BEPCat_Sistemas <> mySelectSystem.INV_BEPCat_Sistemas/**/
+                /*And
+                'Tipo de Licenciamiento'=cmbTipoLicSis.Selected.Value And
+                'Tipo Plataforma'=cmbTipoSolucionSis.Selected.Value*/
+                
+                )) > 0,
+                
+                Notify("No es posible que haya mas un sistema con el mismo nombre",NotificationType.Error),
+                
+                
+                
+                
+                UpdateContext({errorInserSistema:false});
+                ClearCollect(errorInsertDivision,false);
+                
+                
+                   UpdateContext({lastPatchUpdate:
+                   UpdateIf( INV_BEPCat_Sistemas, 
+                   /*Name =mySelectSystem.Name
+                   And*/
+                   INV_BEPCat_Sistemas=mySelectSystem.INV_BEPCat_Sistemas
+                   , 
+                   {
+                                        Name: txtEditNombreSistema.Text,
+                                        'Descripcion de Sistema':txtEdItDescripcion.Text,
+                                         Version:txtEditaVersion.Text,
+                                        'Fecha de Instalacion':dtEditarFechaInst.SelectedDate,
+                                        'Fecha de Vencimiento de Licenciamiento':dtEditarFechaVenc.SelectedDate,
+                                    
+                                        'Tipo de Licenciamiento':cmbEditarTipoLicenciamiento.Selected.Value,
+                                        'Tipo Plataforma':cmbEditarTipoSolucion.Selected.Value ,
+                                        'Nombre de Sistema':txtEditNombreSistema.Text,
+                                         Propietario: 
+                                         LookUp(Gpos,
+                                                    'Team Name'= 
+                                                    cmbEditarGpoSis.Selected.'Team Name'
+                                                    //mySelectSystem.'Equipo propietario'.'Nombre del equipo'
+                                                )
+                
+                
+                   } )
+                
+                });
+                
+                
+                If(
+                    IsEmpty(
+                	Errors(INV_BEPCat_Sistemas
+                    ) 
+                
+                ),
+                    Blank(),
+                    UpdateContext({errorInserSistema:true});
+                );
+                
+                
+                
+                /*
+                RemoveIf( INV_BEPCnfSistemaDivisiones,
+                INV_BEP_optSistemas .Name=mySelectSystem.Name
+                );
+                */
+                
+                
+                  UpdateIf( INV_BEPCnfSistemaDivisiones,
+                  INV_BEP_optSistemas.INV_BEPCat_Sistemas=mySelectSystem.INV_BEPCat_Sistemas
+                  /*INV_BEP_optSistemas.Name =mySelectSystem.Name*/ , 
+                   {
+                     Estado:'Estado (INV_BEPCnfSistemaDivisiones)'.Inactivo
+                   });
+                
+                
+                ForAll(  cmbEditarDivisionSistema.SelectedItems As aItem ,
+                    If(CountRows(Filter(INV_BEPCnfSistemaDivisiones,
+                    INV_BEP_optDivision.Name =aItem.Name
+                    And 
+                   //INV_BEP_optSistemas .Name=mySelectSystem.Name
+                    INV_BEP_optSistemas .INV_BEPCat_Sistemas=mySelectSystem.INV_BEPCat_Sistemas
+                    And
+                    Estado='Estado (INV_BEPCnfSistemaDivisiones)'.Inactivo
+                    )) > 0 ,
+                
+                
+                        UpdateIf( INV_BEPCnfSistemaDivisiones,
+                        INV_BEP_optSistemas.INV_BEPCat_Sistemas =mySelectSystem.INV_BEPCat_Sistemas 
+                        And
+                        INV_BEP_optDivision.Name=aItem.Name
+                        , 
+                        {
+                            Name:/*mySelectSystem .Name*/txtEditNombreSistema.Text & "-" &  aItem.Name,
+                            Estado:'Estado (INV_BEPCnfSistemaDivisiones)'.Activo
+                        });
+                        
+                        Blank();
+                
+                    ,
+                        If(
+                                CountRows(Filter(errorInsertDivision,Value=true  ))>0 ,
+                                Blank(),
+                                If(
+                                    IsEmpty(
+                                    Errors(INV_BEPCnfSistemaDivisiones,
+                                    Patch( INV_BEPCnfSistemaDivisiones,Defaults( INV_BEPCnfSistemaDivisiones),
+                                            { 
+                                                INV_BEP_optSistemas:mySelectSystem ,
+                                                INV_BEP_optDivision:aItem ,
+                                                Name:mySelectSystem .Name & "-" &  aItem.Name,
+                                                Propietario: LookUp(
+                                                            Gpos,
+                                                            'Team Name'= cmbEditarGpoSis.Selected.'Team Name'
+                                                        )
+                                            }
+                                        )
+                                    )
+                                ),
+                                  {}, /*Notify("Se han agregado las divisiones a los sistemas",NotificationType.Success)*/
+                                  {}/* Notify("Error al hacer patch",NotificationType.Error)*/
+                                )
+                            );
+                		 
+                    );
+                
+                
+                );
+                
+                
+                
+                
+                    If(CountRows(Filter(errorInsertDivision,Value=true  ))>0 Or errorInserSistema=true ,
+                
+                            If(CountRows(Filter(errorInsertDivision,Value=true  ))>0 ,
+                            Blank() /*RemoveIf(INV_BEPCnfSistemaDivisiones,INV_BEP_optSistemas .Name=lastPatch.Name );*/,
+                            Blank() );
+                
+                            Blank()/* Remove(INV_BEPCat_Sistemas, lastPatch);*/,
+                            
+                            UpdateContext({checkPatchSystem:true});
+                            
+                            Notify("Se actualizó correctamente el sistema : "&mySelectSystem.Name,NotificationType.Success);
+                         
+                    );
+                
+                
+                
+                Refresh(INV_BEPCat_Sistemas);
+                Refresh(INV_BEPCnfSistemaDivisiones);
+                Reset( cmbEditarTipoLicenciamiento);
+                UpdateContext({showModalDivSistemas: false});
+                
+                
+                );
+                
+                
+                );
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            Text: ="Editar"
+            X: =825
+            Y: =652
+            ZIndex: =21
+
+        Label20 As label:
+            Height: =33
+            Text: ="Fecha vencimiento"
+            Width: =244
+            X: =353
+            Y: =425
+            ZIndex: =22
+
+        Label23 As label:
+            Color: =White
+            Height: =65
+            Size: =14
+            Text: ="[ " & mySelectSystem.Name & " ]"
+            Width: =270
+            X: =473
+            Y: =106
+            ZIndex: =23
+
+        Label25 As label:
+            Color: =White
+            FontWeight: =FontWeight.Semibold
+            Height: =63
+            Size: =14
+            Text: |-
+                ="Editar Sistema:"
+            Width: =166
+            X: =337
+            Y: =107
+            ZIndex: =24
+
+        Icon6 As icon.AddDocument:
+            Color: =ColorValue(  INV_ColorFuente)
+            Height: =50
+            Icon: =Icon.Publish
+            OnSelect: |-
+                =If(IsBlank( mySelectSystem),
+                Notify("No se ha epecificado el sistema",NotificationType.Information);
+                ,
+                
+                ClearCollect(mySelectSystemsDivision,
+                Filter(INV_BEPCnfSistemaDivisiones,INV_BEP_optSistemas.Name = mySelectSystem.Name ));
+                Clear(divisionesDetSystemas);
+                
+                ForAll(  mySelectSystemsDivision As aItem ,
+                 Collect(divisionesDetSystemas, {Name:aItem.INV_BEP_optDivision.Name })
+                );
+                
+                
+                If(
+                
+                        IsBlank(
+                            First(
+                                Filter(myTeamsCurUser,Result = mySelectSystem.'Equipo propietario'.'Team Name')
+                            )
+                        )
+                ,
+                UpdateContext({myAllowEditSystem: false});,
+                UpdateContext({myAllowEditSystem: true});
+                );
+                
+                
+                Navigate(INV_ModulosSistemaDetalle,ScreenTransition.UnCover,{
+                mySelectSystemDet:mySelectSystem,
+                myAllowEditDetSystem:myAllowEditSystem,
+                divisionesDetSystemas:divisionesDetSystemas
+                });
+                )
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Tooltip: ="Agregar módulo"
+            Width: =50
+            X: =732
+            Y: =113
+            ZIndex: =25
+
+        Icon6_2 As icon.AddDocument:
+            Color: =ColorValue(  INV_ColorFuente)
+            Height: =50
+            Icon: =Icon.Sort
+            OnSelect: |-
+                =
+                
+                
+                If(IsBlank( mySelectSystem),
+                Notify("No se ha epecificado el sistema",NotificationType.Information);
+                ,
+                
+                ClearCollect(mySelectSystemsDivision,
+                Filter(INV_BEPCnfSistemaDivisiones,INV_BEP_optSistemas.Name = mySelectSystem.Name ));
+                Clear(divisionesDetSystemas);
+                
+                ForAll(  mySelectSystemsDivision As aItem ,
+                 Collect(divisionesDetSystemas, {Name:aItem.INV_BEP_optDivision.Name })
+                );
+                
+                
+                If(
+                
+                        IsBlank(
+                            First(
+                                Filter(myTeamsCurUser,Result = mySelectSystem.'Equipo propietario'.'Team Name')
+                            )
+                        )
+                ,
+                UpdateContext({myAllowEditSystem: false});,
+                UpdateContext({myAllowEditSystem: true});
+                );
+                
+                
+                
+                Navigate(INV_InterfaceSistema,
+                ScreenTransition.UnCover,{
+                    mySelectSystemDet:mySelectSystem,
+                    myAllowEditDetSystem:myAllowEditSystem,
+                    divisionesDetSystemas:divisionesDetSystemas
+                });
+                
+                
+                )
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Tooltip: ="Agregar interface"
+            Width: =50
+            X: =790
+            Y: =113
+            ZIndex: =27
+
+        Icon6_3 As icon.AddDocument:
+            Color: =ColorValue(  INV_ColorFuente)
+            Height: =50
+            Icon: =Icon.Items
+            OnSelect: |-
+                =
+                
+                If(IsBlank( mySelectSystem),
+                Notify("No se ha epecificado el sistema",NotificationType.Information);
+                ,
+                
+                ClearCollect(mySelectSystemsDivision,
+                Filter(INV_BEPCnfSistemaDivisiones,INV_BEP_optSistemas.Name = mySelectSystem.Name ));
+                Clear(divisionesDetSystemas);
+                
+                ForAll(  mySelectSystemsDivision As aItem ,
+                 Collect(divisionesDetSystemas, {Name:aItem.INV_BEP_optDivision.Name })
+                );
+                
+                
+                If(
+                
+                        IsBlank(
+                            First(
+                                Filter(myTeamsCurUser,Result = mySelectSystem.'Equipo propietario'.'Team Name')
+                            )
+                        )
+                ,
+                UpdateContext({myAllowEditSystem: false});,
+                UpdateContext({myAllowEditSystem: true});
+                );
+                
+                
+                
+                
+                Navigate(INV_ComponenteSistema,
+                ScreenTransition.UnCover,{
+                    mySelectSystemDet:mySelectSystem,
+                    myAllowEditDetSystem:myAllowEditSystem,
+                    divisionesDetSystemas:divisionesDetSystemas
+                });
+                
+                
+                
+                
+                
+                
+                )
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Tooltip: ="Agregar componente"
+            Width: =50
+            X: =854
+            Y: =114
+            ZIndex: =28
+
+    INV_BEP_ModalConfirmBloqSis As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0,0,0,0.4)
+        Height: =768
+        Visible: =showModalBorrarSistema
+        Width: =1366
+        ZIndex: =23
+
+        Rectangle2 As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =70
+            Width: =514
+            X: =441
+            Y: =165
+            ZIndex: =1
+
+        Rectangle3 As rectangle:
+            Fill: =White
+            Height: =130
+            Width: =514
+            X: =441
+            Y: =235
+            ZIndex: =2
+
+        Label38 As label:
+            Align: =Align.Center
+            Color: =ColorValue(  INV_ColorFuente)
+            Height: =47
+            Text: ="Mensaje del sistema"
+            Width: =258
+            X: =569
+            Y: =182
+            ZIndex: =4
+
+        Label42 As label:
+            Align: =Align.Center
+            Height: =60
+            Text: ="¿Desea continuar con el bloqueo del registro?"
+            Width: =318
+            X: =539
+            Y: =235
+            ZIndex: =5
+
+        Button2 As button:
+            OnSelect: |
+                =//mySelectSystem
+                UpdateIf(INV_BEPCat_Sistemas,
+                Name=mySelectSystem.Name
+                And
+                INV_BEPCat_Sistemas=mySelectSystem.INV_BEPCat_Sistemas
+                ,
+                {
+                    Estado:'Estado (INV_BEPCat_Sistemas)'.Inactivo
+                }
+                );
+                UpdateContext({showModalBorrarSistema: false});
+            Text: ="Continuar"
+            X: =528
+            Y: =306
+            ZIndex: =6
+
+        Button3 As button:
+            OnSelect: |-
+                =UpdateContext({showModalBorrarSistema: false});
+            Text: ="Cancelar"
+            X: =731
+            Y: =306
+            ZIndex: =7
+
+    INV_BEP_ModalConfirmHabilitar As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0,0,0,0.4)
+        Height: =768
+        Visible: =showModalHabilitarSistema
+        Width: =1366
+        ZIndex: =24
+
+        Rectangle2_1 As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =70
+            Width: =514
+            X: =441
+            Y: =165
+            ZIndex: =1
+
+        Rectangle3_1 As rectangle:
+            Fill: =White
+            Height: =130
+            Width: =514
+            X: =441
+            Y: =235
+            ZIndex: =2
+
+        Label38_1 As label:
+            Align: =Align.Center
+            Color: =ColorValue(  INV_ColorFuente)
+            Height: =47
+            Text: ="Mensaje del sistema"
+            Width: =258
+            X: =569
+            Y: =182
+            ZIndex: =4
+
+        Label42_1 As label:
+            Align: =Align.Center
+            Height: =49
+            Text: ="¿Desea continuar con el desbloqueo del registro?"
+            Width: =363
+            X: =528
+            Y: =247
+            ZIndex: =5
+
+        Button2_1 As button:
+            OnSelect: |
+                =//mySelectSystem
+                UpdateIf(INV_BEPCat_Sistemas,
+                Name=mySelectSystem.Name
+                And
+                INV_BEPCat_Sistemas=mySelectSystem.INV_BEPCat_Sistemas
+                ,
+                {
+                    Estado:'Estado (INV_BEPCat_Sistemas)'.Activo
+                }
+                );
+                UpdateContext({showModalHabilitarSistema: false});
+            Text: ="Continuar"
+            X: =528
+            Y: =306
+            ZIndex: =6
+
+        Button3_1 As button:
+            OnSelect: |-
+                =UpdateContext({showModalHabilitarSistema: false});
+            Text: ="Cancelar"
+            X: =731
+            Y: =306
+            ZIndex: =7
+

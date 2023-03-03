@@ -1,0 +1,102 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "new_inv_bepcnfsistemadivisioneses",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "new_inv_bepcnfsistemadivisiones",
+    "MaxGetRowsCount": 500,
+    "Name": "INV_BEPCnfSistemaDivisiones",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "_ownerid_value": "Propietario",
+      "createdby": "Autor",
+      "createdon": "Fecha de creación",
+      "createdonbehalfby": "Autor (delegado)",
+      "importsequencenumber": "Número de secuencia de importación",
+      "modifiedby": "Modificado por",
+      "modifiedon": "Fecha de modificación",
+      "modifiedonbehalfby": "Modificado por (delegado)",
+      "new_INV_BEP_optDivision": "INV_BEP_optDivision",
+      "new_INV_BEP_optSistemas": "INV_BEP_optSistemas",
+      "new_inv_bep_shealttest": "INV_BEP_sHealtTest",
+      "new_INV_BEP_SisDiv": "INV_BEPSistemasModulo",
+      "new_inv_bepcnfsistemadivisiones_AsyncOperations": "System Jobs",
+      "new_inv_bepcnfsistemadivisiones_BulkDeleteFailures": "Bulk Delete Failures",
+      "new_inv_bepcnfsistemadivisiones_DuplicateBaseRecord": "Duplicate Records (new_inv_bepcnfsistemadivisiones_DuplicateBaseRecord)",
+      "new_inv_bepcnfsistemadivisiones_DuplicateMatchingRecord": "Duplicate Records (new_inv_bepcnfsistemadivisiones_DuplicateMatchingRecord)",
+      "new_inv_bepcnfsistemadivisiones_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "new_inv_bepcnfsistemadivisiones_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "new_inv_bepcnfsistemadivisiones_ProcessSession": "Process Sessions",
+      "new_inv_bepcnfsistemadivisiones_SyncErrors": "Sync Errors",
+      "new_inv_bepcnfsistemadivisionesid": "INV_BEPCnfSistemaDivisiones",
+      "new_name": "Name",
+      "overriddencreatedon": "Fecha de creación del registro",
+      "owningbusinessunit": "Unidad de negocio propietaria",
+      "owningteam": "Equipo propietario",
+      "owninguser": "Usuario propietario",
+      "statecode": "Estado",
+      "statuscode": "Razón para el estado",
+      "timezoneruleversionnumber": "Número de versión de regla de zona horaria",
+      "utcconversiontimezonecode": "Código de zona horaria de conversión UTC",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "INV_BEPCnfSistemaDivisiones",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "INV_BEPCnfSistemaDivisiones (Vistas)",
+    "Name": "_new_inv_bepcnfsistemadivisiones_views",
+    "RelatedEntityName": "INV_BEPCnfSistemaDivisiones",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "1fcbc2e8-9b6d-4cb4-8424-f5a30ff05910": "Vista de búsqueda avanzada de INV_BEPCnfSistemaDivisiones",
+      "2407e6de-2898-ed11-aad1-00224823fb46": "Sistemas / División",
+      "36163012-3499-4f91-8ae5-f45eab63c1f8": "Vista asociada de INV_BEPCnfSistemaDivisiones",
+      "77f5a803-b45e-4e76-9ddf-33513fd509f1": "INV_BEPCnfSistemaDivisiones activo",
+      "cbd8d2b6-047f-4516-8f09-0cbaadb33ca3": "Vista de búsqueda de INV_BEPCnfSistemaDivisiones",
+      "e0259b25-45d7-48bb-9dfc-d864de4df9dc": "INV_BEPCnfSistemaDivisiones inactivo"
+    }
+  },
+  {
+    "DisplayName": "Estado (INV_BEPCnfSistemaDivisiones)",
+    "Name": "new_inv_bepcnfsistemadivisiones_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Activo",
+      "1": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "INV_BEPCnfSistemaDivisiones"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "INV_BEPCnfSistemaDivisiones",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Razón para el estado (INV_BEPCnfSistemaDivisiones)",
+    "Name": "new_inv_bepcnfsistemadivisiones_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Activo",
+      "2": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "INV_BEPCnfSistemaDivisiones"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "INV_BEPCnfSistemaDivisiones",
+    "Type": "OptionSetInfo"
+  }
+]

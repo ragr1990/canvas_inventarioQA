@@ -1,0 +1,113 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "new_inv_bepcat_personalinventarioses",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "new_inv_bepcat_personalinventarios",
+    "MaxGetRowsCount": 500,
+    "Name": "INV_BEPCat_PersonalInventarios",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "cr3ef_INV_BEP_optAreaNegocio": "Área de negocio",
+      "cr3ef_inv_bep_sapellidom": "Apellido materno",
+      "cr3ef_inv_bep_sapellidop": "Apellido paterno",
+      "createdby": "Autor",
+      "createdon": "Fecha de creación",
+      "createdonbehalfby": "Autor (delegado)",
+      "importsequencenumber": "Número de secuencia de importación",
+      "modifiedby": "Modificado por",
+      "modifiedon": "Fecha de modificación",
+      "modifiedonbehalfby": "Modificado por (delegado)",
+      "new_INV_BEP_optAdminSisModSop": "INV_BEPSoporteSistemas (new_INV_BEP_optAdminSisModSop)",
+      "new_INV_BEP_optAsFuncSop": "INV_BEPSoporteSistemas (new_INV_BEP_optAsFuncSop)",
+      "new_INV_BEP_optAutorizadorComp": "INV_BEPComponentesSistemaDet",
+      "new_INV_BEP_optDirGerenciaTIProInt": "INV_BEPProcesosInterfaces (new_INV_BEP_optDirGerenciaTIProInt)",
+      "new_INV_BEP_optEspecialistaAplicacionesIntPro": "INV_BEPProcesosInterfaces (new_INV_BEP_optEspecialistaAplicacionesIntPro)",
+      "new_INV_BEP_optJefDirAs": "INV_BEPSoporteSistemas (new_INV_BEP_optJefDirAs)",
+      "new_INV_BEP_optLiderTIIntProc": "INV_BEPProcesosInterfaces (new_INV_BEP_optLiderTIIntProc)",
+      "new_INV_BEP_optRespSisSoporte": "INV_BEPSoporteSistemas (new_INV_BEP_optRespSisSoporte)",
+      "new_inv_bep_scorreo": "Correo",
+      "new_inv_bep_snombre": "Nombre",
+      "new_inv_bep_spuesto": "Puesto",
+      "new_inv_bep_stelefono": "Teléfono",
+      "new_inv_bepcat_personalinventarios_AsyncOperations": "System Jobs",
+      "new_inv_bepcat_personalinventarios_BulkDeleteFailures": "Bulk Delete Failures",
+      "new_inv_bepcat_personalinventarios_DuplicateBaseRecord": "Duplicate Records (new_inv_bepcat_personalinventarios_DuplicateBaseRecord)",
+      "new_inv_bepcat_personalinventarios_DuplicateMatchingRecord": "Duplicate Records (new_inv_bepcat_personalinventarios_DuplicateMatchingRecord)",
+      "new_inv_bepcat_personalinventarios_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "new_inv_bepcat_personalinventarios_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "new_inv_bepcat_personalinventarios_ProcessSession": "Process Sessions",
+      "new_inv_bepcat_personalinventarios_SyncErrors": "Sync Errors",
+      "new_inv_bepcat_personalinventariosid": "INV_BEPCat_PersonalInventarios",
+      "new_INV_BEPDirGerTI": "INV_BEPSistemasModulo (new_INV_BEPDirGerTI)",
+      "new_INV_BEPEspApp": "INV_BEPSistemasModulo (new_INV_BEPEspApp)",
+      "new_INV_BEPLidTI": "INV_BEPSistemasModulo (new_INV_BEPLidTI)",
+      "new_name": "Name",
+      "organizationid": "Id. de la organización",
+      "overriddencreatedon": "Fecha de creación del registro",
+      "statecode": "Estado",
+      "statuscode": "Razón para el estado",
+      "timezoneruleversionnumber": "Número de versión de regla de zona horaria",
+      "utcconversiontimezonecode": "Código de zona horaria de conversión UTC",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "INV_BEPCat_PersonalInventarios",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "INV_BEPCat_PersonalInventarios (Vistas)",
+    "Name": "_new_inv_bepcat_personalinventarios_views",
+    "RelatedEntityName": "INV_BEPCat_PersonalInventarios",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "793fd34b-ace0-4b25-8003-c6bda0fdbc4d": "Vista de búsqueda de INV_BEPCat_PersonalInventarios",
+      "8a4ce3ac-951a-4573-ba82-e0d46e860226": "INV_BEPCat_PersonalInventarios activo",
+      "9d36ea6b-8b78-4806-827d-75317acbc1de": "Vista asociada de INV_BEPCat_PersonalInventarios",
+      "c1baf48b-4819-4e9d-b1f6-406556166c64": "INV_BEPCat_PersonalInventarios inactivo",
+      "cd2a8979-b290-ed11-aad1-00224823fb46": "Colaboradores",
+      "e936d00e-85c7-4505-b8dd-9d4ea29cc345": "Vista de búsqueda avanzada de INV_BEPCat_PersonalInventarios"
+    }
+  },
+  {
+    "DisplayName": "Estado (INV_BEPCat_PersonalInventarios)",
+    "Name": "new_inv_bepcat_personalinventarios_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Activo",
+      "1": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "INV_BEPCat_PersonalInventarios"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "INV_BEPCat_PersonalInventarios",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Razón para el estado (INV_BEPCat_PersonalInventarios)",
+    "Name": "new_inv_bepcat_personalinventarios_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Activo",
+      "2": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "INV_BEPCat_PersonalInventarios"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "INV_BEPCat_PersonalInventarios",
+    "Type": "OptionSetInfo"
+  }
+]

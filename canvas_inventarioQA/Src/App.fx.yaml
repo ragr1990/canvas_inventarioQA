@@ -1,0 +1,79 @@
+App As appinfo:
+    BackEnabled: =false
+    OnStart: |+
+        =Refresh(INV_BEPCat_Sistemas);
+        Refresh(Usuarios);
+        Refresh( 'Roles de seguridad');
+        Refresh( Equipos);
+        
+        Set(INV_ColorFuente,"#FFFFFF");
+        Set(INV_ColorPrincipal,"#00126b");
+        Set(CurSelectedMenuNav,Blank());
+        
+        ClearCollect(UserRoles,LookUp(Usuarios,domainname = User().Email).
+        'Security Roles (systemuserroles_association)'
+        /*'Roles de seguridad (systemuserroles_association)'*/
+        );
+        
+        
+        Set(
+        SuperAdmin,
+        If(
+            
+        "INV_RolGruposBepensaSuper" in
+        Concat( Filter( 'Roles de seguridad',roleid in  Concat(UserRoles,roleid & Char(10)) ) ,
+        name
+        )
+         Or 
+         "INV_BepRolAdminAplicacion"in
+        Concat( Filter( 'Roles de seguridad',roleid in  Concat(UserRoles,roleid & Char(10)) ) ,
+        name
+        )
+        
+        ,
+        true,
+        false
+        )
+        );
+        
+        
+        //Set(SuperAdmin,false);
+        
+        
+        
+        
+        
+        /*
+        ClearCollect(myTeamsCurUser,
+        Split( Concat(   First(  Filter(  Usuarios,'Correo electrónico principal'=User().Email )).'Equipos (teammembership_association)','Nombre del equipo' ,"|"),"|")
+           
+        );
+        */
+        
+        
+        ClearCollect(myTeamsCurUser,
+        Split( Concat(   First(  Filter(  Usuarios,'Primary Email'
+        
+        =User().Email  )).'Teams (teammembership_association)'  ,'Team Name',"|"),"|")
+           
+        );
+        
+        
+        ClearCollect(
+            Gpos,
+            Equipos
+        );
+        
+        ClearCollect(UserRoles,LookUp(Usuarios,domainname = User().Email).'Security Roles (systemuserroles_association)'
+        /*'Roles de seguridad (systemuserroles_association)'*/);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+

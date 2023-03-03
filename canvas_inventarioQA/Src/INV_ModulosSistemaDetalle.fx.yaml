@@ -1,0 +1,2490 @@
+INV_ModulosSistemaDetalle As screen:
+    OnVisible: |+
+        =Refresh(INV_BEPSistemasModulo);
+        Refresh(INV_BEPCnfSistemaDivisiones);
+        
+        UpdateContext({showModalModulosSistema: false});
+        UpdateContext({showModalModuloSistemaUpd: false});
+        UpdateContext({showModalModuloSistemaBloq: false});
+        UpdateContext({showModalModuloSistemaHab: false});
+        
+        UpdateContext({mySelectSystemDetName : mySelectSystemDet .Name });
+        
+        /*
+        ClearCollect(  mySistemasDivsDetalle,Filter( INV_BEPCnfSistemaDivisiones, 
+        INV_BEP_optSistemas.INV_BEPCat_Sistemas=mySelectSystemDet.INV_BEPCat_Sistemas
+        ));
+        */
+        /*INV_BEP_optSistemas.Name = mySelectSystemDetName*/
+        
+        
+        
+        ClearCollect(mySplitIDSisDivs,
+        Split(
+            Concat(Filter( INV_BEPCnfSistemaDivisiones, 
+        INV_BEP_optSistemas.INV_BEPCat_Sistemas=mySelectSystemDet.INV_BEPCat_Sistemas
+        And 
+        Estado='Estado (INV_BEPCnfSistemaDivisiones)'.Activo
+        
+        ),
+          ThisRecord. INV_BEPCnfSistemaDivisiones
+        
+            /*ThisRecord.INV_BEP_optSistemas.INV_BEPCat_Sistemas */ & "|" ),"|") );
+        /*
+        ClearCollect(sadsa,
+           Filter(
+            INV_BEPSistemasModulo,
+              Sistema.INV_BEPCnfSistemaDivisiones in Distinct( mySplitIDSisDivs,Result)
+            )
+        );*/
+        
+        
+        
+        UpdateContext({myRowsModuloCount : CountRows( INV_BEPSistemasModulo) });
+        UpdateContext({varModuloPageNumber:1});
+        UpdateContext({varModuloActivar:false});
+        
+        
+        
+        
+        
+        
+        
+        
+
+    "Gallery3_1 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        Height: =486
+        Items: |+
+            =
+            If(varModuloPageNumber=1,FirstN(
+            
+            SortByColumns(
+            
+                Filter(
+                INV_BEPSistemasModulo,
+                GUID(  Sistema.INV_BEPCnfSistemaDivisiones)
+                in mySplitIDSisDivs
+                )
+            
+            ,"createdon",Descending),10 *varModuloPageNumber),
+            
+            LastN(FirstN(
+            
+            SortByColumns(
+            
+                Filter(
+                INV_BEPSistemasModulo,
+                GUID(  Sistema.INV_BEPCnfSistemaDivisiones)
+                in mySplitIDSisDivs
+                )
+            
+            ,"createdon",Descending), 10 *varModuloPageNumber), 10*1))
+            
+             
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =44
+        Width: =1366
+        Y: =165
+        ZIndex: =1
+
+        rectMyModsSystem_1 As rectangle:
+            Fill: |-
+                =If(
+                CountRows(
+                                Filter(myTeamsCurUser,Result =
+                                 LookUp(INV_BEPCnfSistemaDivisiones/*INV_BEPCat_Sistemas*/,
+                                 
+                                        Name=ThisItem.Sistema.Name
+                                 
+                                 ).'Equipo propietario'.'Team Name'
+                                
+                                 /*ThisItem.'Equipo propietario'.'Nombre del equipo'*/)
+                            
+                )>0
+                           /* LookUp(INV_BEPCat_Sistemas,Name= ThisItem.INV_BEP_optSistemas.Name ).'Equipo propietario'.'Nombre del equipo'
+                            in 
+                            myTeamsCurUser  **/
+                        
+                ,
+                RGBA(0,0,0,0.4),
+                RGBA(0,0,0,0.0))
+            Height: =40
+            OnSelect: =Select(Parent)
+            Width: =1366
+            ZIndex: =1
+
+        NextArrow3_3 As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            DisplayMode: |-
+                =If(ThisItem.Estado='Estado (INV_BEPSistemasModulo)'.Inactivo
+                Or
+                SuperAdmin=true
+                ,
+                DisplayMode.Disabled,
+                DisplayMode.Edit
+                )
+            Fill: |-
+                =
+                RGBA(0, 0, 0, 0)
+            Height: =44
+            Icon: =Icon.Blocked
+            OnSelect: |
+                =UpdateContext({showModalModuloSistemaBloq: true});
+                UpdateContext({itmMyModuloEditSelected: ThisItem});
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            TabIndex: =0
+            Tooltip: ="Bloquear módulo"
+            Width: =42
+            X: =1316
+            ZIndex: =2
+
+        Separator4_1 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =3
+
+        Label28_3 As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: |-
+                =//ThisItem.Sistema.Name
+                LookUp(INV_BEPCnfSistemaDivisiones,
+                Name=
+                ThisItem.Sistema.Name).INV_BEP_optDivision.Name
+                
+                //INV_BEP_optDivision.Nombre
+            Width: =167
+            X: =245
+            ZIndex: =4
+
+        Label28_4 As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: =ThisItem.Compañía.Name
+            Width: =178
+            X: =412
+            ZIndex: =5
+
+        Label28_5 As label:
+            Align: =Align.Center
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: |
+                =ThisItem.Name
+            Width: =228
+            X: =14
+            ZIndex: =6
+
+        Label29_1 As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =11
+            Text: |-
+                =//ThisItem.Sistema.INV_BEPCnfSistemaDivisiones
+                
+                ThisItem.Descripcion /*& "-"& LookUp(INV_BEPAreaProcesosxModulo,Modulo.INV_BEPSistemasModulo=ThisItem.INV_BEPSistemasModulo).'Equipo propietario'.'Nombre del equipo'*/
+            Width: =302
+            X: =590
+            ZIndex: =7
+
+        Label41_1 As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: |-
+                =
+                    LookUp(INV_BEPCnfSistemaDivisiones/*INV_BEPCat_Sistemas*/,
+                                 
+                                     INV_BEPCnfSistemaDivisiones=ThisItem.Sistema.INV_BEPCnfSistemaDivisiones /*  Name=ThisItem.Sistema.Name*/
+                                 
+                                 ).'Equipo propietario'.'Team Name'
+            Width: =237
+            X: =892
+            ZIndex: =8
+
+        NextArrow3_2 As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            DisplayMode: |-
+                =If(ThisItem.Estado='Estado (INV_BEPSistemasModulo)'.Inactivo
+                
+                Or
+                SuperAdmin=true,
+                DisplayMode.Disabled,
+                DisplayMode.Edit
+                )
+            Fill: |-
+                =//LookUp(INV_BEPCat_Sistemas,Name= ThisItem.INV_BEP_optSistemas.Name ).'Equipo propietario'.'Nombre del equipo'
+                
+                
+                
+                If(
+                
+                CountRows(
+                                Filter(myTeamsCurUser,Result =
+                                 LookUp(INV_BEPCnfSistemaDivisiones/*INV_BEPCat_Sistemas*/,
+                                 
+                                        Name=ThisItem.Sistema.Name
+                                 
+                                 ).'Equipo propietario'.'Team Name'
+                                
+                                 /*ThisItem.'Equipo propietario'.'Nombre del equipo'*/)
+                            
+                )>0
+                           /* LookUp(INV_BEPCat_Sistemas,Name= ThisItem.INV_BEP_optSistemas.Name ).'Equipo propietario'.'Nombre del equipo'
+                            in 
+                            myTeamsCurUser  **/
+                        
+                ,
+                Green,
+                RGBA(0,0,0,0))
+            Height: =40
+            Icon: =Icon.Edit
+            OnSelect: |+
+                =
+                
+                
+                Refresh(INV_BEPAreaProcesosxModulo);
+                UpdateContext({showModalModuloSistemaUpd: true});
+                
+                UpdateContext({itmMyModuloEditSelected: ThisItem});
+                
+                ClearCollect(myDivisionPorModulo,
+                
+                Filter(
+                INV_BEPCnfSistemaDivisiones,INV_BEPCnfSistemaDivisiones=itmMyModuloEditSelected.Sistema.INV_BEPCnfSistemaDivisiones)
+                
+                );
+                
+                ClearCollect(myDivSisEditModulo,INV_BEPCnfSistemaDivisiones);
+                ClearCollect(mySystemEditModulo,INV_BEPCat_Sistemas);
+                
+                ClearCollect(myTeamsCurUser,
+                Split( Concat(   First(  Filter(  Usuarios,'Primary Email'=User().Email  )).
+                'Teams (teammembership_association)'
+                /*'Equipos (teammembership_association)'*/
+                ,
+                
+                'Team Name',"|"),"|")
+                   
+                );
+                
+                
+                ClearCollect(myItmModAreasNegocio,
+                
+                 Split( Concat( Filter(INV_BEPAreaProcesosxModulo ,
+                  Modulo.Name=itmMyModuloEditSelected.Name ),'Área Negocio'.Name &"|"),"|")
+                   
+                );
+                
+                ClearCollect(myAreasEditModal,Blank());
+                ForAll( Filter(INV_BEPAreaProcesosxModulo ,
+                  Modulo.INV_BEPSistemasModulo=itmMyModuloEditSelected.INV_BEPSistemasModulo ) As aItem ,
+                                Collect(myAreasEditModal,
+                                {
+                                    area:aItem.'Área Negocio',  
+                                    proceso:aItem.'Proceso de negocio'
+                                });
+                            );
+                
+                
+                
+                
+                UpdateContext({itmMySystemaDivEditSelected:LookUp(myDivSisEditModulo, Name=itmMyModuloEditSelected.Sistema.Name)});
+                
+                UpdateContext({itmMySystemaSelected:LookUp(mySystemEditModulo,
+                Name=itmMySystemaDivEditSelected.INV_BEP_optSistemas.Name
+                )});
+                
+                UpdateContext({itmMySystemaModEditSelected:
+                
+                LookUp(INV_BEPCat_Sistemas,Name=itmMySystemaDivEditSelected.INV_BEP_optSistemas.Name  ).'Equipo propietario'.'Team Name'
+                
+                });
+                
+                
+                If(IsBlank( itmMySystemaModEditSelected),
+                UpdateContext({myAllowEditSystem: false});,
+                UpdateContext({myAllowEditSystem: true});
+                );
+                
+                UpdateContext({showModalModuloSistemaUpd: true});
+                
+                
+                UpdateContext({showTabModuloModalEdit: true});
+                UpdateContext({showTabAreaNegModalEdit: false});
+                
+                
+                
+                UpdateContext( { editArea: false } );
+                UpdateContext( { initAreaCurrName: Blank() } );
+                
+                
+                
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            TabIndex: =0
+            Tooltip: ="Editar módulo"
+            Width: =42
+            X: =1188
+            ZIndex: =9
+
+        NextArrow3_4 As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            DisplayMode: |-
+                =If(ThisItem.Estado='Estado (INV_BEPSistemasModulo)'.Activo,
+                DisplayMode.Edit,
+                DisplayMode.Disabled)
+            Fill: |-
+                =
+                RGBA(0, 0, 0, 0)
+            Height: =40
+            Icon: =Icon.Tablet
+            OnSelect: |
+                =
+                /*
+                
+                    LookUp(INV_BEPCnfSistemaDivisiones
+                                 
+                                        Name=ThisItem.Sistema.Name
+                                 
+                                 ).'Equipo propietario'.'Nombre del equipo'
+                */
+                
+                UpdateContext({
+                myGrupoPropietarioModulo:
+                LookUp(INV_BEPCnfSistemaDivisiones,Name=ThisItem.Sistema.Name  ).'Equipo propietario'
+                });
+                
+                /*
+                LookUp(INV_BEPCnfSistemaDivisiones,
+                                 
+                                        Name=ThisItem.Sistema.Name
+                                 
+                                 ).'Equipo propietario'.'Nombre del equipo'
+                */
+                
+                
+                Navigate(INV_SoporteSistemas,ScreenTransition.UnCover,{
+                mySelectSystemDet:mySelectSystemDet,
+                mySelectModulo:ThisItem,
+                myAllowEditDetSystem:myAllowEditSystem,
+                
+                myGrupoPropietarioModulo:myGrupoPropietarioModulo,
+                
+                divisionesDetSystemas:divisionesDetSystemas
+                
+                });
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            TabIndex: =0
+            Tooltip: ="Datos de soporte"
+            Width: =42
+            X: =1233
+            ZIndex: =10
+
+        NextArrow3_5 As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            DisplayMode: |-
+                =If(ThisItem.Estado='Estado (INV_BEPSistemasModulo)'.Activo
+                
+                Or
+                SuperAdmin=true
+                ,
+                DisplayMode.Disabled,
+                DisplayMode.Edit)
+            Fill: |-
+                =
+                RGBA(0, 0, 0, 0)
+            Height: =44
+            Icon: =Icon.Reset
+            OnSelect: |+
+                =
+                UpdateContext({showModalModuloSistemaHab: true});
+                UpdateContext({itmMyModuloEditSelected: ThisItem});
+                
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            TabIndex: =0
+            Tooltip: ="Desbloquear módulo"
+            Width: =42
+            X: =1274
+            ZIndex: =11
+
+    rHeaderGridSistema_2 As rectangle:
+        Fill: =ColorValue(  INV_ColorPrincipal)
+        Height: =62
+        Width: =1366
+        Y: =103
+        ZIndex: =2
+
+    btnAddNuevoSistema_5 As icon.Save:
+        Color: =ColorValue(  INV_ColorFuente)
+        DisplayMode: |-
+            =
+            If(
+            SuperAdmin=true,
+            DisplayMode.Disabled,
+            DisplayMode.Edit)
+        Height: =45
+        Icon: =Icon.Add
+        OnSelect: |+
+            =
+            /*
+            ForAll( Collection,
+                Patch( DataSource, 
+                    LookUp( DataSource, Id = Collection[@Id] ),
+                    { Column: Value }
+                )
+            )
+            */
+            
+            /*
+            If(IsBlank( itmMySystemaModEditSelected),
+            UpdateContext({myAllowEditSystem: false});,
+            UpdateContext({myAllowEditSystem: true});
+            );*/
+            
+            Reset(cmbCreaSistModulo_1);
+            Reset(cmbCreaCompaniaModulo_1);
+            Reset(cmbCreaGerModulo_1);
+            Reset(cmbCreaEspModulo_1);
+            Reset(cmbCreaLidModulo_1);
+            Reset(txtCreaNombreModulo_1);
+            Reset(txtCreaDecripModulo_1);
+            Reset(cmbCreaNegocioModulo);
+            
+            UpdateContext({checkPatchSystem:false});
+            UpdateContext({showModalModulosSistema: true});
+            
+            
+            
+            UpdateContext({showTabModuloModal: true});
+            UpdateContext({showTabAreaNegModal: false});
+            
+            ClearCollect(myAreasCrear,Blank());
+            
+            
+            
+            
+            UpdateContext( { editArea: false } );
+            UpdateContext( { initAreaCurrName: Blank() } );
+            
+            
+        PaddingBottom: =10
+        PaddingLeft: =10
+        PaddingRight: =10
+        PaddingTop: =10
+        Tooltip: ="Agregar módulo"
+        Width: =49
+        X: =1317
+        Y: =111
+        ZIndex: =3
+
+    Label1_13 As label:
+        Align: =Align.Center
+        Color: =ColorValue(  INV_ColorFuente)
+        FontWeight: =FontWeight.Semibold
+        Height: =41
+        Size: =10
+        Text: ="División"
+        Width: =170
+        X: =246
+        Y: =123
+        ZIndex: =4
+
+    Label1_14 As label:
+        Align: =Align.Center
+        Color: =ColorValue(  INV_ColorFuente)
+        FontWeight: =FontWeight.Semibold
+        Size: =10
+        Text: ="Compañía"
+        Width: =175
+        X: =416
+        Y: =123
+        ZIndex: =5
+
+    Label1_15 As label:
+        Align: =Align.Center
+        Color: =ColorValue(  INV_ColorFuente)
+        FontWeight: =FontWeight.Semibold
+        Height: =41
+        Size: =10
+        Text: ="Módulo"
+        Width: =246
+        Y: =124
+        ZIndex: =6
+
+    Label1_16 As label:
+        Align: =Align.Center
+        Color: =ColorValue(  INV_ColorFuente)
+        FontWeight: =FontWeight.Semibold
+        Height: =41
+        Size: =10
+        Text: ="Descripción"
+        Width: =303
+        X: =591
+        Y: =124
+        ZIndex: =7
+
+    rHeaderModulosSistema_1 As rectangle:
+        Fill: =ColorValue(  INV_ColorPrincipal)
+        Width: =1366
+        ZIndex: =8
+
+    lblHeadModuloSystemUser_1 As label:
+        Align: =Align.Right
+        Color: =ColorValue(  INV_ColorFuente)
+        Height: =44
+        Text: =User().FullName
+        Width: =416
+        X: =942
+        Y: =56
+        ZIndex: =9
+
+    lblHeadModuloSystemName_1 As label:
+        Align: =Align.Right
+        Color: =ColorValue(  INV_ColorFuente)
+        Height: =32
+        Text: =User().Email
+        Width: =429
+        X: =929
+        Y: =35
+        ZIndex: =10
+
+    Icon9_1 As icon.ArrowLeft:
+        DisplayMode: =If(varModuloPageNumber = 1 /* Or varModuloActivar=false*/, Disabled, Edit)
+        Height: =40
+        Icon: =Icon.ArrowLeft
+        OnSelect: |-
+            =UpdateContext({varModuloActivar:false});
+            
+            UpdateContext({varModuloPageNumber: varModuloPageNumber - 1});
+            
+            UpdateContext({varModuloActivar:true});
+            
+            /*
+            
+            UpdateContext({myRowsModuloCount : CountRows( INV_BEPSistemasModulo) });
+            UpdateContext({varModuloPageNumber:1});
+            UpdateContext({varModuloActivar:false});
+            
+            
+            */
+        PaddingBottom: =10
+        PaddingLeft: =10
+        PaddingRight: =10
+        PaddingTop: =10
+        Width: =52
+        X: =574
+        Y: =677
+        ZIndex: =11
+
+    Icon10_1 As icon.ChevronLeft:
+        DisplayMode: |-
+            =If(
+              10  /*PageSize_Dropdown.SelectedText.Value*/
+                
+                *varModuloPageNumber<CountRows(
+            
+                    Filter(
+                        INV_BEPSistemasModulo,
+                        GUID(  Sistema.INV_BEPCnfSistemaDivisiones)
+                        in mySplitIDSisDivs
+                    )
+            
+            
+                    
+            )
+            
+            /*Or varModuloActivar=false*/
+            
+            , DisplayMode.Edit,Disabled)
+        Height: =40
+        Icon: =Icon.ArrowRight
+        OnSelect: |-
+            =
+            UpdateContext({varModuloActivar:false});
+            
+            UpdateContext({varModuloPageNumber: varModuloPageNumber + 1});
+            
+            UpdateContext({varModuloActivar:true});
+            
+            /*
+            
+            UpdateContext({myRowsModuloCount : CountRows( INV_BEPSistemasModulo) });
+            UpdateContext({varModuloPageNumber:1});
+            UpdateContext({varModuloActivar:false});
+            
+            */
+        PaddingBottom: =10
+        PaddingLeft: =10
+        PaddingRight: =10
+        PaddingTop: =10
+        Width: =45
+        X: =739
+        Y: =677
+        ZIndex: =12
+
+    Label55_1 As label:
+        Align: =Align.Center
+        FontWeight: =FontWeight.Semibold
+        Height: =33
+        Text: |-
+            =varModuloPageNumber & " de " & RoundUp(CountRows(
+            
+            SortByColumns(
+            
+            
+                Filter(
+                INV_BEPSistemasModulo,
+                GUID(  Sistema.INV_BEPCnfSistemaDivisiones)
+                in mySplitIDSisDivs
+                )
+            
+            ,
+            "createdon",
+            Descending
+            )
+            
+                
+            
+            )/ 10/*PageSize_Dropdown.SelectedText.Value*/,0)
+        Width: =113
+        X: =626
+        Y: =677
+        ZIndex: =13
+
+    lblTitleModuloSistema_1 As label:
+        Align: =Align.Right
+        Color: =ColorValue(  INV_ColorFuente)
+        Height: =35
+        Size: =17
+        Text: ="Módulos del sistema [ " &mySelectSystemDet.Name & " ]"
+        Width: =1233
+        X: =110
+        ZIndex: =14
+
+    Label1_17 As label:
+        Align: =Align.Center
+        Color: =ColorValue(  INV_ColorFuente)
+        FontWeight: =FontWeight.Semibold
+        Height: =41
+        Size: =10
+        Text: ="Grupo"
+        Width: =236
+        X: =894
+        Y: =124
+        ZIndex: =15
+
+    Icon3_1 As icon.ChevronLeft:
+        Color: =ColorValue(  INV_ColorFuente)
+        Icon: =Icon.ChevronLeft
+        OnSelect: =Back()
+        PaddingBottom: =10
+        PaddingLeft: =10
+        PaddingRight: =10
+        PaddingTop: =10
+        Tooltip: ="Regresar a sistemas"
+        X: =2
+        Y: =19
+        ZIndex: =16
+
+    INV_BEP_ModalEditarMod As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0,0,0,0.4)
+        Height: =767
+        Visible: =showModalModuloSistemaUpd
+        Width: =1365
+        ZIndex: =17
+
+        INV_BEP_ModalHeadEditarModulo_1 As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =77
+            Width: =765
+            X: =306
+            Y: =81
+            ZIndex: =1
+
+        INV_BEP_ModalBodyEditarModulo_1 As rectangle:
+            BorderColor: =RGBA(0, 0, 0, 0)
+            Fill: =White
+            Height: =443
+            Width: =765
+            X: =306
+            Y: =151
+            ZIndex: =2
+
+        INV_BEP_ModalCloseEditarModulo_1 As icon.Cancel:
+            Color: =ColorValue(  INV_ColorFuente)
+            Icon: =Icon.Cancel
+            OnSelect: |-
+                =
+                UpdateContext({showModalModuloSistemaUpd: false});
+                
+                UpdateContext({showTabModuloModalEdit: true});
+                UpdateContext({showTabAreaNegModalEdit: false});
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            X: =995
+            Y: =87
+            ZIndex: =3
+
+        btnEditarModulo_1 As button:
+            DisplayMode: |
+                =If(myAllowEditSystem=true,
+                
+                DisplayMode.Edit,
+                DisplayMode.Disabled)
+            OnSelect: |+
+                =
+                
+                //myAreasEditModal
+                
+                
+                If(
+                    cmbEditCompaniaModulo_1.BorderColor=Red
+                    Or
+                     txtEditNombreModulo_1.BorderColor=Red
+                    Or
+                    CountRows(myAreasEditModal)<=0
+                    ,
+                
+                
+                UpdateContext({mensajeError: 
+                Concatenate (
+                 If(cmbEditCompaniaModulo_1.BorderColor=Red," Compañía,","" ) ,
+                 If(txtEditNombreModulo_1.BorderColor=Red," Nombre de módulo,","" ) ,
+                 If(CountRows(myAreasEditModal)<=0 ," Área de negocio y proceso,","" ) 
+                     
+                )
+                });
+                
+                Notify("ERROR : Faltan llenar los datos de :"&Left(mensajeError,Len(mensajeError) -1));,
+                
+                
+                
+                
+                                If(CountRows(Filter(INV_BEPSistemasModulo,
+                                /*
+                                Sistema.Name=itmMyModuloEditSelected.Sistema.Name And
+                                Compañía.Name=cmbEditCompaniaModulo_1.Selected.Name And*/
+                
+                                Sistema.Name=cmbEditCompaniaModulo_2.Selected.Name And
+                
+                                Compañía.Name=cmbEditCompaniaModulo_1.Selected.Name And
+                
+                
+                                Modulo=txtEditNombreModulo_1.Text And
+                                /*Name=txtEditNombreModulo_1.Text  And*/
+                                INV_BEPSistemasModulo <> itmMyModuloEditSelected.INV_BEPSistemasModulo
+                
+                
+                
+                                )) > 0,
+                
+                                        Notify("ERROR : Ya existe un módulo nombrado del modo" ,NotificationType.Information),
+                
+                
+                
+                                                IfError(
+                                                UpdateIf(
+                                                            INV_BEPSistemasModulo,
+                                                            /*Name=itmMyModuloEditSelected.Name And*/
+                                                            INV_BEPSistemasModulo=itmMyModuloEditSelected.INV_BEPSistemasModulo,
+                                                            { 
+                                                                Sistema:itmMyModuloEditSelected.Sistema,
+                                                                Compañía:cmbEditCompaniaModulo_1.Selected,
+                                                                'Dirección/ Gerencia de TI':cmbEditsGerModulo_1.Selected,
+                                                                'Especialista de Aplicaciones':cmbEditsEspModulo_1.Selected,
+                                                            'Líder TI':cmbEditsLidModulo_1.Selected,
+                                                                Modulo:txtEditNombreModulo_1.Text,
+                                                                Descripcion:txtEditDecripModulo_1.Text,
+                                                                Propietario:itmMyModuloEditSelected.'Equipo propietario',
+                
+                
+                                                                Name:/*itmMyModuloEditSelected.Sistema.Name*/
+                                                                cmbEditCompaniaModulo_2.Selected.Name & "-"   &
+                                                                cmbEditCompaniaModulo_1.Selected.Name & "-" &
+                                                                txtEditNombreModulo_1.Text
+                
+                
+                
+                                                            }
+                                                        )
+                                                ,
+                                                Notify("ERROR : "& FirstError.Message & " , Origen de error : " & FirstError.Source,NotificationType.Error),
+                
+                                                RemoveIf(INV_BEPAreaProcesosxModulo, 
+                                                
+                                                /*Modulo .Name=itmMyModuloEditSelected.Name*/
+                                                Modulo.INV_BEPSistemasModulo=itmMyModuloEditSelected.INV_BEPSistemasModulo
+                                                );
+                
+                                                ForAll(  /*cmbAreaNegocioEditModulo_1.SelectedItems*/
+                                                myAreasEditModal As aItem ,
+                                                If(CountRows(Filter(INV_BEPAreaProcesosxModulo,
+                                                    'Área Negocio'.INV_BEPCat_AreaNegocio=aItem.area.INV_BEPCat_AreaNegocio
+                                                    And
+                                                    
+                                                    Modulo.INV_BEPSistemasModulo=itmMyModuloEditSelected.INV_BEPSistemasModulo
+                                                    )) > 0 ,
+                                                    Blank()
+                                                    ,
+                                                    Patch(INV_BEPAreaProcesosxModulo,
+                
+                                                    Defaults(INV_BEPAreaProcesosxModulo),
+                
+                                                    { 
+                                                        'Área Negocio':aItem.area,
+                                                         Propietario:itmMyModuloEditSelected.'Equipo propietario',
+                
+                                                        'Proceso de negocio':aItem.proceso,
+                                                        Modulo:LookUp(INV_BEPSistemasModulo, 
+                                                    
+                                                        INV_BEPSistemasModulo=itmMyModuloEditSelected.INV_BEPSistemasModulo
+                                                        /*Name=itmMyModuloEditSelected.Name*/),
+                                                        Name:aItem.area.Name & patchModulo.Name  & ""
+                                                    });
+                                                    );
+                
+                                                );
+                                                Notify("El módulo se actualizó correctamente.",NotificationType.Success);
+                                                UpdateContext({showModalModuloSistemaUpd: false});
+                
+                                                );
+                
+                                );
+                
+                
+                );
+                
+                
+                
+                
+            Text: ="Editar"
+            Tooltip: ="Editar módulo"
+            X: =835
+            Y: =541
+            ZIndex: =4
+
+        INV_BEP_ModalHeadEditModuloTab As groupContainer.manualLayoutContainer:
+            Fill: =White
+            Height: =367
+            Visible: |-
+                =showTabModuloModalEdit
+                /*
+                UpdateContext({showTabModuloModalEdit: true});
+                UpdateContext({showTabAreaNegModalEdit: false});*/
+            Width: =765
+            X: =306
+            Y: =169
+            ZIndex: =5
+
+            Label30_2 As label:
+                Text: ="Compañía"
+                X: =419
+                Y: =30
+                ZIndex: =1
+
+            cmbEditCompaniaModulo_1 As dropdown:
+                AllowEmptySelection: =true
+                Default: |+
+                    =itmMyModuloEditSelected.Compañía.Name
+                    
+                DisplayMode: |-
+                    =Disabled
+                    
+                    /*If(myAllowEditSystem=true,
+                    
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled)
+                    */
+                Items: |-
+                    =/*
+                    INV_BEPCat_Compania
+                    */
+                    
+                    
+                    Filter(INV_BEPCat_Compania,Division.Name=
+                    First(myDivisionPorModulo).INV_BEP_optDivision.Name
+                    )
+                    
+                    
+                    //itmMyModuloEditSelected.Sistema.INV_BEP_optDivision.Nombre
+                    /*cmbEditSistModulo_1.Selected.INV_BEP_optDivision.Nombre*/
+                X: =419
+                Y: =77
+                ZIndex: =2
+
+            Label32_9 As label:
+                Height: =42
+                Text: ="Dirección/Gerencia de TI "
+                Width: =328
+                X: =35
+                Y: =196
+                ZIndex: =3
+
+            cmbEditsGerModulo_1 As dropdown:
+                Default: =itmMyModuloEditSelected.'Dirección/ Gerencia de TI'.Name
+                DisplayMode: |
+                    =If(myAllowEditSystem=true,
+                    
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled)
+                Items: =INV_BEPCat_PersonalInventarios
+                X: =35
+                Y: =238
+                ZIndex: =4
+
+            cmbEditsEspModulo_1 As dropdown:
+                Default: =itmMyModuloEditSelected.'Especialista de Aplicaciones'.Name
+                DisplayMode: |
+                    =If(myAllowEditSystem=true,
+                    
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled)
+                Items: =INV_BEPCat_PersonalInventarios
+                X: =419
+                Y: =157
+                ZIndex: =5
+
+            Label32_8 As label:
+                Height: =44
+                Text: ="Especialista de aplicaciones"
+                Width: =303
+                X: =419
+                Y: =119
+                ZIndex: =6
+
+            Label32_10 As label:
+                Text: ="Líder TI"
+                X: =35
+                Y: =278
+                ZIndex: =7
+
+            cmbEditsLidModulo_1 As dropdown:
+                Default: =itmMyModuloEditSelected.'Líder TI'.Name
+                DisplayMode: |
+                    =If(myAllowEditSystem=true,
+                    
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled)
+                Items: =INV_BEPCat_PersonalInventarios
+                X: =35
+                Y: =317
+                ZIndex: =8
+
+            txtEditNombreModulo_1 As text:
+                BorderColor: |-
+                    =If(IsBlank(txtEditNombreModulo_1.Text) 
+                    ,
+                        Red,
+                      RGBA(0, 18, 107, 1)
+                      )
+                Default: =itmMyModuloEditSelected.Modulo
+                DisplayMode: |
+                    =If(myAllowEditSystem=true,
+                    
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled)
+                HintText: ="Nombre Módulo"
+                MaxLength: =100
+                X: =35
+                Y: =157
+                ZIndex: =9
+
+            Label32_11 As label:
+                Text: ="Nombre módulo"
+                Width: =204
+                X: =35
+                Y: =118
+                ZIndex: =10
+
+            Label33_2 As label:
+                Height: =39
+                Text: ="Descripción"
+                X: =419
+                Y: =207
+                ZIndex: =11
+
+            txtEditDecripModulo_1 As text:
+                Default: =itmMyModuloEditSelected.Descripcion
+                DisplayMode: |
+                    =If(myAllowEditSystem=true,
+                    
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled)
+                Height: =91
+                HintText: ="Descripción"
+                MaxLength: =300
+                Mode: =TextMode.MultiLine
+                Width: =324
+                X: =419
+                Y: =248
+                ZIndex: =12
+
+            Label30_4 As label:
+                Text: ="Sistema"
+                X: =33
+                Y: =33
+                ZIndex: =13
+
+            cmbEditCompaniaModulo_2 As dropdown:
+                Default: |+
+                    =itmMyModuloEditSelected.Sistema.Name
+                    
+                DisplayMode: |-
+                    =Disabled
+                    
+                    /*If(myAllowEditSystem=true,
+                    
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled)
+                    */
+                Items: |-
+                    =Filter(INV_BEPCnfSistemaDivisiones,
+                    
+                    INV_BEP_optSistemas.INV_BEPCat_Sistemas=mySelectSystemDet.INV_BEPCat_Sistemas
+                    /*
+                    INV_BEP_optSistemas.Name =
+                    mySelectSystemDetName
+                    */
+                    )
+                X: =35
+                Y: =79
+                ZIndex: =14
+
+        INV_BEP_ModalHeadEditModuloTabArea As groupContainer.manualLayoutContainer:
+            Fill: =White
+            Height: =352
+            Visible: |
+                =
+                showTabAreaNegModalEdit
+                /*
+                UpdateContext({showTabModuloModalEdit: true});
+                UpdateContext({showTabAreaNegModalEdit: false});*/
+            Width: =765
+            X: =306
+            Y: =169
+            ZIndex: =6
+
+            Label34_2 As label:
+                Height: =38
+                Text: ="Área de negocio"
+                Width: =222
+                X: =22
+                Y: =29
+                ZIndex: =1
+
+            cmbAreaNegocioEditModulo As combobox:
+                DefaultSelectedItems: |-
+                    = 
+                     /*
+                    Filter(INV_BEPCat_AreaNegocio,Name in
+                    
+                    myItmModAreasNegocio
+                      
+                    )
+                    */
+                DisplayFields: =["new_name"]
+                DisplayMode: |
+                    =If(myAllowEditSystem=true,
+                    
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled)
+                InputTextPlaceholder: ="Área de negocio"
+                IsSearchable: =false
+                Items: |-
+                    =
+                    INV_BEPCat_AreaNegocio 
+                Reset: =true
+                SearchFields: =["new_name"]
+                SearchItems: =[]
+                SelectMultiple: =false
+                X: =29
+                Y: =68
+                ZIndex: =2
+
+            txtEditNombreModuloEdit As text:
+                Default: =
+                DisplayMode: |
+                    =If(myAllowEditSystem=true,
+                    
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled)
+                HintText: ="Proceso"
+                MaxLength: =100
+                Reset: =true
+                Width: =265
+                X: =395
+                Y: =68
+                ZIndex: =3
+
+            Label32_18 As label:
+                Text: ="Proceso"
+                Width: =204
+                X: =395
+                Y: =29
+                ZIndex: =4
+
+            Rectangle11_1 As rectangle:
+                Fill: =ColorValue(  INV_ColorPrincipal)
+                Height: =44
+                Width: =697
+                X: =29
+                Y: =130
+                ZIndex: =6
+
+            Label34_5 As label:
+                Color: =ColorValue(  INV_ColorFuente)
+                Height: =45
+                Text: ="Área de negocio"
+                Width: =222
+                X: =31
+                Y: =130
+                ZIndex: =7
+
+            Label32_19 As label:
+                Color: =ColorValue(  INV_ColorFuente)
+                Height: =39
+                Text: ="Proceso"
+                Width: =339
+                X: =293
+                Y: =135
+                ZIndex: =8
+
+            INV_BEP_ModalCloseEditarModulo_2 As icon.Cancel:
+                Color: =ColorValue(  INV_ColorPrincipal)
+                Height: =50
+                Icon: =Icon.Add
+                OnSelect: |-
+                    =
+                    If(CountRows(Filter(myAreasEditModal, area.Name= cmbAreaNegocioEditModulo.Selected.Name ))>0,
+                    Notify("No esta permitido repetir la misma área",NotificationType.Information);
+                    
+                    ,
+                    If( IsBlank(txtEditNombreModuloEdit.Text) Or IsBlank(cmbAreaNegocioEditModulo.Selected),
+                     Notify("Debe indicar tanto proceso como área",NotificationType.Information),
+                                    If(IsBlank( myAreasEditModal),
+                                    ClearCollect(myAreasEditModal,{
+                                        area:cmbAreaNegocioEditModulo.Selected,
+                                        proceso:txtEditNombreModuloEdit.Text
+                    
+                    
+                                    }),
+                    
+                                    Collect(myAreasEditModal,
+                                    {
+                                        area:cmbAreaNegocioEditModulo.Selected,
+                                        proceso:txtEditNombreModuloEdit.Text
+                    
+                    
+                                    });
+                                    );
+                            Reset(txtEditNombreModuloEdit);
+                            Reset(cmbAreaNegocioEditModulo);
+                            )
+                    
+                    );
+                PaddingBottom: =10
+                PaddingLeft: =10
+                PaddingRight: =10
+                PaddingTop: =10
+                Tooltip: ="Agregar área"
+                Width: =50
+                X: =685
+                Y: =56
+                ZIndex: =9
+
+            "Gallery6 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+                Height: =182
+                Items: =myAreasEditModal
+                Layout: =Layout.Vertical
+                TemplatePadding: =0
+                TemplateSize: =37
+                Width: =694
+                X: =32
+                Y: =170
+                ZIndex: =10
+
+                NextArrow4 As icon.ChevronRight:
+                    AccessibleLabel: =Self.Tooltip
+                    DisplayMode: |-
+                        =
+                        If(initAreaCurrName=ThisItem.area.Name ,
+                        DisplayMode.Disabled
+                        ,
+                        DisplayMode.Edit
+                        )
+                    Height: =36
+                    Icon: =Icon.Cancel
+                    OnSelect: =RemoveIf(myAreasEditModal,area.Name=ThisItem.area.Name);
+                    PaddingBottom: =10
+                    PaddingLeft: =10
+                    PaddingRight: =10
+                    PaddingTop: =10
+                    TabIndex: =0
+                    Tooltip: ="Quitar"
+                    Width: =37
+                    X: =657
+                    ZIndex: =2
+
+                Separator8 As rectangle:
+                    Height: =1
+                    OnSelect: =Select(Parent)
+                    Width: =Parent.TemplateWidth
+                    Y: =Parent.TemplateHeight - 1
+                    ZIndex: =3
+
+                Label41 As label:
+                    BorderThickness: =1
+                    Height: =36
+                    OnSelect: =Select(Parent)
+                    Size: =10
+                    Text: =ThisItem.area.Name
+                    Width: =213
+                    ZIndex: =4
+
+                Label41_2 As label:
+                    BorderColor: |
+                        =
+                        RGBA(0, 18, 107, 1)
+                    BorderThickness: =1
+                    Color: =Black
+                    Height: =36
+                    OnSelect: =Select(Parent)
+                    Size: =10
+                    Text: =ThisItem.proceso 
+                    Visible: |-
+                        =/*
+                        If(initAreaCurrName=ThisItem.area.Name ,
+                        editArea,false)
+                        
+                        */If(initAreaCurrName=ThisItem.area.Name,
+                        !editArea,true)
+                    Width: =320
+                    X: =213
+                    ZIndex: =5
+
+                NextArrow4_1 As icon.ChevronRight:
+                    AccessibleLabel: =Self.Tooltip
+                    DisplayMode: |-
+                        =
+                        If(initAreaCurrName=ThisItem.area.Name ,
+                        DisplayMode.Disabled
+                        ,
+                        DisplayMode.Edit
+                        )
+                    Height: =37
+                    Icon: =Icon.Edit
+                    OnSelect: |
+                        =
+                        
+                        UpdateContext( { editArea: true } );
+                        UpdateContext( { initAreaCurrName: ThisItem.area.Name } );
+                    PaddingBottom: =10
+                    PaddingLeft: =10
+                    PaddingRight: =10
+                    PaddingTop: =10
+                    TabIndex: =0
+                    Tooltip: ="Editar"
+                    Width: =38
+                    X: =619
+                    ZIndex: =6
+
+                txtProcesoModalArea As text:
+                    BorderColor: |
+                        =
+                        If(initAreaCurrName=ThisItem.area.Name ,
+                        Green
+                        ,
+                        RGBA(0, 18, 107, 1)
+                        )
+                    Default: =ThisItem.proceso
+                    Height: =37
+                    OnSelect: =Select(Parent)
+                    Size: =10
+                    Visible: |
+                        =If(initAreaCurrName=ThisItem.area.Name ,
+                        editArea,false)
+                    X: =213
+                    ZIndex: =7
+
+                NextArrow4_2 As icon.ChevronRight:
+                    AccessibleLabel: =Self.Tooltip
+                    DisplayMode: |
+                        =If(initAreaCurrName=ThisItem.area.Name ,
+                        DisplayMode.Edit
+                        ,
+                        DisplayMode.Disabled
+                        )
+                    Height: =37
+                    Icon: =Icon.Check
+                    OnSelect: |-
+                        =
+                        UpdateIf(myAreasEditModal,
+                        area.Name=ThisItem.area.Name,
+                        {
+                            proceso:txtProcesoModalArea.Text
+                        });
+                        
+                        UpdateContext( { editArea: false } );
+                        UpdateContext( { initAreaCurrName: Blank() } );
+                    PaddingBottom: =10
+                    PaddingLeft: =10
+                    PaddingRight: =10
+                    PaddingTop: =10
+                    TabIndex: =0
+                    Tooltip: ="Confirmar"
+                    Width: =32
+                    X: =586
+                    ZIndex: =8
+
+                NextArrow4_3 As icon.ChevronRight:
+                    AccessibleLabel: =Self.Tooltip
+                    DisplayMode: |
+                        =If(initAreaCurrName=ThisItem.area.Name ,
+                        DisplayMode.Edit
+                        ,
+                        DisplayMode.Disabled
+                        )
+                    Height: =37
+                    Icon: =Icon.Undo
+                    OnSelect: |-
+                        =
+                        
+                        UpdateContext( { editArea: false } );
+                        UpdateContext( { initAreaCurrName: Blank() } );
+                    PaddingBottom: =10
+                    PaddingLeft: =10
+                    PaddingRight: =10
+                    PaddingTop: =10
+                    TabIndex: =0
+                    Tooltip: ="Regresar"
+                    Width: =32
+                    X: =554
+                    ZIndex: =9
+
+        Label40 As label:
+            BorderColor: =RGBA(0, 0, 0, 0)
+            Color: |
+                =If(showTabModuloModalEdit=true,
+                Black
+                
+                ,
+                White)
+            Fill: |
+                =If(showTabModuloModalEdit=true,
+                White,
+                ColorValue(  INV_ColorPrincipal))
+            FontWeight: =FontWeight.Semibold
+            Height: |-
+                =If(showTabModuloModalEdit=true,
+                80
+                ,
+                65)
+            OnSelect: |-
+                =
+                
+                UpdateContext({showTabModuloModalEdit: true});
+                UpdateContext({showTabAreaNegModalEdit: false});
+            Size: |
+                =If(showTabModuloModalEdit=true,
+                13
+                
+                ,
+                10)
+            Text: ="Editar módulo"
+            Width: =207
+            X: =306
+            Y: |-
+                =If(showTabModuloModalEdit=true,
+                72
+                ,
+                81)
+            ZIndex: =7
+
+        Label40_1 As label:
+            BorderColor: =RGBA(0, 0, 0, 0)
+            Color: |-
+                =If(showTabAreaNegModalEdit=true,
+                Black
+                
+                ,
+                White)
+            Fill: |
+                =If(showTabAreaNegModalEdit=true,
+                White,
+                ColorValue(  INV_ColorPrincipal))
+            FontWeight: =FontWeight.Semibold
+            Height: |-
+                =If(showTabAreaNegModalEdit=true,
+                80
+                ,
+                65)
+            OnSelect: |-
+                =
+                
+                UpdateContext({showTabModuloModalEdit: false});
+                UpdateContext({showTabAreaNegModalEdit: true});
+            Size: |-
+                =If(showTabAreaNegModalEdit=true,
+                13
+                
+                ,
+                10)
+            Text: ="Áreas de negocio y proceso"
+            Width: =278
+            X: =513
+            Y: |-
+                =If(showTabAreaNegModalEdit=true,
+                72
+                ,
+                81)
+            ZIndex: =8
+
+        Label36_1 As label:
+            Align: =Align.Right
+            Color: =Black
+            Height: =33
+            Size: =10
+            Text: |-
+                ="Módulo : [ " & itmMyModuloEditSelected.Name & " ]"
+            Width: =720
+            X: =338
+            Y: =159
+            ZIndex: =9
+
+    INV_BEP_ModalCrearMod As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0,0,0,0.4)
+        Height: =768
+        Visible: =showModalModulosSistema
+        Width: =1366
+        ZIndex: =18
+
+        INV_BEP_ModalHeadCrearModulo_1 As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =77
+            Width: =765
+            X: =306
+            Y: =81
+            ZIndex: =1
+
+        INV_BEP_ModalBodyCrearModulo_1 As rectangle:
+            BorderColor: =White
+            Fill: =White
+            Height: =423
+            Width: =767
+            X: =304
+            Y: =158
+            ZIndex: =2
+
+        INV_BEP_ModalCloseCrearModulo_1 As icon.Cancel:
+            Color: =ColorValue(  INV_ColorFuente)
+            Icon: =Icon.Cancel
+            OnSelect: |
+                =
+                UpdateContext({showModalModulosSistema: false});
+                
+                UpdateContext({showTabModuloModal: true});
+                UpdateContext({showTabAreaNegModal: false});
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            X: =995
+            Y: =87
+            ZIndex: =3
+
+        Label37_1 As label:
+            BorderColor: =White
+            Color: |+
+                =If(showTabModuloModal=true,
+                Black
+                
+                ,
+                White)
+                
+                
+                
+            Fill: |+
+                =If(showTabModuloModal=true,
+                White,
+                ColorValue(  INV_ColorPrincipal))
+                
+                
+            FontWeight: =FontWeight.Semibold
+            Height: |-
+                =
+                If(showTabModuloModal=true,
+                80
+                ,
+                67)
+            OnSelect: |-
+                =
+                UpdateContext({showTabModuloModal: true});
+                UpdateContext({showTabAreaNegModal: false});
+            Size: |
+                =If(showTabModuloModal=true,
+                13
+                
+                ,
+                10)
+            Text: ="Crear módulo"
+            Width: =207
+            X: =304
+            Y: |-
+                =If(showTabModuloModal=true,
+                69
+                ,
+                81)
+            ZIndex: =21
+
+        Label39_1 As label:
+            Height: =32
+            Text: =equipoSistema.'Equipo propietario'.'Team Name'
+            Visible: =false
+            Width: =338
+            X: =347
+            Y: =581
+            ZIndex: =22
+
+        Label37_2 As label:
+            BorderColor: =White
+            Color: |+
+                =/*ColorValue(  INV_ColorFuente)*/
+                
+                If(showTabAreaNegModal=true,
+                Black
+                
+                ,
+                ColorValue(  INV_ColorFuente))
+                
+            Fill: |+
+                =
+                If(showTabAreaNegModal=true,
+                White
+                
+                ,
+                ColorValue(  INV_ColorPrincipal))
+                
+            FontWeight: =FontWeight.Semibold
+            Height: |-
+                =
+                If(showTabAreaNegModal=true,
+                80
+                ,
+                65)
+            OnSelect: |-
+                =
+                UpdateContext({showTabModuloModal: false});
+                UpdateContext({showTabAreaNegModal: true});
+            Size: |
+                =If(showTabAreaNegModal=true,
+                13
+                
+                ,
+                10)
+            Text: ="Áreas de negocio y proceso"
+            Width: =278
+            X: =513
+            Y: |-
+                =
+                If(showTabAreaNegModal=true,
+                69
+                ,
+                81)
+            ZIndex: =23
+
+        INV_BEP_ModalHeadCrearModuloTab As groupContainer.manualLayoutContainer:
+            BorderColor: =RGBA(0, 0, 0, 0)
+            Fill: =White
+            Height: =380
+            Visible: |-
+                =
+                showTabModuloModal
+            Width: =765
+            X: =304
+            Y: =148
+            ZIndex: =24
+
+            Label30_3 As label:
+                Text: ="Compañía"
+                X: =404
+                Y: =4
+                ZIndex: =1
+
+            cmbCreaCompaniaModulo_1 As dropdown:
+                AllowEmptySelection: =true
+                BorderColor: |-
+                    =If(IsBlank(cmbCreaCompaniaModulo_1.Selected) 
+                    ,
+                        Red,
+                      RGBA(0, 18, 107, 1)
+                      )
+                Default: =
+                DisplayMode: |-
+                    =/*
+                    If(myAllowEditSystem=true,
+                    
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled)
+                    */
+                    DisplayMode.Edit
+                Items: |-
+                    =
+                    Filter(INV_BEPCat_Compania,Division.Name= cmbCreaSistModulo_1.Selected.INV_BEP_optDivision.Name)
+                Reset: =true
+                X: =404
+                Y: =45
+                ZIndex: =2
+
+            cmbCreaSistModulo_1 As dropdown:
+                Default: =
+                DisplayMode: |-
+                    =/*
+                    If(myAllowEditSystem=true,
+                    
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled)
+                    */
+                    DisplayMode.Edit
+                Items: |
+                    =
+                    /*
+                    
+                    Version  para ver todos si ERES administrador :
+                    
+                    If(SuperAdmin=true,
+                    INV_BEPCnfSistemaDivisiones,
+                    Filter(INV_BEPCnfSistemaDivisiones,
+                    INV_BEP_optSistemas.Name =
+                    mySelectSystemDetName
+                    )
+                    )
+                    */
+                    Filter(INV_BEPCnfSistemaDivisiones,
+                    INV_BEP_optSistemas.INV_BEPCat_Sistemas=mySelectSystemDet.INV_BEPCat_Sistemas
+                    And 
+                    Estado='Estado (INV_BEPCnfSistemaDivisiones)'.Activo
+                    
+                    
+                    /*INV_BEP_optSistemas.Name =
+                    mySelectSystemDetName*/
+                    )
+                X: =35
+                Y: =49
+                ZIndex: =3
+
+            Label31_3 As label:
+                Text: ="Sistema"
+                X: =35
+                Y: =4
+                ZIndex: =4
+
+            Label32_13 As label:
+                Text: ="Dirección/Gerencia de TI "
+                Width: =328
+                X: =35
+                Y: =169
+                ZIndex: =5
+
+            cmbCreaGerModulo_1 As dropdown:
+                AllowEmptySelection: =true
+                BorderColor: |-
+                    =If(IsBlank(cmbCreaGerModulo_1.Selected) 
+                    ,
+                        Red,
+                      RGBA(0, 18, 107, 1)
+                      )
+                Default: =
+                DisplayMode: |-
+                    =/*
+                    If(myAllowEditSystem=true,
+                    
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled)
+                    */
+                    DisplayMode.Edit
+                Items: =INV_BEPCat_PersonalInventarios
+                Reset: =true
+                X: =35
+                Y: =209
+                ZIndex: =6
+
+            cmbCreaEspModulo_1 As dropdown:
+                AllowEmptySelection: =true
+                BorderColor: |-
+                    =If(IsBlank(cmbCreaEspModulo_1.Selected) 
+                    ,
+                        Red,
+                      RGBA(0, 18, 107, 1)
+                      )
+                Default: =
+                DisplayMode: |-
+                    =/*
+                    If(myAllowEditSystem=true,
+                    
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled)
+                    */
+                    DisplayMode.Edit
+                Items: =INV_BEPCat_PersonalInventarios
+                Reset: =true
+                X: =404
+                Y: =252
+                ZIndex: =7
+
+            Label32_12 As label:
+                Height: =44
+                Text: ="Especialista de aplicaciones"
+                Width: =303
+                X: =404
+                Y: =208
+                ZIndex: =8
+
+            Label32_14 As label:
+                Text: ="Líder TI"
+                X: =35
+                Y: =250
+                ZIndex: =9
+
+            cmbCreaLidModulo_1 As dropdown:
+                AllowEmptySelection: =true
+                BorderColor: |-
+                    =If(IsBlank(cmbCreaLidModulo_1.Selected) 
+                    ,
+                        Red,
+                      RGBA(0, 18, 107, 1)
+                      )
+                Default: =
+                DisplayMode: |-
+                    =/*
+                    If(myAllowEditSystem=true,
+                    
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled)
+                    */
+                    DisplayMode.Edit
+                Items: =INV_BEPCat_PersonalInventarios
+                Reset: =true
+                X: =35
+                Y: =289
+                ZIndex: =10
+
+            txtCreaNombreModulo_1 As text:
+                BorderColor: |-
+                    =If(IsBlank(txtCreaNombreModulo_1.Text) 
+                    ,
+                        Red,
+                      RGBA(0, 18, 107, 1)
+                      )
+                Default: =
+                DisplayMode: |-
+                    =/*
+                    If(myAllowEditSystem=true,
+                    
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled)
+                    */
+                    DisplayMode.Edit
+                HintText: ="Nombre Módulo"
+                MaxLength: =100
+                X: =35
+                Y: =129
+                ZIndex: =11
+
+            Label32_15 As label:
+                Text: ="Nombre módulo"
+                Width: =204
+                X: =35
+                Y: =89
+                ZIndex: =12
+
+            Label33_3 As label:
+                Height: =39
+                Text: ="Descripción"
+                X: =404
+                Y: =85
+                ZIndex: =13
+
+            txtCreaDecripModulo_1 As text:
+                Default: =
+                DisplayMode: |-
+                    =/*
+                    If(myAllowEditSystem=true,
+                    
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled)
+                    */
+                    DisplayMode.Edit
+                Height: =78
+                HintText: ="Descripción"
+                MaxLength: =300
+                Mode: =TextMode.MultiLine
+                Width: =328
+                X: =404
+                Y: =124
+                ZIndex: =14
+
+        INV_BEP_ModalHeadCrearModuloTabArea As groupContainer.manualLayoutContainer:
+            Fill: =White
+            Height: =380
+            Visible: =showTabAreaNegModal
+            Width: =765
+            X: =306
+            Y: =148
+            ZIndex: =25
+
+            Label34_3 As label:
+                Height: =38
+                Text: ="Área de negocio"
+                Width: =222
+                X: =9
+                Y: =6
+                ZIndex: =1
+
+            cmbCreaNegocioModulo As combobox:
+                BorderColor: |-
+                    =If(IsBlank(cmbCreaNegocioModulo.Selected) 
+                    ,
+                        Red,
+                      RGBA(0, 18, 107, 1)
+                      )
+                DefaultSelectedItems: =
+                DisplayFields: =["new_name"]
+                DisplayMode: |-
+                    =/*
+                    If(myAllowEditSystem=true,
+                    
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled)
+                    */
+                    DisplayMode.Edit
+                InputTextPlaceholder: ="Área de negocio"
+                IsSearchable: =false
+                Items: =INV_BEPCat_AreaNegocio
+                Reset: =true
+                SearchFields: =["new_name"]
+                SearchItems: =[]
+                SelectMultiple: =false
+                X: =16
+                Y: =45
+                ZIndex: =2
+
+            txtCreaProceso As text:
+                BorderColor: |-
+                    =If(IsBlank(txtCreaProceso.Text) 
+                    ,
+                        Red,
+                      RGBA(0, 18, 107, 1)
+                      )
+                Default: =
+                DisplayMode: |-
+                    =/*
+                    If(myAllowEditSystem=true,
+                    
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled)
+                    */
+                    DisplayMode.Edit
+                Height: =39
+                HintText: ="Proceso"
+                MaxLength: =100
+                Reset: =true
+                Width: =278
+                X: =367
+                Y: =46
+                ZIndex: =3
+
+            Label32_16 As label:
+                Text: ="Proceso"
+                Width: =204
+                X: =363
+                Y: =6
+                ZIndex: =4
+
+            btnAgregarAreaCrear As icon.Add:
+                Height: =50
+                Icon: =Icon.Add
+                OnSelect: |
+                    =
+                    
+                    If(CountRows(Filter(myAreasCrear, area.Name= cmbCreaNegocioModulo.Selected.Name ))>0,
+                    Notify("No esta permitido repetir la misma área",NotificationType.Information);
+                    
+                    ,
+                    If( IsBlank(txtCreaProceso.Text) Or IsBlank(cmbCreaNegocioModulo.Selected),
+                     Notify("Debe indicar tanto proceso como área",NotificationType.Information),
+                                    If(IsBlank( myAreasCrear),
+                                    ClearCollect(myAreasCrear,{
+                                        area:cmbCreaNegocioModulo.Selected,
+                                        proceso:txtCreaProceso.Text
+                    
+                    
+                                    }),
+                    
+                                    Collect(myAreasCrear,
+                                    {
+                                        area:cmbCreaNegocioModulo.Selected,
+                                        proceso:txtCreaProceso.Text
+                    
+                    
+                                    });
+                                    );
+                            Reset(txtCreaProceso);
+                            Reset(cmbCreaNegocioModulo);
+                            )
+                    
+                    );
+                PaddingBottom: =10
+                PaddingLeft: =10
+                PaddingRight: =10
+                PaddingTop: =10
+                Tooltip: ="Agregar área"
+                Width: =50
+                X: =662
+                Y: =42
+                ZIndex: =5
+
+            Rectangle11 As rectangle:
+                Fill: =ColorValue(  INV_ColorPrincipal)
+                Height: =47
+                Width: =747
+                X: =9
+                Y: =90
+                ZIndex: =7
+
+            Label34_4 As label:
+                Color: =ColorValue(  INV_ColorFuente)
+                Height: =38
+                Text: ="Área de negocio"
+                Width: =222
+                X: =9
+                Y: =94
+                ZIndex: =8
+
+            Label32_17 As label:
+                Color: =ColorValue(  INV_ColorFuente)
+                Text: ="Proceso"
+                Width: =204
+                X: =332
+                Y: =94
+                ZIndex: =9
+
+            "Gallery3 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+                Height: =206
+                Items: =myAreasCrear
+                Layout: =Layout.Vertical
+                TemplatePadding: =0
+                TemplateSize: =39
+                Width: =747
+                X: =9
+                Y: =134
+                ZIndex: =10
+
+                btnDeleAreaModal As icon.ChevronRight:
+                    AccessibleLabel: =Self.Tooltip
+                    DisplayMode: |-
+                        =If(initAreaCurrName=ThisItem.area.Name ,
+                        DisplayMode.Disabled
+                        ,
+                        DisplayMode.Edit
+                        )
+                    Height: =38
+                    Icon: =Icon.Cancel
+                    OnSelect: =RemoveIf(myAreasCrear,area.Name=ThisItem.area.Name);
+                    PaddingBottom: =10
+                    PaddingLeft: =10
+                    PaddingRight: =10
+                    PaddingTop: =10
+                    TabIndex: =0
+                    Tooltip: ="Quitar"
+                    Width: =37
+                    X: =710
+                    ZIndex: =2
+
+                Separator3 As rectangle:
+                    Height: =1
+                    OnSelect: =Select(Parent)
+                    Width: =Parent.TemplateWidth
+                    Y: =Parent.TemplateHeight - 1
+                    ZIndex: =3
+
+                Label36 As label:
+                    BorderThickness: =1
+                    Height: =38
+                    OnSelect: =Select(Parent)
+                    Text: =ThisItem.proceso
+                    Visible: |-
+                        =If(initAreaCurrName=ThisItem.area.Name,
+                        !editArea,true)
+                    Width: =320
+                    X: =247
+                    Y: =1
+                    ZIndex: =4
+
+                Label37 As label:
+                    BorderThickness: =1
+                    Height: =39
+                    OnSelect: =Select(Parent)
+                    Text: =ThisItem.area.Name
+                    Width: =247
+                    ZIndex: =5
+
+                TextInput3 As text:
+                    BorderColor: |+
+                        =If(initAreaCurrName=ThisItem.area.Name ,
+                        Green
+                        ,
+                        RGBA(0, 18, 107, 1)
+                        )
+                        
+                        
+                        
+                    Default: =ThisItem.proceso
+                    Height: =39
+                    OnSelect: =Select(Parent)
+                    Visible: |-
+                        =If(initAreaCurrName=ThisItem.area.Name ,
+                        editArea,false)
+                    X: =247
+                    ZIndex: =6
+
+                btnDeleAreaModal_1 As icon.ChevronRight:
+                    AccessibleLabel: =Self.Tooltip
+                    DisplayMode: |-
+                        =
+                        If(initAreaCurrName=ThisItem.area.Name ,
+                        DisplayMode.Edit
+                        ,
+                        DisplayMode.Disabled
+                        )
+                    Height: =39
+                    Icon: =Icon.Check
+                    OnSelect: |+
+                        =
+                        
+                        UpdateIf(myAreasCrear,
+                        area.Name=ThisItem.area.Name,
+                        {
+                            proceso:TextInput3.Text
+                        });
+                        
+                        UpdateContext( { editArea: false } );
+                        UpdateContext( { initAreaCurrName: Blank() } );
+                        
+                        
+                    PaddingBottom: =10
+                    PaddingLeft: =10
+                    PaddingRight: =10
+                    PaddingTop: =10
+                    TabIndex: =0
+                    Tooltip: ="Confirmar"
+                    Width: =37
+                    X: =624
+                    ZIndex: =7
+
+                btnDeleAreaModal_2 As icon.ChevronRight:
+                    AccessibleLabel: =Self.Tooltip
+                    DisplayMode: |-
+                        =
+                        If(initAreaCurrName=ThisItem.area.Name ,
+                        DisplayMode.Disabled
+                        ,
+                        DisplayMode.Edit
+                        )
+                    Height: =39
+                    Icon: =Icon.Edit
+                    OnSelect: |+
+                        =
+                        
+                        /*UpdateContext( { editArea: false } );
+                        UpdateContext( { initAreaCurrName: Blank() } );
+                        */
+                        UpdateContext( { editArea: true } );
+                        UpdateContext( { initAreaCurrName: ThisItem.area.Name } );
+                        
+                        
+                    PaddingBottom: =10
+                    PaddingLeft: =10
+                    PaddingRight: =10
+                    PaddingTop: =10
+                    TabIndex: =0
+                    Tooltip: ="Editar"
+                    Width: =37
+                    X: =673
+                    ZIndex: =8
+
+                btnDeleAreaModal_3 As icon.ChevronRight:
+                    AccessibleLabel: =Self.Tooltip
+                    DisplayMode: |+
+                        =
+                        
+                        
+                        If(initAreaCurrName=ThisItem.area.Name ,
+                        DisplayMode.Edit
+                        ,
+                        DisplayMode.Disabled
+                        )
+                        
+                    Height: =39
+                    Icon: =Icon.Undo
+                    OnSelect: |+
+                        =/*UpdateContext( { editArea: true } );
+                        UpdateContext( { initAreaCurrName: ThisItem.area.Name } );
+                        */
+                        UpdateContext( { editArea: false } );
+                        UpdateContext( { initAreaCurrName: Blank() } );
+                        
+                    PaddingBottom: =10
+                    PaddingLeft: =10
+                    PaddingRight: =10
+                    PaddingTop: =10
+                    TabIndex: =0
+                    Tooltip: ="Regresar"
+                    Width: =37
+                    X: =587
+                    ZIndex: =9
+
+        btnCreaModulo As button:
+            DisplayMode: |-
+                =/*
+                If(myAllowEditSystem=true,
+                
+                DisplayMode.Edit,
+                DisplayMode.Disabled)
+                */
+                If(
+                checkPatchSystem=false,
+                DisplayMode.Edit,
+                DisplayMode.Disabled)
+            OnSelect: |+
+                =
+                UpdateContext({mensajeError: Blank()});
+                UpdateContext({patchModulo: Blank()});
+                
+                
+                UpdateContext({equipoSistema: LookUp(INV_BEPCat_Sistemas,/*Name*/
+                
+                INV_BEPCat_Sistemas= cmbCreaSistModulo_1.Selected.INV_BEP_optSistemas.INV_BEPCat_Sistemas/*cmbCreaSistModulo_1.Selected.INV_BEP_optSistemas.Name*/ )});
+                
+                
+                
+                If(
+                    cmbCreaCompaniaModulo_1.BorderColor=Red
+                    Or
+                     txtCreaNombreModulo_1.BorderColor=Red
+                    /*Or
+                    cmbCreaNegocioModulo.BorderColor=Red*/
+                
+                
+                    Or
+                     cmbCreaGerModulo_1.BorderColor=Red
+                     Or
+                      cmbCreaEspModulo_1.BorderColor=Red
+                      Or
+                      CountRows(myAreasCrear)<=0
+                
+                    ,
+                
+                
+                UpdateContext({mensajeError: 
+                Concatenate (
+                 If(cmbCreaCompaniaModulo_1.BorderColor=Red," Compañía,","" ) ,
+                 If(txtCreaNombreModulo_1.BorderColor=Red," Nombre de módulo,","" ) ,
+                 /*If(cmbCreaNegocioModulo.BorderColor=Red," Área de negocio,","" ) ,*/
+                 If(cmbCreaGerModulo_1.BorderColor=Red,"Gerencia de TI,","" )  ,
+                 If(cmbCreaEspModulo_1.BorderColor=Red," Especialista de aplicaciones,","" ) ,
+                 If(cmbCreaLidModulo_1.BorderColor=Red," Especialista de aplicaciones,","" ) ,
+                 If(CountRows(myAreasCrear)<=0,"Área de negocio y proceso","")
+                )
+                });
+                
+                Notify("ERROR : Faltan llenar los datos de :"&Left(mensajeError,Len(mensajeError) -1));
+                
+                ,
+                
+                If(CountRows(Filter(INV_BEPSistemasModulo,
+                
+                Sistema.Name=cmbCreaSistModulo_1.Selected.Name And
+                //Sistema.INV_BEPCnfSistemaDivisiones=cmbCreaSistModulo_1.Selected.INV_BEPCnfSistemaDivisiones  And
+                
+                Compañía.Name=cmbCreaCompaniaModulo_1.Selected.Name And
+                
+                Modulo=txtCreaNombreModulo_1.Text
+                
+                
+                )) > 0,
+                
+                Notify("INFORMACIÓN : Ya existe un módulo con el nombre " &txtCreaNombreModulo_1.Text & " en el sistema de la compañía " & cmbCreaCompaniaModulo_1.Selected.Name );
+                
+                ,
+                
+                
+                   IfError(
+                            UpdateContext({patchModulo:
+                            Patch(INV_BEPSistemasModulo,
+                            Defaults(INV_BEPSistemasModulo),
+                            { 
+                                    Sistema:cmbCreaSistModulo_1.Selected,
+                                    Compañía:cmbCreaCompaniaModulo_1.Selected,
+                
+                
+                                    Modulo:txtCreaNombreModulo_1.Text
+                                    
+                                   /* cmbCreaSistModulo_1.Selected.Name & cmbCreaCompaniaModulo_1.Selected.Name*/
+                                    
+                                    ,
+                
+                
+                                    //txtCreaNombreModulo_1.Text,
+                                     'Dirección/ Gerencia de TI':cmbCreaGerModulo_1.Selected,
+                                    'Especialista de Aplicaciones':cmbCreaEspModulo_1.Selected,
+                                    'Líder TI':cmbCreaLidModulo_1.Selected,
+                                
+                                    Descripcion:txtCreaDecripModulo_1.Text,
+                                    Propietario:equipoSistema.'Equipo propietario',
+                                    Name:/*itmMyModuloEditSelected.Sistema.Name*/
+                                    cmbCreaSistModulo_1.Selected.Name & "-"   &
+                                    cmbCreaCompaniaModulo_1.Selected.Name & "-" &
+                                      txtCreaNombreModulo_1.Text
+                
+                
+                                   //cmbCreaSistModulo_1.Selected.Name & cmbCreaCompaniaModulo_1.Selected.Name
+                                    
+                            })})
+                            ,
+                            Notify("ERROR : "& FirstError.Message & " , Origen de error : " & FirstError.Source,NotificationType.Error),
+                
+                
+                
+                          //  RemoveIf(INV_BEPAreaProcesosxModulo, Modulo.INV_BEPSistemasModulo=patchModulo.INV_BEPSistemasModulo);
+                
+                            ForAll(  /*cmbCreaNegocioModulo.SelectedItems*/myAreasCrear As aItem ,
+                            If(CountRows(Filter(INV_BEPAreaProcesosxModulo,
+                
+                                'Área Negocio'.INV_BEPCat_AreaNegocio=aItem.area.INV_BEPCat_AreaNegocio
+                                And
+                              //  Modulo .Name=patchModulo.Name
+                               Modulo.INV_BEPSistemasModulo=patchModulo.INV_BEPSistemasModulo
+                                )) > 0 ,
+                                Blank()
+                                ,            
+                            
+                
+                                Patch(INV_BEPAreaProcesosxModulo,
+                                { 
+                                    'Área Negocio':aItem.area,
+                                    Modulo:LookUp(INV_BEPSistemasModulo,INV_BEPSistemasModulo=patchModulo.INV_BEPSistemasModulo),
+                                    Name:aItem.area.Name & patchModulo.INV_BEPSistemasModulo/*patchModulo.Name*/  & "",
+                                    'Proceso de negocio':aItem.proceso,
+                                    Propietario:equipoSistema.'Equipo propietario'
+                                });
+                
+                
+                                );
+                            );
+                
+                                Notify("Se ha creado un nuevo módulo",NotificationType.Success);
+                                UpdateContext({checkPatchSystem:true});
+                                UpdateContext({showModalModulosSistema: false});
+                
+                            //Notify("Se ha creado un nuevo módulo",NotificationType.Success);
+                
+                        );
+                
+                
+                
+                
+                
+                
+                
+                
+                );
+                 
+                
+                     
+                
+                
+                );
+                
+                
+                
+                
+            Text: ="Crear"
+            Tooltip: ="Crear módulo"
+            X: =899
+            Y: =528
+            ZIndex: =26
+
+    INV_BEP_ModalBloqMod As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0, 0, 0, 0.4)
+        Height: =768
+        Visible: =showModalModuloSistemaBloq
+        Width: =1366
+        ZIndex: =19
+
+        Rectangle2_2 As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =70
+            Width: =514
+            X: =468
+            Y: =236
+            ZIndex: =1
+
+        Rectangle3_2 As rectangle:
+            Fill: =White
+            Height: =130
+            Width: =514
+            X: =468
+            Y: =306
+            ZIndex: =2
+
+        Label38_2 As label:
+            Align: =Align.Center
+            Color: =ColorValue(  INV_ColorFuente)
+            Height: =47
+            Text: ="Mensaje del sistema"
+            Width: =258
+            X: =596
+            Y: =253
+            ZIndex: =3
+
+        Label42_2 As label:
+            Align: =Align.Center
+            Height: =60
+            Text: ="¿Desea continuar con el bloqueo del registro?"
+            Width: =318
+            X: =566
+            Y: =316
+            ZIndex: =4
+
+        Button2_2 As button:
+            OnSelect: |-
+                =//mySelectSystem
+                UpdateIf(INV_BEPSistemasModulo,
+                Name=itmMyModuloEditSelected.Name
+                And
+                INV_BEPSistemasModulo=itmMyModuloEditSelected.INV_BEPSistemasModulo
+                ,
+                {
+                    Estado:'Estado (INV_BEPSistemasModulo)'.Inactivo
+                }
+                );
+                UpdateContext({showModalModuloSistemaBloq: false});
+                Refresh(INV_BEPSistemasModulo);
+            Text: ="Continuar"
+            X: =555
+            Y: =377
+            ZIndex: =5
+
+        Button3_2 As button:
+            OnSelect: |
+                =UpdateContext({showModalModuloSistemaBloq: false});
+            Text: ="Cancelar"
+            X: =758
+            Y: =377
+            ZIndex: =6
+
+    INV_BEP_ModalBloqHab As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0, 0, 0, 0.4)
+        Height: =768
+        Visible: =showModalModuloSistemaHab
+        Width: =1366
+        ZIndex: =20
+
+        Rectangle2_3 As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =70
+            Width: =514
+            X: =468
+            Y: =236
+            ZIndex: =1
+
+        Rectangle3_3 As rectangle:
+            Fill: =White
+            Height: =130
+            Width: =514
+            X: =468
+            Y: =306
+            ZIndex: =2
+
+        Label38_3 As label:
+            Align: =Align.Center
+            Color: =ColorValue(  INV_ColorFuente)
+            Height: =47
+            Text: ="Mensaje del sistema"
+            Width: =258
+            X: =596
+            Y: =253
+            ZIndex: =3
+
+        Label42_3 As label:
+            Align: =Align.Center
+            Height: =60
+            Text: ="¿Desea continuar con el desbloqueo del registro?"
+            Width: =318
+            X: =566
+            Y: =306
+            ZIndex: =4
+
+        Button2_3 As button:
+            OnSelect: |-
+                =//mySelectSystem
+                UpdateIf(INV_BEPSistemasModulo,
+                Name=itmMyModuloEditSelected.Name
+                And
+                INV_BEPSistemasModulo=itmMyModuloEditSelected.INV_BEPSistemasModulo
+                ,
+                {
+                    Estado:'Estado (INV_BEPSistemasModulo)'.Activo
+                }
+                );
+                UpdateContext({showModalModuloSistemaHab: false});
+                Refresh(INV_BEPSistemasModulo);
+            Text: ="Continuar"
+            X: =555
+            Y: =377
+            ZIndex: =5
+
+        Button3_3 As button:
+            OnSelect: |
+                =UpdateContext({showModalModuloSistemaHab: false});
+            Text: ="Cancelar"
+            X: =758
+            Y: =377
+            ZIndex: =6
+

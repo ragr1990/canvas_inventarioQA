@@ -1,0 +1,539 @@
+INV_EquiposRegistros As screen:
+    OnVisible: |-
+        =UpdateContext({showModalEquipos: false});
+        UpdateContext({showModalEquiposRol: false});
+        UpdateContext({showModalEquiposUsr: false});
+        UpdateContext({showModalBloqEquipos: false});
+        UpdateContext({showModalUnBloqEquipos: false});
+
+    "galEquipos As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        Height: =350
+        Items: |-
+            =
+            
+            SortByColumns(
+                Equipos
+                ,"createdon",Descending)
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =50
+        Width: =1366
+        Y: =165
+        ZIndex: =1
+
+        btnAddRolToTeam As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            Height: =50
+            Icon: =Icon.Add
+            OnSelect: |
+                =/*
+                Patch('Roles de seguridad',
+                Defaults('Roles de seguridad'),
+                {
+                });
+                */
+                UpdateContext({showModalEquiposRol: true});
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            TabIndex: =0
+            Tooltip: ="Agregar rol"
+            Width: =51
+            X: =1238
+            ZIndex: =2
+
+        Separator6 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =3
+
+        Label29_2 As label:
+            Height: =47
+            OnSelect: =Select(Parent)
+            Text: =ThisItem.'Membership Type'
+            Width: =214
+            ZIndex: =9
+
+        Label29_3 As label:
+            Height: =47
+            OnSelect: =Select(Parent)
+            Text: =ThisItem.'Team Name'
+            Width: =214
+            X: =422
+            ZIndex: =10
+
+        Label29_4 As label:
+            Height: =47
+            OnSelect: =Select(Parent)
+            Text: =ThisItem.Description
+            Width: =416
+            X: =647
+            Y: =3
+            ZIndex: =11
+
+        Label29_5 As label:
+            Height: =47
+            OnSelect: =Select(Parent)
+            Text: =ThisItem.'Team Type'
+            Width: =206
+            X: =216
+            ZIndex: =12
+
+        btnAddMiembroToTeam As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            Height: =50
+            Icon: =Icon.AddUser
+            OnSelect: |
+                =/*
+                Patch('Roles de seguridad',
+                Defaults('Roles de seguridad'),
+                {
+                });
+                */
+                
+                UpdateContext({showModalEquiposUsr: true});
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            TabIndex: =0
+            Tooltip: ="Agregar miembro"
+            Width: =51
+            X: =1289
+            ZIndex: =13
+
+    "Gallery7_1 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        Height: =253
+        Items: |-
+            =
+            
+            SortByColumns(
+              Filter(  'Roles de seguridad' , 
+              StartsWith( Name ,"INV_")
+              And 
+              'Business Unit'.Name="unqeb8eeb861abd4d16883c71907cd59"
+                )
+                ,"createdon",Descending)
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =53
+        Width: =1284
+        X: =22
+        Y: =515
+        ZIndex: =4
+
+        Title2_5 As label:
+            Height: =32
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =15
+            Text: =ThisItem.Name
+            VerticalAlign: =VerticalAlign.Top
+            Width: =462
+            Y: =18
+            ZIndex: =1
+
+        NextArrow2_1 As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            Height: =60
+            Icon: =Icon.Add
+            OnSelect: |-
+                =Patch('Roles de seguridad',
+                Defaults('Roles de seguridad'),
+                {
+                });
+                
+                
+                /*
+                
+                LookUp(Usuarios,domainname = User().Email).'Roles de seguridad (systemuserroles_association)'
+                */
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            TabIndex: =0
+            Tooltip: ="Ver los detalles del elemento"
+            Width: =60
+            X: =Parent.TemplateWidth - Self.Width - 5
+            Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+            ZIndex: =2
+
+        Separator6_1 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =3
+
+        Title2_6 As label:
+            Height: =32
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =15
+            Text: |-
+                ="Nombre Rol : " & ThisItem.Name   //Nombre
+            VerticalAlign: =VerticalAlign.Top
+            Width: =690
+            X: =462
+            Y: =18
+            ZIndex: =4
+
+        Title2_8 As label:
+            Height: =32
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =15
+            Text: =/*ThisItem.Usuarios*/
+            VerticalAlign: =VerticalAlign.Top
+            Width: =422
+            Y: =50
+            ZIndex: =6
+
+        Title2_9 As label:
+            Height: =32
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =15
+            Text: |-
+                ="Rol : " & ThisItem.Role   //Rol
+            VerticalAlign: =VerticalAlign.Top
+            Width: =729
+            X: =462
+            Y: =50
+            ZIndex: =7
+
+        Title2_10 As label:
+            Height: =32
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =15
+            Text: |-
+                =" Unidad de negocio: " & ThisItem.'Business Unit'.Name // Unidad de negocio'.Nombre
+            VerticalAlign: =VerticalAlign.Top
+            Width: =757
+            X: =462
+            Y: =83
+            ZIndex: =8
+
+    rHeaderGridSistema_1 As rectangle:
+        Fill: =ColorValue(  INV_ColorPrincipal)
+        Height: =62
+        Width: =1366
+        Y: =103
+        ZIndex: =6
+
+    Label32 As label:
+        Color: =ColorValue(  INV_ColorFuente)
+        Height: =37
+        Text: ="Tipo de pertenencia"
+        Width: =185
+        X: =22
+        Y: =115
+        ZIndex: =7
+
+    Label32_1 As label:
+        Color: =ColorValue(  INV_ColorFuente)
+        Height: =37
+        Text: ="Tipo equipo"
+        Width: =185
+        X: =227
+        Y: =115
+        ZIndex: =8
+
+    Label32_2 As label:
+        Color: =ColorValue(  INV_ColorFuente)
+        Height: =37
+        Text: ="Descripción"
+        Width: =185
+        X: =784
+        Y: =115
+        ZIndex: =9
+
+    Label32_3 As label:
+        Color: =ColorValue(  INV_ColorFuente)
+        Height: =37
+        Text: ="Nombre de equipo"
+        Width: =185
+        X: =431
+        Y: =115
+        ZIndex: =10
+
+    INV_BEP_ModalEquipoUsuario As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0,0,0,0.4)
+        Height: =768
+        Visible: =showModalEquiposUsr
+        Width: =1366
+        ZIndex: =11
+
+        Rectangle10_1 As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =64
+            Width: =648
+            X: =372
+            Y: =198
+            ZIndex: =1
+
+        Rectangle12_1 As rectangle:
+            Fill: =White
+            Height: =150
+            Width: =648
+            X: =372
+            Y: =262
+            ZIndex: =2
+
+        Icon2_1 As icon.Cancel:
+            Color: =ColorValue(  INV_ColorFuente)
+            Icon: =Icon.Cancel
+            OnSelect: |
+                =UpdateContext({showModalEquiposUsr: false});
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            X: =943
+            Y: =198
+            ZIndex: =3
+
+        ComboBox2_1 As combobox:
+            DisplayFields: =["fullname"]
+            Height: =39
+            InputTextPlaceholder: ="Usuarios"
+            Items: =Usuarios
+            SearchFields: =["fullname"]
+            SearchItems: =Search(Usuarios,ComboBox2_1.SearchText,"fullname")
+            Width: =491
+            X: =490
+            Y: =292
+            ZIndex: =4
+
+        btnGuardarUsuarioEquipo As button:
+            Text: ="Guardar"
+            X: =821
+            Y: =350
+            ZIndex: =5
+
+    INV_BEP_ModalEquipoRol As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0,0,0,0.4)
+        Height: =768
+        Visible: =showModalEquiposRol
+        Width: =1366
+        ZIndex: =12
+
+        Rectangle10 As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =64
+            Width: =648
+            X: =339
+            Y: =186
+            ZIndex: =1
+
+        Rectangle12 As rectangle:
+            Fill: =White
+            Height: =146
+            Width: =648
+            X: =339
+            Y: =250
+            ZIndex: =2
+
+        Icon2 As icon.Cancel:
+            Color: =ColorValue(  INV_ColorFuente)
+            Icon: =Icon.Cancel
+            OnSelect: |
+                =UpdateContext({showModalEquiposRol: false});
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            X: =910
+            Y: =186
+            ZIndex: =3
+
+        ComboBox2 As combobox:
+            DisplayFields: =["name"]
+            Height: =46
+            InputTextPlaceholder: ="Roles de seguridad"
+            Items: ='Roles de seguridad'
+            SearchFields: =["name"]
+            SearchItems: =Search('Roles de seguridad',ComboBox2.SearchText,"name")
+            Width: =558
+            X: =384
+            Y: =277
+            ZIndex: =4
+
+        btnGuardarRolEquipo As button:
+            Text: ="Guardar"
+            X: =782
+            Y: =340
+            ZIndex: =5
+
+    btnAddEquipo As icon.Save:
+        Color: =ColorValue(  INV_ColorFuente)
+        DisplayMode: |+
+            =If(SuperAdmin<>true,
+            DisplayMode.Disabled,
+            DisplayMode.Edit)
+            
+            
+        Height: =51
+        Icon: =Icon.Add
+        OnSelect: |
+            =UpdateContext({showModalEquipos: true});
+        PaddingBottom: =10
+        PaddingLeft: =10
+        PaddingRight: =10
+        PaddingTop: =10
+        Tooltip: ="Agregar grupo"
+        Width: =48
+        X: =1306
+        Y: =108
+        ZIndex: =13
+
+    INV_BEP_ModalEquipos As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0,0,0,0.4)
+        Height: =768
+        Visible: =showModalEquipos
+        Width: =1366
+        ZIndex: =14
+
+        INV_BEP_ModalHeadEquipos As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =64
+            Width: =648
+            X: =336
+            Y: =184
+            ZIndex: =1
+
+        INV_BEP_ModalBodyEquipos As rectangle:
+            Fill: =White
+            Height: =373
+            Width: =648
+            X: =336
+            Y: =248
+            ZIndex: =2
+
+        INV_BEP_ModalCloseEquipos As icon.Cancel:
+            Color: =ColorValue(  INV_ColorFuente)
+            Icon: =Icon.Cancel
+            OnSelect: |
+                =UpdateContext({showModalEquipos: false});
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            X: =907
+            Y: =184
+            ZIndex: =3
+
+        btnCrearEquipo As button:
+            OnSelect: |
+                =  IfError(
+                
+                Patch(
+                Equipos,
+                Defaults(Equipos),
+                {
+                 'Team Name':txtNombreEqu.Text,
+                  Description:txtDescEquipo.Text,
+                  'Team Type': cmbTipoEqu.Selected.Value,//'Tipo de equipo (Equipos)'.Propietario,
+                  'Membership Type':cmbPertenenciaEqu.Selected.Value//'Tipo de pertenencia (Equipos)'.'Miembros e invitados'
+                }
+                ),
+                Notify("ERROR : " & FirstError.Message,NotificationType.Information);,
+                Notify("Se ha creado un nuevo grupo de responsables.",NotificationType.Success);
+                Refresh(Equipos);
+                );
+            Text: ="Guardar"
+            X: =762
+            Y: =546
+            ZIndex: =4
+
+        txtNombreEqu As text:
+            Default: =
+            HintText: ="Nombre del equipo"
+            Reset: =true
+            X: =587
+            Y: =271
+            ZIndex: =5
+
+        Label34 As label:
+            Text: ="Nombre del equipo"
+            Width: =182
+            X: =373
+            Y: =271
+            ZIndex: =6
+
+        txtDescEquipo As text:
+            Default: =
+            Height: =85
+            HintText: ="Nombre del equipo"
+            Mode: =TextMode.MultiLine
+            Reset: =true
+            X: =587
+            Y: =440
+            ZIndex: =7
+
+        Label34_1 As label:
+            Text: ="Descripción"
+            Width: =182
+            X: =373
+            Y: =440
+            ZIndex: =8
+
+        Label34_6 As label:
+            Text: ="Tipo de equipo"
+            Width: =182
+            X: =365
+            Y: =325
+            ZIndex: =9
+
+        cmbTipoEqu As dropdown:
+            AllowEmptySelection: =true
+            Default: =
+            Items: =Choices('Team Type (Equipos)')
+            Reset: =true
+            X: =587
+            Y: =325
+            ZIndex: =10
+
+        Label34_7 As label:
+            Text: ="Tipo de pertenenca"
+            Width: =182
+            X: =365
+            Y: =385
+            ZIndex: =11
+
+        cmbPertenenciaEqu As dropdown:
+            AllowEmptySelection: =true
+            Default: =
+            Items: =Choices('Membership Type (Equipos)')
+            Reset: =true
+            X: =587
+            Y: =385
+            ZIndex: =12
+
+        Label35 As label:
+            Color: =ColorValue(  INV_ColorFuente)
+            Text: ="Crear grupo"
+            X: =365
+            Y: =196
+            ZIndex: =13
+

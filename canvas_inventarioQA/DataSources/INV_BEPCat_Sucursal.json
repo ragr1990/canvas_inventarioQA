@@ -1,0 +1,99 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "new_inv_bepcat_sucursals",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "new_inv_bepcat_sucursal",
+    "MaxGetRowsCount": 500,
+    "Name": "INV_BEPCat_Sucursal",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "createdby": "Autor",
+      "createdon": "Fecha de creación",
+      "createdonbehalfby": "Autor (delegado)",
+      "importsequencenumber": "Número de secuencia de importación",
+      "modifiedby": "Modificado por",
+      "modifiedon": "Fecha de modificación",
+      "modifiedonbehalfby": "Modificado por (delegado)",
+      "new_INV_BEP_optCompania": "Compañia",
+      "new_INV_BEP_optSucursalSoporte": "INV_BEPSoporteSistemas",
+      "new_inv_bep_ssucursal": "Descripción de sucursal",
+      "new_inv_bepcat_sucursal_AsyncOperations": "System Jobs",
+      "new_inv_bepcat_sucursal_BulkDeleteFailures": "Bulk Delete Failures",
+      "new_inv_bepcat_sucursal_DuplicateBaseRecord": "Duplicate Records (new_inv_bepcat_sucursal_DuplicateBaseRecord)",
+      "new_inv_bepcat_sucursal_DuplicateMatchingRecord": "Duplicate Records (new_inv_bepcat_sucursal_DuplicateMatchingRecord)",
+      "new_inv_bepcat_sucursal_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "new_inv_bepcat_sucursal_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "new_inv_bepcat_sucursal_ProcessSession": "Process Sessions",
+      "new_inv_bepcat_sucursal_SyncErrors": "Sync Errors",
+      "new_INV_BEPCat_SucursalesComp": "INV_BEPComponentesSistemaDet",
+      "new_inv_bepcat_sucursalid": "INV_BEPCat_Sucursal",
+      "new_name": "Name",
+      "organizationid": "Id. de la organización",
+      "overriddencreatedon": "Fecha de creación del registro",
+      "statecode": "Estado",
+      "statuscode": "Razón para el estado",
+      "timezoneruleversionnumber": "Número de versión de regla de zona horaria",
+      "utcconversiontimezonecode": "Código de zona horaria de conversión UTC",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "INV_BEPCat_Sucursal",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "INV_BEPCat_Sucursal (Vistas)",
+    "Name": "_new_inv_bepcat_sucursal_views",
+    "RelatedEntityName": "INV_BEPCat_Sucursal",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "220f2a94-9aa1-473b-85d1-92977e33333e": "Vista de búsqueda de INV_BEPCat_Sucursal",
+      "54f3cf6d-c51c-4b9e-8f63-0b8bba6ae716": "INV_BEPCat_Sucursal activo",
+      "5697379c-fc58-4e51-bbed-3e92cdabdcf5": "Vista asociada de INV_BEPCat_Sucursal",
+      "7bece0be-b290-ed11-aad1-00224823fb46": "Sucursal",
+      "915a40e4-76bd-488e-85b9-c2d64849ea02": "Vista de búsqueda avanzada de INV_BEPCat_Sucursal",
+      "c606575b-529b-4b8e-9f4a-fccd80eb0575": "INV_BEPCat_Sucursal inactivo"
+    }
+  },
+  {
+    "DisplayName": "Estado (INV_BEPCat_Sucursal)",
+    "Name": "new_inv_bepcat_sucursal_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Activo",
+      "1": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "INV_BEPCat_Sucursal"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "INV_BEPCat_Sucursal",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Razón para el estado (INV_BEPCat_Sucursal)",
+    "Name": "new_inv_bepcat_sucursal_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Activo",
+      "2": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "INV_BEPCat_Sucursal"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "INV_BEPCat_Sucursal",
+    "Type": "OptionSetInfo"
+  }
+]

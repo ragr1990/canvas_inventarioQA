@@ -1,0 +1,97 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "new_inv_bepcat_tecnologias",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "new_inv_bepcat_tecnologia",
+    "MaxGetRowsCount": 500,
+    "Name": "INV_BEPCat_Tecnologia",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "cr3ef_inv_bep_stecnologia": "Descripción de tecnología",
+      "createdby": "Autor",
+      "createdon": "Fecha de creación",
+      "createdonbehalfby": "Autor (delegado)",
+      "importsequencenumber": "Número de secuencia de importación",
+      "modifiedby": "Modificado por",
+      "modifiedon": "Fecha de modificación",
+      "modifiedonbehalfby": "Modificado por (delegado)",
+      "new_INV_BEP_optTecnologiaProcInt": "INV_BEPProcesosInterfaces",
+      "new_inv_bepcat_tecnologia_AsyncOperations": "System Jobs",
+      "new_inv_bepcat_tecnologia_BulkDeleteFailures": "Bulk Delete Failures",
+      "new_inv_bepcat_tecnologia_DuplicateBaseRecord": "Duplicate Records (new_inv_bepcat_tecnologia_DuplicateBaseRecord)",
+      "new_inv_bepcat_tecnologia_DuplicateMatchingRecord": "Duplicate Records (new_inv_bepcat_tecnologia_DuplicateMatchingRecord)",
+      "new_inv_bepcat_tecnologia_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "new_inv_bepcat_tecnologia_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "new_inv_bepcat_tecnologia_ProcessSession": "Process Sessions",
+      "new_inv_bepcat_tecnologia_SyncErrors": "Sync Errors",
+      "new_inv_bepcat_tecnologiaid": "INV_BEPCat_Tecnologia",
+      "new_name": "Name",
+      "organizationid": "Id. de la organización",
+      "overriddencreatedon": "Fecha de creación del registro",
+      "statecode": "Estado",
+      "statuscode": "Razón para el estado",
+      "timezoneruleversionnumber": "Número de versión de regla de zona horaria",
+      "utcconversiontimezonecode": "Código de zona horaria de conversión UTC",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "INV_BEPCat_Tecnologia",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "INV_BEPCat_Tecnologia (Vistas)",
+    "Name": "_new_inv_bepcat_tecnologia_views",
+    "RelatedEntityName": "INV_BEPCat_Tecnologia",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "09b10ab6-b3e2-4107-b644-a956fec0473f": "INV_BEPCat_Tecnologia inactivo",
+      "39057794-f537-45a0-bf41-71c5ba6f09e9": "Vista de búsqueda avanzada de INV_BEPCat_Tecnologia",
+      "533fbde4-9719-400a-88c4-363ab09eed23": "Vista asociada de INV_BEPCat_Tecnologia",
+      "5de24df9-12fd-40a8-97a4-c260e1033edb": "Vista de búsqueda de INV_BEPCat_Tecnologia",
+      "74eab4df-6993-ed11-aad1-00224824e59e": "Tecnología",
+      "e78087a9-018f-4ce7-b113-425a7f60f82a": "INV_BEPCat_Tecnologia activo"
+    }
+  },
+  {
+    "DisplayName": "Estado (INV_BEPCat_Tecnologia)",
+    "Name": "new_inv_bepcat_tecnologia_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Activo",
+      "1": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "INV_BEPCat_Tecnologia"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "INV_BEPCat_Tecnologia",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Razón para el estado (INV_BEPCat_Tecnologia)",
+    "Name": "new_inv_bepcat_tecnologia_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Activo",
+      "2": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "INV_BEPCat_Tecnologia"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "INV_BEPCat_Tecnologia",
+    "Type": "OptionSetInfo"
+  }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "new_inv_bepcat_servidoreses",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "new_inv_bepcat_servidores",
+    "MaxGetRowsCount": 500,
+    "Name": "INV_BEPCat_Servidores",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "createdby": "Autor",
+      "createdon": "Fecha de creación",
+      "createdonbehalfby": "Autor (delegado)",
+      "importsequencenumber": "Número de secuencia de importación",
+      "modifiedby": "Modificado por",
+      "modifiedon": "Fecha de modificación",
+      "modifiedonbehalfby": "Modificado por (delegado)",
+      "new_INV_BEP_optServidorComp": "INV_BEPComponentesSistemaDet",
+      "new_inv_bep_opttipoip": "Tipo de Direccion IP",
+      "new_inv_bep_sdominio": "Dominio",
+      "new_inv_bep_sipservidor": "IP Servidor",
+      "new_inv_bep_snombreservidor": "Nombre de Servidor",
+      "new_inv_bep_sversionso": "Version S.O",
+      "new_inv_bepcat_servidores_AsyncOperations": "System Jobs",
+      "new_inv_bepcat_servidores_BulkDeleteFailures": "Bulk Delete Failures",
+      "new_inv_bepcat_servidores_DuplicateBaseRecord": "Duplicate Records (new_inv_bepcat_servidores_DuplicateBaseRecord)",
+      "new_inv_bepcat_servidores_DuplicateMatchingRecord": "Duplicate Records (new_inv_bepcat_servidores_DuplicateMatchingRecord)",
+      "new_inv_bepcat_servidores_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "new_inv_bepcat_servidores_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "new_inv_bepcat_servidores_ProcessSession": "Process Sessions",
+      "new_inv_bepcat_servidores_SyncErrors": "Sync Errors",
+      "new_inv_bepcat_servidoresid": "INV_BEPCat_Servidores",
+      "new_INV_BEPProcIntServ": "INV_BEPProcesosInterfacesDet",
+      "new_name": "Name",
+      "organizationid": "Id. de la organización",
+      "overriddencreatedon": "Fecha de creación del registro",
+      "statecode": "Estado",
+      "statuscode": "Razón para el estado",
+      "timezoneruleversionnumber": "Número de versión de regla de zona horaria",
+      "utcconversiontimezonecode": "Código de zona horaria de conversión UTC",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "INV_BEPCat_Servidores",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "INV_BEPCat_Servidores (Vistas)",
+    "Name": "_new_inv_bepcat_servidores_views",
+    "RelatedEntityName": "INV_BEPCat_Servidores",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "4357fa7d-f930-4e01-ba06-5fc530c95eb2": "INV_BEPCat_Servidores activo",
+      "6e72421f-2df1-4466-80a6-8bcf3e4a9232": "Vista de búsqueda avanzada de INV_BEPCat_Servidores",
+      "79bf022d-a144-4c1f-9f46-cb35bb6a6354": "Vista de búsqueda de INV_BEPCat_Servidores",
+      "b94bdce3-95dc-4806-ad42-2a85b01716de": "INV_BEPCat_Servidores inactivo",
+      "ba1f2e2d-6e6e-44b0-b31e-6eed2813259f": "Vista asociada de INV_BEPCat_Servidores",
+      "d3626d01-e291-ed11-aad1-00224823fb46": "Servidores"
+    }
+  },
+  {
+    "DisplayName": "INV_BEP_optTipoIP",
+    "Name": "new_inv_bep_opttipoip",
+    "OptionSetInfoNameMapping": {
+      "100000000": "Estatica",
+      "100000001": "Dinamica"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "new_inv_bep_opttipoip",
+        "OptionSetReferenceEntityName": "INV_BEPCat_Servidores"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "new_inv_bep_opttipoip",
+    "RelatedEntityName": "INV_BEPCat_Servidores",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Estado (INV_BEPCat_Servidores)",
+    "Name": "new_inv_bepcat_servidores_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Activo",
+      "1": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "INV_BEPCat_Servidores"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "INV_BEPCat_Servidores",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Razón para el estado (INV_BEPCat_Servidores)",
+    "Name": "new_inv_bepcat_servidores_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Activo",
+      "2": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "INV_BEPCat_Servidores"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "INV_BEPCat_Servidores",
+    "Type": "OptionSetInfo"
+  }
+]

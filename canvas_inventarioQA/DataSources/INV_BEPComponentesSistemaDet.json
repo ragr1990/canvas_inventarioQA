@@ -1,0 +1,106 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "new_inv_bepcomponentessistemadets",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "new_inv_bepcomponentessistemadet",
+    "MaxGetRowsCount": 500,
+    "Name": "INV_BEPComponentesSistemaDet",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "_ownerid_value": "Propietario",
+      "createdby": "Autor",
+      "createdon": "Fecha de creación",
+      "createdonbehalfby": "Autor (delegado)",
+      "importsequencenumber": "Número de secuencia de importación",
+      "modifiedby": "Modificado por",
+      "modifiedon": "Fecha de modificación",
+      "modifiedonbehalfby": "Modificado por (delegado)",
+      "new_INV_BEP_optAutorizador": "Autorizador",
+      "new_INV_BEP_optServidor": "Servidor",
+      "new_inv_bep_sdescripcion": "Descripción",
+      "new_inv_bep_snombre": "Nombre",
+      "new_inv_bep_sversion": "Version",
+      "new_INV_BEPCat_Companias": "Compañía",
+      "new_INV_BEPCat_Sucursales": "Sucursal",
+      "new_INV_BEPComponenteSistema": "Componente",
+      "new_inv_bepcomponentessistemadet_AsyncOperations": "System Jobs",
+      "new_inv_bepcomponentessistemadet_BulkDeleteFailures": "Bulk Delete Failures",
+      "new_inv_bepcomponentessistemadet_DuplicateBaseRecord": "Duplicate Records (new_inv_bepcomponentessistemadet_DuplicateBaseRecord)",
+      "new_inv_bepcomponentessistemadet_DuplicateMatchingRecord": "Duplicate Records (new_inv_bepcomponentessistemadet_DuplicateMatchingRecord)",
+      "new_inv_bepcomponentessistemadet_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "new_inv_bepcomponentessistemadet_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "new_inv_bepcomponentessistemadet_ProcessSession": "Process Sessions",
+      "new_inv_bepcomponentessistemadet_SyncErrors": "Sync Errors",
+      "new_inv_bepcomponentessistemadetid": "INV_BEPComponentesSistemaDet",
+      "new_name": "Name",
+      "overriddencreatedon": "Fecha de creación del registro",
+      "owningbusinessunit": "Unidad de negocio propietaria",
+      "owningteam": "Equipo propietario",
+      "owninguser": "Usuario propietario",
+      "statecode": "Estado",
+      "statuscode": "Razón para el estado",
+      "timezoneruleversionnumber": "Número de versión de regla de zona horaria",
+      "utcconversiontimezonecode": "Código de zona horaria de conversión UTC",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "INV_BEPComponentesSistemaDet",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "INV_BEPComponentesSistemaDet (Vistas)",
+    "Name": "_new_inv_bepcomponentessistemadet_views",
+    "RelatedEntityName": "INV_BEPComponentesSistemaDet",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "2033faf0-f9b6-45d0-b7ed-79eecad7017f": "Vista asociada de INV_BEPComponentesSistemaDet",
+      "7735f624-aac6-4163-aeae-5e9357464b89": "INV_BEPComponentesSistemaDet activo",
+      "84afe118-2375-44af-8adc-f41d7ac6131c": "INV_BEPComponentesSistemaDet inactivo",
+      "89bf84b4-67b2-471e-a79b-27cf46057eea": "Vista de búsqueda avanzada de INV_BEPComponentesSistemaDet",
+      "9b519b02-1f53-4c19-9265-41a6e76aa72c": "Vista de búsqueda de INV_BEPComponentesSistemaDet",
+      "9cc2c2a2-ac95-ed11-aad1-00224823fb46": "Componente detalle"
+    }
+  },
+  {
+    "DisplayName": "Estado (INV_BEPComponentesSistemaDet)",
+    "Name": "new_inv_bepcomponentessistemadet_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Activo",
+      "1": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "INV_BEPComponentesSistemaDet"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "INV_BEPComponentesSistemaDet",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Razón para el estado (INV_BEPComponentesSistemaDet)",
+    "Name": "new_inv_bepcomponentessistemadet_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Activo",
+      "2": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "INV_BEPComponentesSistemaDet"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "INV_BEPComponentesSistemaDet",
+    "Type": "OptionSetInfo"
+  }
+]

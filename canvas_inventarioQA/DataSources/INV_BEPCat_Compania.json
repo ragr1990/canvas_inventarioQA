@@ -1,0 +1,103 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "new_inv_bepcat_companias",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "new_inv_bepcat_compania",
+    "MaxGetRowsCount": 500,
+    "Name": "INV_BEPCat_Compania",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "createdby": "Autor",
+      "createdon": "Fecha de creación",
+      "createdonbehalfby": "Autor (delegado)",
+      "importsequencenumber": "Número de secuencia de importación",
+      "modifiedby": "Modificado por",
+      "modifiedon": "Fecha de modificación",
+      "modifiedonbehalfby": "Modificado por (delegado)",
+      "new_INV_BEP_optCompaniaSop": "INV_BEPSoporteSistemas",
+      "new_INV_BEP_optCompaniaSuc": "INV_BEPCat_Sucursal",
+      "new_INV_BEP_optDivision": "Division",
+      "new_INV_BEP_ProcIntCompania": "INV_BEPCiasProcesosInterfaces",
+      "new_inv_bep_scompania": "Descripción de compañía",
+      "new_inv_bepcat_compania_AsyncOperations": "System Jobs",
+      "new_inv_bepcat_compania_BulkDeleteFailures": "Bulk Delete Failures",
+      "new_inv_bepcat_compania_DuplicateBaseRecord": "Duplicate Records (new_inv_bepcat_compania_DuplicateBaseRecord)",
+      "new_inv_bepcat_compania_DuplicateMatchingRecord": "Duplicate Records (new_inv_bepcat_compania_DuplicateMatchingRecord)",
+      "new_inv_bepcat_compania_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "new_inv_bepcat_compania_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "new_inv_bepcat_compania_ProcessSession": "Process Sessions",
+      "new_inv_bepcat_compania_SyncErrors": "Sync Errors",
+      "new_inv_bepcat_companiaid": "INV_BEPCat_Compania",
+      "new_INV_BEPCat_CompaniasComp": "INV_BEPComponentesSistemaDet",
+      "new_INV_ModSisComp": "INV_BEPSistemasModulo",
+      "new_name": "Name",
+      "organizationid": "Id. de la organización",
+      "overriddencreatedon": "Fecha de creación del registro",
+      "statecode": "Estado",
+      "statuscode": "Razón para el estado",
+      "timezoneruleversionnumber": "Número de versión de regla de zona horaria",
+      "utcconversiontimezonecode": "Código de zona horaria de conversión UTC",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "INV_BEPCat_Compania",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "INV_BEPCat_Compania (Vistas)",
+    "Name": "_new_inv_bepcat_compania_views",
+    "RelatedEntityName": "INV_BEPCat_Compania",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "21d84574-e291-ed11-aad1-00224823fb46": "Compañía",
+      "23169fd9-3028-48c8-af8d-5b1fc8e1ad95": "Vista de búsqueda avanzada de INV_BEPCat_Compania",
+      "82169ed8-0598-4909-be7a-118658088304": "INV_BEPCat_Compania activo",
+      "890b01ab-8663-4355-ac08-09fada812bb6": "Vista de búsqueda de INV_BEPCat_Compania",
+      "b0021601-51c3-4cf3-8a13-68373de836c8": "Vista asociada de INV_BEPCat_Compania",
+      "b4588fc1-239c-ed11-aad1-00224823fb46": "Divisiones",
+      "d21a3ec7-5bb6-4ea9-bce4-c428304a02b6": "INV_BEPCat_Compania inactivo"
+    }
+  },
+  {
+    "DisplayName": "Estado (INV_BEPCat_Compania)",
+    "Name": "new_inv_bepcat_compania_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Activo",
+      "1": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "INV_BEPCat_Compania"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "INV_BEPCat_Compania",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Razón para el estado (INV_BEPCat_Compania)",
+    "Name": "new_inv_bepcat_compania_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Activo",
+      "2": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "INV_BEPCat_Compania"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "INV_BEPCat_Compania",
+    "Type": "OptionSetInfo"
+  }
+]

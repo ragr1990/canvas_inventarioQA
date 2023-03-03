@@ -1,0 +1,179 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "new_inv_bepprocesosinterfaceses",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "new_inv_bepprocesosinterfaces",
+    "MaxGetRowsCount": 500,
+    "Name": "INV_BEPProcesosInterfaces",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "_ownerid_value": "Propietario",
+      "createdby": "Autor",
+      "createdon": "Fecha de creación",
+      "createdonbehalfby": "Autor (delegado)",
+      "importsequencenumber": "Número de secuencia de importación",
+      "modifiedby": "Modificado por",
+      "modifiedon": "Fecha de modificación",
+      "modifiedonbehalfby": "Modificado por (delegado)",
+      "new_inv_bep_interfaceprocesotipo": "Tipo",
+      "new_inv_bep_optcriticidad": "Criticidad",
+      "new_INV_BEP_optDirGerenciaTI": "Dirección/ Gerencia de TI",
+      "new_INV_BEP_optEspecialistaAplicaciones": "Especialista de aplicaciones",
+      "new_INV_BEP_optLiderTI": "Lider TI",
+      "new_inv_bep_optmodoejecucion": "Modo de ejecución",
+      "new_INV_BEP_optProcesosInterfacesPID": "INV_BEPProcesosInterfacesDet",
+      "new_INV_BEP_optProcInterfacesCia": "INV_BEPCiasProcesosInterfaces",
+      "new_INV_BEP_optSistemaDestinoSis": "Sistema de destino",
+      "new_INV_BEP_optSistemaOrigen": "Sistema de origen",
+      "new_INV_BEP_optTecnologia": "Tecnología",
+      "new_inv_bep_s1eraaccionrealizar": "1era acción a realizar",
+      "new_inv_bep_s2daaccionrealizar": "2da acción a realizar",
+      "new_inv_bep_sdescripcion": "Descripción",
+      "new_inv_bep_snombre": "Nombre",
+      "new_inv_bep_sprotocolo": "Protocolo",
+      "new_inv_bep_spuerto": "Puerto",
+      "new_inv_bep_susuarioespecial": "Usuario especial",
+      "new_inv_bepprocesosinterfaces_AsyncOperations": "System Jobs",
+      "new_inv_bepprocesosinterfaces_BulkDeleteFailures": "Bulk Delete Failures",
+      "new_inv_bepprocesosinterfaces_DuplicateBaseRecord": "Duplicate Records (new_inv_bepprocesosinterfaces_DuplicateBaseRecord)",
+      "new_inv_bepprocesosinterfaces_DuplicateMatchingRecord": "Duplicate Records (new_inv_bepprocesosinterfaces_DuplicateMatchingRecord)",
+      "new_inv_bepprocesosinterfaces_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "new_inv_bepprocesosinterfaces_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "new_inv_bepprocesosinterfaces_ProcessSession": "Process Sessions",
+      "new_inv_bepprocesosinterfaces_SyncErrors": "Sync Errors",
+      "new_inv_bepprocesosinterfacesid": "INV_BEPProcesosInterfaces",
+      "new_name": "Name",
+      "overriddencreatedon": "Fecha de creación del registro",
+      "owningbusinessunit": "Unidad de negocio propietaria",
+      "owningteam": "Equipo propietario",
+      "owninguser": "Usuario propietario",
+      "statecode": "Estado",
+      "statuscode": "Razón para el estado",
+      "timezoneruleversionnumber": "Número de versión de regla de zona horaria",
+      "utcconversiontimezonecode": "Código de zona horaria de conversión UTC",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "INV_BEPProcesosInterfaces",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "INV_BEPProcesosInterfaces (Vistas)",
+    "Name": "_new_inv_bepprocesosinterfaces_views",
+    "RelatedEntityName": "INV_BEPProcesosInterfaces",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "2298700b-24b4-4d54-90e1-fa72d9676e6d": "INV_BEPProcesosInterfaces activo",
+      "35f71c33-d1c2-4153-9e48-4ae6cf97de65": "INV_BEPProcesosInterfaces inactivo",
+      "370a2981-526b-4d9a-879d-0ecc990d24f5": "Vista de búsqueda de INV_BEPProcesosInterfaces",
+      "5ff64b23-ad95-ed11-aad1-00224823fb46": "Procesos e interfaces de sistema",
+      "730ab44c-ad1b-4898-98d9-ea1c66b7d646": "Vista asociada de INV_BEPProcesosInterfaces",
+      "cd1e3d1b-a1e7-4543-b6b2-bfc24d0051a1": "Vista de búsqueda avanzada de INV_BEPProcesosInterfaces"
+    }
+  },
+  {
+    "DisplayName": "INV_BEP_optCriticidad",
+    "Name": "new_inv_bep_optcriticidad",
+    "OptionSetInfoNameMapping": {
+      "1": "Bajo",
+      "2": "Medio",
+      "3": "Alto"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "new_inv_bep_optcriticidad",
+        "OptionSetReferenceEntityName": "INV_BEPProcesosInterfaces"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "new_inv_bep_optcriticidad",
+    "RelatedEntityName": "INV_BEPProcesosInterfaces",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "INV_BEP_optModoEjecucion",
+    "Name": "new_inv_bep_optmodoejecucion",
+    "OptionSetInfoNameMapping": {
+      "100000000": "Job SQL",
+      "100000001": "Concurrente",
+      "100000002": "Manual",
+      "100000003": "Automático"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "new_inv_bep_optmodoejecucion",
+        "OptionSetReferenceEntityName": "INV_BEPProcesosInterfaces"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "new_inv_bep_optmodoejecucion",
+    "RelatedEntityName": "INV_BEPProcesosInterfaces",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "INV_BEP_optTipoProInt",
+    "Name": "new_inv_bep_opttipoproint",
+    "OptionSetInfoNameMapping": {
+      "100000000": "Interface",
+      "100000001": "Proceso"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "new_inv_bep_interfaceprocesotipo",
+        "OptionSetReferenceEntityName": "INV_BEPProcesosInterfaces"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "new_inv_bep_interfaceprocesotipo",
+    "RelatedEntityName": "INV_BEPProcesosInterfaces",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Estado (INV_BEPProcesosInterfaces)",
+    "Name": "new_inv_bepprocesosinterfaces_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Activo",
+      "1": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "INV_BEPProcesosInterfaces"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "INV_BEPProcesosInterfaces",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Razón para el estado (INV_BEPProcesosInterfaces)",
+    "Name": "new_inv_bepprocesosinterfaces_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Activo",
+      "2": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "INV_BEPProcesosInterfaces"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "INV_BEPProcesosInterfaces",
+    "Type": "OptionSetInfo"
+  }
+]

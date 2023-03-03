@@ -1,0 +1,172 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "new_inv_bepcomponentessistemas",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "new_inv_bepcomponentessistema",
+    "MaxGetRowsCount": 500,
+    "Name": "INV_BEPComponentesSistema",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "_ownerid_value": "Propietario",
+      "createdby": "Autor",
+      "createdon": "Fecha de creación",
+      "createdonbehalfby": "Autor (delegado)",
+      "importsequencenumber": "Número de secuencia de importación",
+      "modifiedby": "Modificado por",
+      "modifiedon": "Fecha de modificación",
+      "modifiedonbehalfby": "Modificado por (delegado)",
+      "new_inv_bep_calccriticidad": "Criticidad",
+      "new_INV_BEP_optComponente": "Componente",
+      "new_inv_bep_optconfidencialidadc": "Confidencialidad",
+      "new_inv_bep_optdisponibilidadd": "Disponibilidad",
+      "new_INV_BEP_optFabricante": "Fabricante",
+      "new_inv_bep_optintegridadl": "Integridad",
+      "new_inv_bep_optmodeloservicio": "Modelo Servicio",
+      "new_INV_BEP_optProducto": "Producto",
+      "new_INV_BEP_optSistema": "Sistemas",
+      "new_inv_bep_surl": "URL",
+      "new_inv_bepcomponentessistema_AsyncOperations": "System Jobs",
+      "new_inv_bepcomponentessistema_BulkDeleteFailures": "Bulk Delete Failures",
+      "new_inv_bepcomponentessistema_DuplicateBaseRecord": "Duplicate Records (new_inv_bepcomponentessistema_DuplicateBaseRecord)",
+      "new_inv_bepcomponentessistema_DuplicateMatchingRecord": "Duplicate Records (new_inv_bepcomponentessistema_DuplicateMatchingRecord)",
+      "new_inv_bepcomponentessistema_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "new_inv_bepcomponentessistema_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "new_inv_bepcomponentessistema_ProcessSession": "Process Sessions",
+      "new_inv_bepcomponentessistema_SyncErrors": "Sync Errors",
+      "new_inv_bepcomponentessistemaid": "INV_BEPComponentesSistema",
+      "new_INV_BEPCompSistemaDet": "INV_BEPComponentesSistemaDet",
+      "new_name": "Name",
+      "overriddencreatedon": "Fecha de creación del registro",
+      "owningbusinessunit": "Unidad de negocio propietaria",
+      "owningteam": "Equipo propietario",
+      "owninguser": "Usuario propietario",
+      "statecode": "Estado",
+      "statuscode": "Razón para el estado",
+      "timezoneruleversionnumber": "Número de versión de regla de zona horaria",
+      "utcconversiontimezonecode": "Código de zona horaria de conversión UTC",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "INV_BEPComponentesSistema",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "INV_BEPComponentesSistema (Vistas)",
+    "Name": "_new_inv_bepcomponentessistema_views",
+    "RelatedEntityName": "INV_BEPComponentesSistema",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "2578c789-57f4-4085-9efc-d01a8e0750b3": "Vista de búsqueda avanzada de INV_BEPComponentesSistema",
+      "3807e5b5-8ba4-4121-9a86-bb1962f6a083": "INV_BEPComponentesSistema activo",
+      "4832d2f3-ab95-ed11-aad1-00224823fb46": "Componente de sistema",
+      "654ef2a4-3d59-43c3-92b3-3f218f46ee1f": "INV_BEPComponentesSistema inactivo",
+      "f3474269-3348-4127-8ad2-f6bee183378b": "Vista de búsqueda de INV_BEPComponentesSistema",
+      "f9a5a2bb-84f8-4d04-8248-53f8f7bc79da": "Vista asociada de INV_BEPComponentesSistema"
+    }
+  },
+  {
+    "DisplayName": "INV_BEP_optConfidencialidad",
+    "Name": "new_inv_bep_optconfidencialidad",
+    "OptionSetInfoNameMapping": {
+      "1": "1",
+      "2": "2",
+      "3": "3"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "new_inv_bep_optconfidencialidadc",
+        "OptionSetReferenceEntityName": "INV_BEPComponentesSistema"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "new_inv_bep_optconfidencialidadc",
+    "RelatedEntityName": "INV_BEPComponentesSistema",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "INV_BEP_optDisponibilidad",
+    "Name": "new_inv_bep_optdisponibilidad",
+    "OptionSetInfoNameMapping": {
+      "1": "1",
+      "2": "2",
+      "3": "3"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "new_inv_bep_optdisponibilidadd",
+        "OptionSetReferenceEntityName": "INV_BEPComponentesSistema"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "new_inv_bep_optdisponibilidadd",
+    "RelatedEntityName": "INV_BEPComponentesSistema",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "INV_BEP_optIntegridad",
+    "Name": "new_inv_bep_optintegridad",
+    "OptionSetInfoNameMapping": {
+      "1": "1",
+      "2": "2",
+      "3": "3"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "new_inv_bep_optintegridadl",
+        "OptionSetReferenceEntityName": "INV_BEPComponentesSistema"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "new_inv_bep_optintegridadl",
+    "RelatedEntityName": "INV_BEPComponentesSistema",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Estado (INV_BEPComponentesSistema)",
+    "Name": "new_inv_bepcomponentessistema_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Activo",
+      "1": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "INV_BEPComponentesSistema"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "INV_BEPComponentesSistema",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Razón para el estado (INV_BEPComponentesSistema)",
+    "Name": "new_inv_bepcomponentessistema_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Activo",
+      "2": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "INV_BEPComponentesSistema"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "INV_BEPComponentesSistema",
+    "Type": "OptionSetInfo"
+  }
+]

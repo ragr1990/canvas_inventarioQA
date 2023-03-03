@@ -1,0 +1,1353 @@
+INV_ComponenteSistema As screen:
+    OnVisible: |-
+        =Refresh(INV_BEPComponentesSistema);
+        Refresh(INV_BEPCatComponente);
+        Refresh(INV_BEPCatProductos);
+        Refresh(INV_BEPCat_Fabricante);
+        
+        UpdateContext({showModalComponenteSistemas: false});
+        UpdateContext({showModalComponenteSistemasEdit: false});
+        UpdateContext({showModalBloqComponenteSistema: false});
+        UpdateContext({showModalUnBloqComponenteSistema: false});
+        
+        
+        
+        UpdateContext({myRowsCount : CountRows( INV_BEPComponentesSistema) });
+        UpdateContext({varPageCompNumber:1});
+        UpdateContext({varCompActivar:false})
+        
+        
+        /*
+        
+        Navigate(INV_ComponenteSistema,
+        ScreenTransition.UnCover,{
+            mySelectSystemDet:ThisItem,
+            myAllowEditDetSystem:myAllowEditSystem,
+            divisionesDetSystemas:divisionesDetSystemas
+        });
+        
+        */
+
+    rHeaderSoporteSistema_1 As rectangle:
+        Fill: =ColorValue(  INV_ColorPrincipal)
+        Width: =1366
+        ZIndex: =1
+
+    "Gallery4 As gallery.'BrowseLayout_Vertical_OneTextVariant_ver4.0'":
+        Height: =485
+        Items: |
+            =
+            
+            
+            SortByColumns(
+            
+            Filter(
+            INV_BEPComponentesSistema,
+            ThisRecord.Sistemas.INV_BEPCat_Sistemas=mySelectSystemDet.INV_BEPCat_Sistemas
+            )
+            
+            ,
+            "createdon",
+            Descending
+            )
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =46
+        Width: =1366
+        Y: =164
+        ZIndex: =1
+
+        btnDetalleComponente As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            DisplayMode: |-
+                =If(
+                ThisItem.Estado='Estado (INV_BEPComponentesSistema)'.Inactivo
+                
+                
+                
+                ,
+                DisplayMode.Disabled,
+                DisplayMode.Edit)
+            Height: =44
+            Icon: =Icon.DetailList
+            OnSelect: |+
+                =
+                /*
+                UpdateContext({mySelectedComponent: ThisItem});
+                */
+                
+                
+                
+                Navigate(INV_ComponenteSistemaDet,
+                ScreenTransition.UnCover,{
+                    mySelectSystemCompDet:ThisItem
+                    //myAllowEditDetSystem:myAllowEditSystem,
+                    //divisionesDetSystemas:divisionesDetSystemas
+                });
+                
+                
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            TabIndex: =0
+            Tooltip: ="Detalles de componente"
+            Width: =42
+            X: =1240
+            Y: =2
+            ZIndex: =2
+
+        Separator5 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =3
+
+        Label49 As label:
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =9
+            Text: =ThisItem.Name
+            Width: =275
+            ZIndex: =4
+
+        Label52 As label:
+            OnSelect: =Select(Parent)
+            Text: =
+            X: =275
+            ZIndex: =6
+
+        Label50 As label:
+            Align: =Align.Center
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =9
+            Text: =ThisItem.Sistemas.Name
+            Width: =128
+            X: =275
+            ZIndex: =7
+
+        Label51 As label:
+            Align: =Align.Center
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: =ThisItem.Componente.Name
+            Width: =160
+            X: =402
+            ZIndex: =8
+
+        Label53 As label:
+            Align: =Align.Center
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: =ThisItem.Confidencialidad
+            Width: =132
+            X: =562
+            ZIndex: =9
+
+        Label54 As label:
+            Align: =Align.Center
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: =ThisItem.Integridad
+            Width: =132
+            X: =694
+            ZIndex: =10
+
+        Label56 As label:
+            Align: =Align.Center
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: =ThisItem.Disponibilidad
+            X: =827
+            ZIndex: =11
+
+        Label57 As label:
+            Align: =Align.Center
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: =ThisItem.Criticidad
+            Width: =70
+            X: =977
+            ZIndex: =12
+
+        Label58 As label:
+            Align: =Align.Center
+            BorderThickness: =1
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =10
+            Text: =ThisItem.Producto.Name
+            Width: =152
+            X: =1047
+            ZIndex: =13
+
+        btnMostrarEditComp As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            DisplayMode: |-
+                =If(
+                ThisItem.Estado='Estado (INV_BEPComponentesSistema)'.Inactivo
+                
+                Or
+                SuperAdmin=true
+                
+                ,
+                DisplayMode.Disabled,
+                DisplayMode.Edit)
+            Height: =44
+            Icon: =Icon.Edit
+            OnSelect: |+
+                =UpdateContext({showModalComponenteSistemasEdit: true});
+                UpdateContext({mySelectedComponent: ThisItem});
+                
+                Reset(txtUrlCompEdit);
+                Reset(ddlComponenteEdit);
+                Reset(cmbConfidenEdit);
+                Reset(cmbIntegridadEdit);
+                Reset(cmbDisponibilidadEdit);
+                Reset(cmbModeloServicioEdit);
+                Reset(ddlFabricanteEditar);
+                Reset(ddlProductoEditar);
+                Reset(txtUrlCompEdit);
+                
+                
+                
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            TabIndex: =0
+            Tooltip: ="Actualizar componente"
+            Width: =42
+            X: =1199
+            Y: =1
+            ZIndex: =14
+
+        btnUnBloqComp As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            DisplayMode: |-
+                =If(
+                ThisItem.Estado='Estado (INV_BEPComponentesSistema)'.Activo
+                
+                Or
+                SuperAdmin=true
+                
+                ,
+                DisplayMode.Disabled,
+                DisplayMode.Edit)
+            Height: =44
+            Icon: =Icon.Reset
+            OnSelect: |
+                =
+                
+                UpdateContext({showModalUnBloqComponenteSistema: true});
+                
+                UpdateContext({mySelectedComponent: ThisItem});
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            TabIndex: =0
+            Tooltip: ="Desbloquear componente"
+            Width: =42
+            X: =1282
+            Y: =2
+            ZIndex: =15
+
+        btnBloqComp As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            DisplayMode: |-
+                =If(
+                ThisItem.Estado='Estado (INV_BEPComponentesSistema)'.Inactivo
+                
+                Or
+                SuperAdmin=true
+                
+                ,
+                DisplayMode.Disabled,
+                DisplayMode.Edit)
+            Height: =44
+            Icon: =Icon.Blocked
+            OnSelect: |-
+                =
+                UpdateContext({mySelectedComponent: ThisItem});
+                
+                
+                
+                UpdateContext({showModalBloqComponenteSistema: true});
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            TabIndex: =0
+            Tooltip: ="Bloquear componente"
+            Width: =42
+            X: =1324
+            ZIndex: =16
+
+    lblHeadSoporteSystemUser_1 As label:
+        Align: =Align.Right
+        Color: =ColorValue(  INV_ColorFuente)
+        Height: =44
+        Text: =User().FullName
+        Width: =416
+        X: =942
+        Y: =56
+        ZIndex: =2
+
+    lblHeadSoporteSystemName_1 As label:
+        Align: =Align.Right
+        Color: =ColorValue(  INV_ColorFuente)
+        Height: =32
+        Text: =User().Email
+        Width: =429
+        X: =929
+        Y: =35
+        ZIndex: =3
+
+    lblTitleSoporteSistema_1 As label:
+        Align: =Align.Right
+        Color: =ColorValue(  INV_ColorFuente)
+        Height: =35
+        Size: =17
+        Text: ="Componentes del sistema [ " & mySelectSystemDet.Name & "]"
+        Width: =1208
+        X: =150
+        ZIndex: =4
+
+    backSoporteSistemas_1 As icon.ChevronLeft:
+        Color: =ColorValue(  INV_ColorFuente)
+        Icon: =Icon.ChevronLeft
+        OnSelect: =Back()
+        PaddingBottom: =10
+        PaddingLeft: =10
+        PaddingRight: =10
+        PaddingTop: =10
+        Tooltip: ="Regresar a sistemas"
+        X: =2
+        Y: =19
+        ZIndex: =5
+
+    Rectangle5 As rectangle:
+        Fill: =ColorValue(  INV_ColorPrincipal)
+        Height: =62
+        Width: =1366
+        Y: =103
+        ZIndex: =6
+
+    Label59 As label:
+        Color: =ColorValue(  INV_ColorFuente)
+        Size: =10
+        Text: ="Componente"
+        Y: =123
+        ZIndex: =7
+
+    Label59_1 As label:
+        Align: =Align.Center
+        Color: =ColorValue(  INV_ColorFuente)
+        Size: =10
+        Text: ="Sistemas"
+        Width: =119
+        X: =284
+        Y: =123
+        ZIndex: =8
+
+    Label59_2 As label:
+        Align: =Align.Center
+        Color: =ColorValue(  INV_ColorFuente)
+        Size: =10
+        Text: ="Tipo de componente"
+        X: =409
+        Y: =125
+        ZIndex: =9
+
+    Label59_3 As label:
+        Align: =Align.Center
+        Color: =ColorValue(  INV_ColorFuente)
+        Height: =38
+        Size: =10
+        Text: ="Confidencialidad"
+        Width: =118
+        X: =571
+        Y: =123
+        ZIndex: =10
+
+    Label59_4 As label:
+        Align: =Align.Center
+        Color: =ColorValue(  INV_ColorFuente)
+        Size: =10
+        Text: ="Integridad"
+        X: =673
+        Y: =123
+        ZIndex: =11
+
+    Label59_5 As label:
+        Align: =Align.Center
+        Color: =ColorValue(  INV_ColorFuente)
+        Size: =10
+        Text: ="Disponibilidad"
+        X: =821
+        Y: =123
+        ZIndex: =12
+
+    Label59_6 As label:
+        Align: =Align.Center
+        Color: =ColorValue(  INV_ColorFuente)
+        Size: =10
+        Text: ="Criticidad"
+        Width: =106
+        X: =958
+        Y: =123
+        ZIndex: =13
+
+    Label59_7 As label:
+        Align: =Align.Center
+        Color: =ColorValue(  INV_ColorFuente)
+        Size: =10
+        Text: ="Producto"
+        X: =1043
+        Y: =123
+        ZIndex: =14
+
+    btnMostrarCrearComp As icon.Add:
+        Color: =ColorValue(  INV_ColorFuente)
+        DisplayMode: |-
+            =If(
+            SuperAdmin=true,
+            DisplayMode.Disabled,
+            DisplayMode.Edit
+            )
+        Height: =51
+        Icon: =Icon.Add
+        OnSelect: |
+            =UpdateContext({showModalComponenteSistemas: true});
+            
+            
+            Reset(ddlComponenteCrear);
+            Reset(cmbConfidenCrear);
+            Reset(cmbIntegridadCrear);
+            Reset(cmbDisponibilidadCrear);
+            Reset(cmbModeloServicioCrear);
+            Reset(ddlFabricanteCrear);
+            Reset(txtUrlCompCrear);
+            Reset(ddlProductoCrear);
+        PaddingBottom: =10
+        PaddingLeft: =10
+        PaddingRight: =10
+        PaddingTop: =10
+        Width: =48
+        X: =1311
+        Y: =110
+        ZIndex: =15
+
+    INV_BEP_ModalComponenteCrear As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0,0,0,0.4)
+        Height: =768
+        Visible: =showModalComponenteSistemas
+        Width: =1366
+        ZIndex: =16
+
+        INV_BEP_ModalCompCrearBody As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =72
+            Width: =723
+            X: =326
+            Y: =98
+            ZIndex: =1
+
+        INV_BEP_ModalCompCrearHead As rectangle:
+            Fill: =White
+            Height: =503
+            Width: =723
+            X: =326
+            Y: =170
+            ZIndex: =2
+
+        INV_BEP_ModalCompCrearClose As icon.Cancel:
+            Color: =ColorValue(  INV_ColorFuente)
+            Icon: =Icon.Cancel
+            OnSelect: |
+                =UpdateContext({showModalComponenteSistemas: false});
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            X: =970
+            Y: =102
+            ZIndex: =3
+
+        Label60 As label:
+            Color: =ColorValue(  INV_ColorFuente)
+            Height: =34
+            Text: ="Crear componente"
+            Width: =202
+            X: =352
+            Y: =111
+            ZIndex: =4
+
+        btnGuardarComponente As button:
+            OnSelect: |+
+                =
+                UpdateContext({lastPatchComponente:Blank()});
+                
+                
+                UpdateContext({equipoSistema: LookUp(INV_BEPCat_Sistemas,
+                
+                INV_BEPCat_Sistemas= mySelectSystemDet.INV_BEPCat_Sistemas )});
+                
+                
+                
+                If(CountRows(Filter(INV_BEPComponentesSistema,
+                Componente.INV_BEPCatComponente=ddlComponenteCrear.Selected.INV_BEPCatComponente
+                And
+                Sistemas.INV_BEPCat_Sistemas=mySelectSystemDet.INV_BEPCat_Sistemas
+                And
+                Producto.INV_BEPCatProductos=ddlProductoCrear.Selected.INV_BEPCatProductos
+                And
+                Fabricante.INV_BEPCat_Fabricante=ddlFabricanteCrear.Selected.INV_BEPCat_Fabricante
+                )) > 0,
+                
+                Notify("ERROR : Ya se ha definido un componente del tipo indicado para este sistema.",NotificationType.Error),
+                
+                
+                        If(
+                            ddlComponenteCrear.BorderColor=Red    
+                        Or
+                            cmbConfidenCrear.BorderColor=Red
+                            Or
+                            cmbDisponibilidadCrear.BorderColor=Red
+                            Or
+                            cmbIntegridadCrear.BorderColor=Red
+                        Or 
+                        cmbModeloServicioCrear.BorderColor=Red
+                            Or 
+                        ddlProductoCrear.BorderColor=Red
+                            Or 
+                        ddlFabricanteCrear.BorderColor=Red
+                        ,
+                
+                
+                
+                        UpdateContext({mensajeError: 
+                        Concatenate (
+                        If(ddlComponenteCrear.BorderColor=Red," Componente,","" ) ,
+                        If(cmbConfidenCrear.BorderColor=Red," Confidencialidad,","" ) ,
+                        If(cmbDisponibilidadCrear.BorderColor=Red," Disponibilidad,","" ) ,
+                        If(cmbIntegridadCrear.BorderColor=Red," Integridad,","" ) ,
+                        If(cmbModeloServicioCrear.BorderColor=Red," Modelo de servicio,","" )  ,
+                        If(ddlProductoCrear.BorderColor=Red," Producto,","" ) ,
+                        If(ddlFabricanteCrear.BorderColor=Red," Fabricante,","" ) 
+                
+                        )
+                        });
+                        Notify("ERROR : Faltan llenar los datos de :"&Left(mensajeError,Len(mensajeError) -1));
+                        
+                        ,
+                
+                
+                        UpdateContext({
+                        numCriticidad:
+                        
+                            Switch(cmbConfidenCrear.Selected.Value,
+                            
+                            INV_BEP_optConfidencialidad .'3',3,
+                            INV_BEP_optConfidencialidad .'2',2,
+                            INV_BEP_optConfidencialidad .'1',1
+                            )
+                            
+                            +
+                
+                        Switch( cmbIntegridadCrear.Selected.Value,
+                            
+                            INV_BEP_optIntegridad .'3',3,
+                            INV_BEP_optIntegridad .'2',2,
+                            INV_BEP_optIntegridad .'1',1
+                            )
+                            +
+                
+                        Switch( cmbDisponibilidadCrear.Selected.Value,
+                            
+                            INV_BEP_optDisponibilidad .'1',1,
+                            INV_BEP_optDisponibilidad .'2',2,
+                            INV_BEP_optDisponibilidad .'3',3
+                            )
+                        });
+                
+                
+                
+                        IfError(
+                        UpdateContext({
+                        lastPatchComponente:
+                            Patch(INV_BEPComponentesSistema,
+                            Defaults(INV_BEPComponentesSistema),
+                                {
+                                    Sistemas:mySelectSystemDet,
+                                    Componente:ddlComponenteCrear.Selected,
+                                    Confidencialidad: cmbConfidenCrear.Selected.Value,
+                                    Integridad:cmbIntegridadCrear.Selected.Value ,
+                                    Disponibilidad:cmbDisponibilidadCrear.Selected.Value,
+                                    'Modelo Servicio':cmbModeloServicioCrear.Selected.Value,
+                                    Producto:ddlProductoCrear.Selected,
+                                    Fabricante:ddlFabricanteCrear.Selected,
+                                    URL:txtUrlCompCrear.Text,
+                                    Propietario:mySelectSystemDet.'Equipo propietario',
+                
+                                    Name: 
+                                    mySelectSystemDet .Name & "-" & 
+                                    ddlComponenteCrear.Selected.Name & "-" & 
+                                    ddlProductoCrear.Selected.Name& "-" &
+                                    ddlFabricanteCrear.Selected.Name
+                                    ,
+                
+                                    Criticidad:numCriticidad
+                                  
+                                }
+                            )
+                        });
+                
+                
+                /*
+                Componente.INV_BEPCatComponente=ddlComponenteCrear.Selected.INV_BEPCatComponente
+                And
+                Sistemas.INV_BEPCat_Sistemas=mySelectSystemDet.INV_BEPCat_Sistemas
+                And
+                Producto.INV_BEPCatProductos=ddlProductoCrear.Selected.INV_BEPCatProductos
+                And
+                Fabricante.INV_BEPCat_Fabricante=ddlFabricanteCrear.Selected.INV_BEPCat_Fabricante
+                
+                */
+                
+                
+                
+                
+                
+                        Refresh(INV_BEPComponentesSistema);,
+                        Notify("ERROR : " &FirstError.Message ,NotificationType.Error);,
+                
+                        Notify("Se creado un nuevo componente para al sistema " & mySelectSystemDet .Name ,Success);
+                        UpdateContext({showModalComponenteSistemas: false});
+                
+                        )
+                        )
+                
+                )
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            Text: ="Crear"
+            X: =847
+            Y: =602
+            ZIndex: =5
+
+        Label1 As label:
+            Text: ="Componente"
+            X: =347
+            Y: =170
+            ZIndex: =7
+
+        Label1_8 As label:
+            Text: ="Confidencialidad"
+            X: =697
+            Y: =172
+            ZIndex: =8
+
+        cmbConfidenCrear As dropdown:
+            AllowEmptySelection: =true
+            BorderColor: |
+                =If(IsBlank(cmbConfidenCrear.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =
+            Items: =Choices( INV_BEP_optConfidencialidad)
+            Reset: =true
+            Width: =306
+            X: =710
+            Y: =213
+            ZIndex: =9
+
+        Label1_9 As label:
+            Text: ="Integridad"
+            X: =347
+            Y: =253
+            ZIndex: =10
+
+        cmbIntegridadCrear As dropdown:
+            AllowEmptySelection: =true
+            BorderColor: |
+                =If(IsBlank(cmbIntegridadCrear.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =
+            Height: =41
+            Items: =Choices(INV_BEP_optIntegridad)
+            Reset: =true
+            Width: =323
+            X: =352
+            Y: =293
+            ZIndex: =11
+
+        cmbDisponibilidadCrear As dropdown:
+            AllowEmptySelection: =true
+            BorderColor: |
+                =If(IsBlank(cmbDisponibilidadCrear.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =
+            Height: =41
+            Items: =Choices(INV_BEP_optDisponibilidad)
+            Reset: =true
+            Width: =306
+            X: =708
+            Y: =295
+            ZIndex: =12
+
+        Label1_10 As label:
+            Text: ="Disponibilidad"
+            X: =697
+            Y: =253
+            ZIndex: =13
+
+        cmbModeloServicioCrear As dropdown:
+            AllowEmptySelection: =true
+            BorderColor: |
+                =If(IsBlank(cmbModeloServicioCrear.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =
+            Height: =41
+            Items: =Choices(INV_BEP_optModeloServicio)
+            Reset: |
+                =true
+            Width: =323
+            X: =352
+            Y: =377
+            ZIndex: =14
+
+        Label1_11 As label:
+            Text: ="Modelo de servicio"
+            Width: =221
+            X: =352
+            Y: =334
+            ZIndex: =15
+
+        Label1_12 As label:
+            Text: ="Producto"
+            Width: =221
+            X: =697
+            Y: =343
+            ZIndex: =17
+
+        Label1_18 As label:
+            Text: ="Fabricante"
+            Width: =221
+            X: =352
+            Y: =425
+            ZIndex: =19
+
+        txtUrlCompCrear As text:
+            Default: =
+            HintText: ="URL"
+            MaxLength: =400
+            Reset: =true
+            Width: =655
+            X: =361
+            Y: =556
+            ZIndex: =20
+
+        Label1_19 As label:
+            Text: ="URL"
+            Width: =221
+            X: =361
+            Y: =507
+            ZIndex: =21
+
+        ddlProductoCrear As combobox:
+            BorderColor: |-
+                =If(IsBlank(ddlProductoCrear.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            DisplayFields: =["new_name"]
+            Height: =38
+            InputTextPlaceholder: ="Producto"
+            Items: =INV_BEPCatProductos
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCatProductos,ddlProductoCrear.SearchText,"new_name")
+            SelectMultiple: =false
+            Width: =311
+            X: =703
+            Y: =387
+            ZIndex: =22
+
+        ddlFabricanteCrear As combobox:
+            BorderColor: |-
+                =If(IsBlank(ddlFabricanteCrear.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            DisplayFields: =["new_name"]
+            Height: =38
+            InputTextPlaceholder: ="Fabricante"
+            Items: =INV_BEPCat_Fabricante
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCat_Fabricante,ddlFabricanteCrear.SearchText,"new_name")
+            SelectMultiple: =false
+            Width: =311
+            X: =358
+            Y: =473
+            ZIndex: =23
+
+        ddlComponenteCrear As combobox:
+            BorderColor: |-
+                =If(IsBlank(ddlComponenteCrear.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            DisplayFields: =["new_name"]
+            Height: =41
+            InputTextPlaceholder: ="Componente"
+            Items: =INV_BEPCatComponente
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCatComponente,ddlComponenteCrear.SearchText,"new_name")
+            SelectMultiple: =false
+            Width: =323
+            X: =352
+            Y: =210
+            ZIndex: =24
+
+    INV_BEP_ModalComponenteEdit As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0,0,0,0.4)
+        Height: =768
+        Visible: =showModalComponenteSistemasEdit
+        Width: =1366
+        ZIndex: =17
+
+        INV_BEP_ModalCompEditBody As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =72
+            Width: =723
+            X: =326
+            Y: =98
+            ZIndex: =1
+
+        INV_BEP_ModalCompEditHead As rectangle:
+            Fill: =White
+            Height: =503
+            Width: =723
+            X: =326
+            Y: =170
+            ZIndex: =2
+
+        INV_BEP_ModalCompEditClose As icon.Cancel:
+            Color: =ColorValue(  INV_ColorFuente)
+            Icon: =Icon.Cancel
+            OnSelect: |-
+                =UpdateContext({showModalComponenteSistemasEdit: false});
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            X: =970
+            Y: =102
+            ZIndex: =3
+
+        Label60_1 As label:
+            Color: =ColorValue(  INV_ColorFuente)
+            Height: =34
+            Text: ="Editar componente"
+            Width: =202
+            X: =361
+            Y: =117
+            ZIndex: =4
+
+        btnEditComponente As button:
+            OnSelect: |+
+                =
+                UpdateContext({lastPatchComponente:Blank()});
+                
+                
+                
+                If(CountRows(Filter(INV_BEPComponentesSistema,
+                
+                Componente.INV_BEPCatComponente=ddlComponenteEdit.Selected.INV_BEPCatComponente
+                And
+                Sistemas.INV_BEPCat_Sistemas=mySelectSystemDet.INV_BEPCat_Sistemas
+                And
+                INV_BEPComponentesSistema<>mySelectedComponent.INV_BEPComponentesSistema
+                And 
+                Producto.INV_BEPCatProductos=ddlProductoEditar.Selected.INV_BEPCatProductos
+                And
+                Fabricante.INV_BEPCat_Fabricante=ddlFabricanteEditar.Selected.INV_BEPCat_Fabricante
+                
+                
+                )) > 0,
+                
+                Notify("Ya se ha definido un componente del tipo indicado para este sistema.",NotificationType.Error),
+                
+                        If(
+                            ddlComponenteEdit.BorderColor=Red    
+                        Or
+                            cmbConfidenEdit.BorderColor=Red
+                            Or
+                            cmbDisponibilidadEdit.BorderColor=Red
+                            Or
+                            cmbIntegridadEdit.BorderColor=Red
+                        Or 
+                        cmbModeloServicioEdit.BorderColor=Red
+                            Or 
+                        ddlProductoEditar.BorderColor=Red
+                            Or 
+                        ddlFabricanteEditar.BorderColor=Red
+                        ,
+                
+                
+                
+                        UpdateContext({mensajeError: 
+                        Concatenate (
+                        If(ddlComponenteEdit.BorderColor=Red," Componente,","" ) ,
+                        If(cmbConfidenEdit.BorderColor=Red," Confidencialidad,","" ) ,
+                        If(cmbDisponibilidadEdit.BorderColor=Red," Disponibilidad,","" ) ,
+                        If(cmbIntegridadEdit.BorderColor=Red," Integridad,","" ) ,
+                        If(cmbModeloServicioEdit.BorderColor=Red," Modelo de servicio,","" )  ,
+                        If(ddlProductoEditar.BorderColor=Red," Producto,","" ) ,
+                        If(ddlFabricanteEditar.BorderColor=Red," Fabricante,","" ) 
+                
+                        )
+                        });
+                        Notify("ERROR : Faltan llenar los datos de :"&Left(mensajeError,Len(mensajeError) -1));
+                
+                        ,
+                
+                
+                
+                        UpdateContext({
+                        numCriticidad:
+                        
+                            Switch(cmbConfidenEdit.Selected.Value,
+                            
+                            INV_BEP_optConfidencialidad .'3',3,
+                            INV_BEP_optConfidencialidad .'2',2,
+                            INV_BEP_optConfidencialidad .'1',1
+                            )
+                            
+                            +
+                
+                        Switch( cmbIntegridadEdit.Selected.Value,
+                            
+                            INV_BEP_optIntegridad .'3',3,
+                            INV_BEP_optIntegridad .'2',2,
+                            INV_BEP_optIntegridad .'1',1
+                            )
+                            +
+                
+                        Switch( cmbDisponibilidadEdit.Selected.Value,
+                            
+                            INV_BEP_optDisponibilidad .'1',1,
+                            INV_BEP_optDisponibilidad .'2',2,
+                            INV_BEP_optDisponibilidad .'3',3
+                            )
+                            //  Value( Text(  cmbConfidenCrear.Selected.Value) )
+                                /*  cmbIntegridadCrear.Selected.Value
+                                cmbDisponibilidadCrear.Selected.Value*/
+                
+                        });
+                
+                
+                
+                
+                
+                        IfError(
+                
+                            UpdateIf(INV_BEPComponentesSistema,
+                            INV_BEPComponentesSistema= mySelectedComponent.INV_BEPComponentesSistema,
+                                {
+                                    Sistemas:mySelectSystemDet,
+                                    Componente:ddlComponenteEdit.Selected,
+                                    Confidencialidad: cmbConfidenEdit.Selected.Value,
+                                    Integridad:cmbIntegridadEdit.Selected.Value ,
+                                    Disponibilidad:cmbDisponibilidadEdit.Selected.Value,
+                                    'Modelo Servicio':cmbModeloServicioEdit.Selected.Value,
+                                    Producto:ddlProductoEditar.Selected,
+                                    Fabricante:ddlFabricanteEditar.Selected,
+                                    URL:txtUrlCompEdit.Text,
+                                    Propietario:mySelectSystemDet.'Equipo propietario',
+                
+                                     Name:  mySelectSystemDet .Name & "-" & 
+                                    ddlComponenteEdit.Selected.Name & "-" & 
+                                    ddlProductoEditar.Selected.Name  & "-" &
+                                    ddlFabricanteEditar.Selected.Name
+                                }
+                            );
+                        ,
+                        Notify("ERROR : " &FirstError.Message ,NotificationType.Error);,
+                
+                        Notify("Se ha actualizado el componente del sistema : " & mySelectSystemDet .Name ,Success);
+                        Refresh(INV_BEPComponentesSistema);
+                        UpdateContext({showModalComponenteSistemasEdit: false});
+                        )
+                        );
+                
+                
+                )
+                
+                
+                
+                
+                
+                
+                
+            Text: ="Editar"
+            X: =847
+            Y: =615
+            ZIndex: =5
+
+        Label1_20 As label:
+            Text: ="Componente"
+            X: =347
+            Y: =170
+            ZIndex: =7
+
+        Label1_21 As label:
+            Text: ="Confidencialidad"
+            X: =697
+            Y: =172
+            ZIndex: =8
+
+        cmbConfidenEdit As dropdown:
+            AllowEmptySelection: =true
+            BorderColor: |
+                =If(IsBlank(cmbConfidenEdit.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =mySelectedComponent.Confidencialidad
+            Items: =Choices( INV_BEP_optConfidencialidad)
+            Reset: =true
+            Width: =306
+            X: =710
+            Y: =213
+            ZIndex: =9
+
+        Label1_22 As label:
+            Text: ="Integridad"
+            X: =347
+            Y: =253
+            ZIndex: =10
+
+        cmbIntegridadEdit As dropdown:
+            AllowEmptySelection: =true
+            BorderColor: |
+                =If(IsBlank(cmbIntegridadEdit.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =mySelectedComponent.Integridad
+            Height: =41
+            Items: =Choices(INV_BEP_optIntegridad)
+            Reset: =true
+            Width: =323
+            X: =352
+            Y: =293
+            ZIndex: =11
+
+        cmbDisponibilidadEdit As dropdown:
+            AllowEmptySelection: =true
+            BorderColor: |
+                =If(IsBlank(cmbDisponibilidadEdit.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =mySelectedComponent.Disponibilidad
+            Height: =41
+            Items: =Choices(INV_BEP_optDisponibilidad)
+            Reset: =true
+            Width: =306
+            X: =708
+            Y: =295
+            ZIndex: =12
+
+        Label1_23 As label:
+            Text: ="Disponibilidad"
+            X: =697
+            Y: =253
+            ZIndex: =13
+
+        cmbModeloServicioEdit As dropdown:
+            AllowEmptySelection: =true
+            BorderColor: |
+                =If(IsBlank(cmbModeloServicioEdit.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            Default: =mySelectedComponent.'Modelo Servicio'
+            Height: =41
+            Items: =Choices(INV_BEP_optModeloServicio)
+            Reset: |
+                =true
+            Width: =323
+            X: =352
+            Y: =377
+            ZIndex: =14
+
+        Label1_24 As label:
+            Text: ="Modelo de servicio"
+            Width: =221
+            X: =352
+            Y: =334
+            ZIndex: =15
+
+        Label1_25 As label:
+            Text: ="Producto"
+            Width: =221
+            X: =697
+            Y: =343
+            ZIndex: =17
+
+        Label1_26 As label:
+            Text: ="Fabricante"
+            Width: =221
+            X: =352
+            Y: =425
+            ZIndex: =19
+
+        txtUrlCompEdit As text:
+            Default: =mySelectedComponent.URL
+            HintText: ="URL"
+            MaxLength: =400
+            Reset: =true
+            Width: =655
+            X: =361
+            Y: =556
+            ZIndex: =20
+
+        Label1_27 As label:
+            Text: ="URL"
+            Width: =221
+            X: =361
+            Y: =507
+            ZIndex: =21
+
+        ddlProductoEditar As combobox:
+            BorderColor: |-
+                =If(IsBlank(ddlProductoEditar.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            DefaultSelectedItems: =mySelectedComponent.Producto
+            DisplayFields: =["new_name"]
+            Height: =38
+            InputTextPlaceholder: ="Producto"
+            Items: =INV_BEPCatProductos
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCatProductos,ddlProductoEditar.SearchText,"new_name")
+            SelectMultiple: =false
+            Width: =311
+            X: =705
+            Y: =383
+            ZIndex: =22
+
+        ddlFabricanteEditar As combobox:
+            BorderColor: |-
+                =If(IsBlank(ddlFabricanteEditar.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            DefaultSelectedItems: =mySelectedComponent.Fabricante
+            DisplayFields: =["new_name"]
+            Height: =38
+            InputTextPlaceholder: ="Fabricante"
+            Items: =INV_BEPCat_Fabricante
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCat_Fabricante,ddlFabricanteEditar.SearchText,"new_name")
+            SelectMultiple: =false
+            Width: =311
+            X: =360
+            Y: =468
+            ZIndex: =23
+
+        ddlComponenteEdit As combobox:
+            BorderColor: |-
+                =If(IsBlank(ddlComponenteEdit.Selected),
+                    Red,
+                  RGBA(0, 18, 107, 1)
+                  )
+            DefaultSelectedItems: =mySelectedComponent.Componente
+            DisplayFields: =["new_name"]
+            Height: =41
+            InputTextPlaceholder: ="Componente"
+            Items: =INV_BEPCatComponente
+            SearchFields: =["new_name"]
+            SearchItems: =Search(INV_BEPCatComponente,ddlComponenteEdit.SearchText,"new_name")
+            SelectMultiple: =false
+            Width: =323
+            X: =352
+            Y: =212
+            ZIndex: =24
+
+    INV_BEP_ModalComponenteBloq As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0,0,0,0.4)
+        Height: =768
+        Visible: =showModalBloqComponenteSistema
+        Width: =1366
+        ZIndex: =18
+
+        Rectangle6 As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =70
+            Width: =514
+            X: =428
+            Y: =165
+            ZIndex: =1
+
+        Rectangle7 As rectangle:
+            Fill: =White
+            Height: =130
+            Width: =514
+            X: =429
+            Y: =228
+            ZIndex: =2
+
+        btnConfBloqComp As button:
+            OnSelect: |-
+                =IfError(
+                
+                    UpdateIf(INV_BEPComponentesSistema,
+                      INV_BEPComponentesSistema= mySelectedComponent.INV_BEPComponentesSistema,
+                        {
+                         Estado:'Estado (INV_BEPComponentesSistema)'.Inactivo
+                        }
+                    );
+                ,
+                Notify("ERROR : " &FirstError.Message ,NotificationType.Error);,
+                
+                Notify("Se ha actualizado el estado del sistema : " & mySelectSystemDet .Name ,Success);
+                Refresh(INV_BEPComponentesSistema);
+                UpdateContext({showModalBloqComponenteSistema: false});
+                
+                )
+            Text: ="Continuar"
+            X: =506
+            Y: =302
+            ZIndex: =4
+
+        btnConfBloqCancelComp As button:
+            OnSelect: |
+                =UpdateContext({showModalBloqComponenteSistema: false});
+            Text: ="Cancelar"
+            X: =711
+            Y: =302
+            ZIndex: =5
+
+        Label9 As label:
+            Color: =ColorValue(  INV_ColorFuente)
+            Text: ="Mensaje del sistema"
+            Width: =197
+            X: =610
+            Y: =172
+            ZIndex: =6
+
+        Label11_2 As label:
+            Align: =Align.Center
+            Height: =52
+            Text: ="¿Desea continuar con el bloqueo del registro?"
+            Width: =242
+            X: =565
+            Y: =235
+            ZIndex: =7
+
+    INV_BEP_ModalComponenteUnBloq As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(0,0,0,0.4)
+        Height: =768
+        Visible: =showModalUnBloqComponenteSistema
+        Width: =1366
+        ZIndex: =19
+
+        Rectangle8 As rectangle:
+            Fill: =ColorValue(  INV_ColorPrincipal)
+            Height: =70
+            Width: =514
+            X: =406
+            Y: =165
+            ZIndex: =1
+
+        Rectangle9 As rectangle:
+            Fill: =White
+            Height: =130
+            Width: =514
+            X: =406
+            Y: =235
+            ZIndex: =2
+
+        btnConfUnBloqComp As button:
+            OnSelect: |-
+                =IfError(
+                
+                    UpdateIf(INV_BEPComponentesSistema,
+                      INV_BEPComponentesSistema= mySelectedComponent.INV_BEPComponentesSistema,
+                        {
+                         Estado:'Estado (INV_BEPComponentesSistema)'.Activo
+                        }
+                    );
+                ,
+                Notify("ERROR : " &FirstError.Message ,NotificationType.Error);,
+                
+                Notify("Se ha actualizado el estado del sistema : " & mySelectSystemDet .Name ,Success);
+                Refresh(INV_BEPComponentesSistema);
+                UpdateContext({showModalUnBloqComponenteSistema: false});
+                )
+            Text: ="Continuar"
+            X: =484
+            Y: =306
+            ZIndex: =4
+
+        btnConfUnBloqCancelComp As button:
+            OnSelect: |-
+                =UpdateContext({showModalUnBloqComponenteSistema: false});
+            Text: ="Cancelar"
+            X: =689
+            Y: =306
+            ZIndex: =5
+
+        Label5 As label:
+            Align: =Align.Center
+            Color: =ColorValue(  INV_ColorFuente)
+            Height: =24
+            Text: ="Mensaje del sistema"
+            Width: =204
+            X: =568
+            Y: =188
+            ZIndex: =6
+
+        Label11 As label:
+            Align: =Align.Center
+            Height: =71
+            Text: ="¿Desea continuar con el desbloqueo del registro?"
+            Width: =288
+            X: =516
+            Y: =235
+            ZIndex: =7
+

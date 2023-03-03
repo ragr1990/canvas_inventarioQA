@@ -1,0 +1,177 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "new_inv_bepcat_sistemases",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "new_inv_bepcat_sistemas",
+    "MaxGetRowsCount": 500,
+    "Name": "INV_BEPCat_Sistemas",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "_ownerid_value": "Propietario",
+      "createdby": "Autor",
+      "createdon": "Fecha de creación",
+      "createdonbehalfby": "Autor (delegado)",
+      "importsequencenumber": "Número de secuencia de importación",
+      "modifiedby": "Modificado por",
+      "modifiedon": "Fecha de modificación",
+      "modifiedonbehalfby": "Modificado por (delegado)",
+      "new_inv_bep_dtfechainstalacion": "Fecha de Instalacion",
+      "new_inv_bep_dtfechavencimientolicenciamiento": "Fecha de Vencimiento de Licenciamiento",
+      "new_inv_bep_optmodeloservicio": "Modelo de Servicio",
+      "new_INV_BEP_optSistemaComp": "INV_BEPComponentesSistema",
+      "new_INV_BEP_optSistemaOrigenSis": "INV_BEPProcesosInterfaces (new_INV_BEP_optSistemaOrigenSis)",
+      "new_inv_bep_opttipolicenciamiento": "Tipo de Licenciamiento",
+      "new_inv_bep_opttipoplataforma": "Tipo Plataforma",
+      "new_inv_bep_sdescripcionsistema": "Descripcion de Sistema",
+      "new_inv_bep_ssistema": "Nombre de Sistema",
+      "new_inv_bep_sversion": "Version",
+      "new_inv_bepcat_sistemas_AsyncOperations": "System Jobs",
+      "new_inv_bepcat_sistemas_BulkDeleteFailures": "Bulk Delete Failures",
+      "new_inv_bepcat_sistemas_DuplicateBaseRecord": "Duplicate Records (new_inv_bepcat_sistemas_DuplicateBaseRecord)",
+      "new_inv_bepcat_sistemas_DuplicateMatchingRecord": "Duplicate Records (new_inv_bepcat_sistemas_DuplicateMatchingRecord)",
+      "new_inv_bepcat_sistemas_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "new_inv_bepcat_sistemas_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "new_inv_bepcat_sistemas_ProcessSession": "Process Sessions",
+      "new_inv_bepcat_sistemas_SyncErrors": "Sync Errors",
+      "new_inv_bepcat_sistemasid": "INV_BEPCat_Sistemas",
+      "new_INV_SISTEMAS_DIV": "INV_BEPCnfSistemaDivisiones",
+      "new_name": "Name",
+      "new_new_inv_bepprocesosinterfaces_INV_BEP_opt": "INV_BEPProcesosInterfaces (new_new_inv_bepprocesosinterfaces_INV_BEP_opt)",
+      "overriddencreatedon": "Fecha de creación del registro",
+      "owningbusinessunit": "Unidad de negocio propietaria",
+      "owningteam": "Equipo propietario",
+      "owninguser": "Usuario propietario",
+      "statecode": "Estado",
+      "statuscode": "Razón para el estado",
+      "timezoneruleversionnumber": "Número de versión de regla de zona horaria",
+      "utcconversiontimezonecode": "Código de zona horaria de conversión UTC",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "INV_BEPCat_Sistemas",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "INV_BEPCat_Sistemas (Vistas)",
+    "Name": "_new_inv_bepcat_sistemas_views",
+    "RelatedEntityName": "INV_BEPCat_Sistemas",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "281186a0-8bf7-4f4b-9cd9-369940922110": "INV_BEPCat_Sistemas inactivo",
+      "515a60a0-0b73-4f74-abf3-18c08f76f064": "Vista de búsqueda de INV_BEPCat_Sistemas",
+      "565beba4-0ab1-442f-9cc9-02b8124931c1": "Vista asociada de INV_BEPCat_Sistemas",
+      "9c130019-9b0d-4e26-9c5f-e77c3b1d2494": "INV_BEPCat_Sistemas activo",
+      "ae2462fd-629e-4745-a453-d57de256f569": "Vista de búsqueda avanzada de INV_BEPCat_Sistemas"
+    }
+  },
+  {
+    "DisplayName": "INV_BEP_optModeloServicio",
+    "Name": "new_inv_bep_optmodeloservicio",
+    "OptionSetInfoNameMapping": {
+      "100000000": "SaaS",
+      "100000001": "PaaS",
+      "100000002": "IaaS",
+      "100000003": "On premise"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "new_inv_bep_optmodeloservicio",
+        "OptionSetReferenceEntityName": "INV_BEPCat_Sistemas"
+      },
+      "OptionSetReferenceItem1": {
+        "OptionSetReferenceColumnName": "new_inv_bep_optmodeloservicio",
+        "OptionSetReferenceEntityName": "INV_BEPComponentesSistema"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "new_inv_bep_optmodeloservicio",
+    "RelatedEntityName": "INV_BEPCat_Sistemas",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "INV_BEP_optTipoLicenciamiento",
+    "Name": "new_inv_bep_opttipolicenciamiento",
+    "OptionSetInfoNameMapping": {
+      "100000000": "Compra",
+      "100000001": "Renta"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "new_inv_bep_opttipolicenciamiento",
+        "OptionSetReferenceEntityName": "INV_BEPCat_Sistemas"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "new_inv_bep_opttipolicenciamiento",
+    "RelatedEntityName": "INV_BEPCat_Sistemas",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "INV_BEP_optTipoSolucion",
+    "Name": "new_inv_bep_opttiposolucion",
+    "OptionSetInfoNameMapping": {
+      "100000000": "SaaS",
+      "100000001": "PaaS",
+      "100000002": "IaaS",
+      "100000003": "On premise"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "new_inv_bep_opttipoplataforma",
+        "OptionSetReferenceEntityName": "INV_BEPCat_Sistemas"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "new_inv_bep_opttipoplataforma",
+    "RelatedEntityName": "INV_BEPCat_Sistemas",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Estado (INV_BEPCat_Sistemas)",
+    "Name": "new_inv_bepcat_sistemas_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Activo",
+      "1": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "INV_BEPCat_Sistemas"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "INV_BEPCat_Sistemas",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Razón para el estado (INV_BEPCat_Sistemas)",
+    "Name": "new_inv_bepcat_sistemas_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Activo",
+      "2": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "INV_BEPCat_Sistemas"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "INV_BEPCat_Sistemas",
+    "Type": "OptionSetInfo"
+  }
+]

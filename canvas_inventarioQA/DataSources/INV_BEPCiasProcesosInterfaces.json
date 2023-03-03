@@ -1,0 +1,100 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "new_inv_bepciasprocesosinterfaceses",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "new_inv_bepciasprocesosinterfaces",
+    "MaxGetRowsCount": 500,
+    "Name": "INV_BEPCiasProcesosInterfaces",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "_ownerid_value": "Propietario",
+      "createdby": "Autor",
+      "createdon": "Fecha de creación",
+      "createdonbehalfby": "Autor (delegado)",
+      "importsequencenumber": "Número de secuencia de importación",
+      "modifiedby": "Modificado por",
+      "modifiedon": "Fecha de modificación",
+      "modifiedonbehalfby": "Modificado por (delegado)",
+      "new_INV_BEP_optProcesosInterfaces": "Proceso/Interface",
+      "new_INV_BEPCat_optCompania": "Compañía",
+      "new_inv_bepciasprocesosinterfaces_AsyncOperations": "System Jobs",
+      "new_inv_bepciasprocesosinterfaces_BulkDeleteFailures": "Bulk Delete Failures",
+      "new_inv_bepciasprocesosinterfaces_DuplicateBaseRecord": "Duplicate Records (new_inv_bepciasprocesosinterfaces_DuplicateBaseRecord)",
+      "new_inv_bepciasprocesosinterfaces_DuplicateMatchingRecord": "Duplicate Records (new_inv_bepciasprocesosinterfaces_DuplicateMatchingRecord)",
+      "new_inv_bepciasprocesosinterfaces_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "new_inv_bepciasprocesosinterfaces_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "new_inv_bepciasprocesosinterfaces_ProcessSession": "Process Sessions",
+      "new_inv_bepciasprocesosinterfaces_SyncErrors": "Sync Errors",
+      "new_inv_bepciasprocesosinterfacesid": "INV_BEPCiasProcesosInterfaces",
+      "new_name": "Name",
+      "overriddencreatedon": "Fecha de creación del registro",
+      "owningbusinessunit": "Unidad de negocio propietaria",
+      "owningteam": "Equipo propietario",
+      "owninguser": "Usuario propietario",
+      "statecode": "Estado",
+      "statuscode": "Razón para el estado",
+      "timezoneruleversionnumber": "Número de versión de regla de zona horaria",
+      "utcconversiontimezonecode": "Código de zona horaria de conversión UTC",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "INV_BEPCiasProcesosInterfaces",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "INV_BEPCiasProcesosInterfaces (Vistas)",
+    "Name": "_new_inv_bepciasprocesosinterfaces_views",
+    "RelatedEntityName": "INV_BEPCiasProcesosInterfaces",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "2a488ca9-bc86-4223-b220-6e7a096200ea": "Vista de búsqueda avanzada de INV_BEPCiasProcesosInterfaces",
+      "5f1bfd0d-49ff-4a05-a0b4-b2d7e24ddf03": "INV_BEPCiasProcesosInterfaces activo",
+      "61b77957-dce2-4105-81a1-408536be8cdb": "Vista de búsqueda de INV_BEPCiasProcesosInterfaces",
+      "760e2668-ba95-ed11-aad1-00224824e59e": "Compañías de proceso e interfaces",
+      "86c5a9f7-59a3-43b5-aa8e-cbbeea4c685c": "Vista asociada de INV_BEPCiasProcesosInterfaces",
+      "9e56ab3e-5fa5-4b9e-9aae-71c7f488aa6a": "INV_BEPCiasProcesosInterfaces inactivo"
+    }
+  },
+  {
+    "DisplayName": "Estado (INV_BEPCiasProcesosInterfaces)",
+    "Name": "new_inv_bepciasprocesosinterfaces_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Activo",
+      "1": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "INV_BEPCiasProcesosInterfaces"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "INV_BEPCiasProcesosInterfaces",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Razón para el estado (INV_BEPCiasProcesosInterfaces)",
+    "Name": "new_inv_bepciasprocesosinterfaces_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Activo",
+      "2": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "INV_BEPCiasProcesosInterfaces"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "INV_BEPCiasProcesosInterfaces",
+    "Type": "OptionSetInfo"
+  }
+]

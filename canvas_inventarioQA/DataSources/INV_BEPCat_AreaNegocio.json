@@ -1,0 +1,98 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "new_inv_bepcat_areanegocios",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "new_inv_bepcat_areanegocio",
+    "MaxGetRowsCount": 500,
+    "Name": "INV_BEPCat_AreaNegocio",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "cr3ef_INV_BEP_optAreaNegocioPers": "INV_BEPCat_PersonalInventarios",
+      "cr3ef_inv_bep_sareanegocio": "Descripción de área de negocio",
+      "createdby": "Autor",
+      "createdon": "Fecha de creación",
+      "createdonbehalfby": "Autor (delegado)",
+      "importsequencenumber": "Número de secuencia de importación",
+      "modifiedby": "Modificado por",
+      "modifiedon": "Fecha de modificación",
+      "modifiedonbehalfby": "Modificado por (delegado)",
+      "new_INV_AreaNProcMod": "INV_BEPAreaProcesosxModulo",
+      "new_inv_bepcat_areanegocio_AsyncOperations": "System Jobs",
+      "new_inv_bepcat_areanegocio_BulkDeleteFailures": "Bulk Delete Failures",
+      "new_inv_bepcat_areanegocio_DuplicateBaseRecord": "Duplicate Records (new_inv_bepcat_areanegocio_DuplicateBaseRecord)",
+      "new_inv_bepcat_areanegocio_DuplicateMatchingRecord": "Duplicate Records (new_inv_bepcat_areanegocio_DuplicateMatchingRecord)",
+      "new_inv_bepcat_areanegocio_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "new_inv_bepcat_areanegocio_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "new_inv_bepcat_areanegocio_ProcessSession": "Process Sessions",
+      "new_inv_bepcat_areanegocio_SyncErrors": "Sync Errors",
+      "new_inv_bepcat_areanegocioid": "INV_BEPCat_AreaNegocio",
+      "new_name": "Name",
+      "organizationid": "Id. de la organización",
+      "overriddencreatedon": "Fecha de creación del registro",
+      "statecode": "Estado",
+      "statuscode": "Razón para el estado",
+      "timezoneruleversionnumber": "Número de versión de regla de zona horaria",
+      "utcconversiontimezonecode": "Código de zona horaria de conversión UTC",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "INV_BEPCat_AreaNegocio",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "INV_BEPCat_AreaNegocio (Vistas)",
+    "Name": "_new_inv_bepcat_areanegocio_views",
+    "RelatedEntityName": "INV_BEPCat_AreaNegocio",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "0ef9c619-5787-4c82-a657-43c89f6493cc": "INV_BEPCat_AreaNegocio activo",
+      "37349049-e76b-4244-a584-a6d45bb32ff3": "Vista asociada de INV_BEPCat_AreaNegocio",
+      "5b2ac357-ba63-4bd9-9745-8c38e6069a8e": "Vista de búsqueda avanzada de INV_BEPCat_AreaNegocio",
+      "61626812-b510-4aa9-a008-2cb3a70b8e58": "INV_BEPCat_AreaNegocio inactivo",
+      "ac1ad788-6993-ed11-aad1-00224824e59e": "Área de negocio",
+      "d50493da-c3cf-4f4f-b5ea-ab8d5c6dc4dd": "Vista de búsqueda de INV_BEPCat_AreaNegocio"
+    }
+  },
+  {
+    "DisplayName": "Estado (INV_BEPCat_AreaNegocio)",
+    "Name": "new_inv_bepcat_areanegocio_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Activo",
+      "1": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "INV_BEPCat_AreaNegocio"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "INV_BEPCat_AreaNegocio",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Razón para el estado (INV_BEPCat_AreaNegocio)",
+    "Name": "new_inv_bepcat_areanegocio_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Activo",
+      "2": "Inactivo"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "INV_BEPCat_AreaNegocio"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "INV_BEPCat_AreaNegocio",
+    "Type": "OptionSetInfo"
+  }
+]
