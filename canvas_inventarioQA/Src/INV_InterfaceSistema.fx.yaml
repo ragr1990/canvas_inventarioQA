@@ -319,7 +319,7 @@ INV_InterfaceSistema As screen:
         Color: =ColorValue(  INV_ColorFuente)
         Height: =35
         Size: =17
-        Text: ="Interfaces y procesos del sistema ["& mySelectSystemDet.Name &"]"
+        Text: ="Interfaces y procesos del sistema ["& mySelectSystemDet.Name &"] QA-RICARDO-GONZALEZ"
         Width: =1206
         X: =151
         ZIndex: =5
