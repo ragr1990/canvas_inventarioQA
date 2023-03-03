@@ -24,7 +24,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 505,
+                  "charOffset": 497,
                   "snippet": {
                     "text": "in"
                   }
@@ -64,7 +64,7 @@
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 641,
+                  "charOffset": 633,
                   "snippet": {
                     "text": "in"
                   }
@@ -184,7 +184,7 @@
                 },
                 "region": {
                   "charLength": 23,
-                  "charOffset": 3741,
+                  "charOffset": 3738,
                   "snippet": {
                     "text": ".INV_BEPCat_AreaNegocio"
                   }
@@ -224,7 +224,7 @@
                 },
                 "region": {
                   "charLength": 1,
-                  "charOffset": 3730,
+                  "charOffset": 3727,
                   "snippet": {
                     "text": "="
                   }
@@ -264,7 +264,7 @@
                 },
                 "region": {
                   "charLength": 3,
-                  "charOffset": 3802,
+                  "charOffset": 3799,
                   "snippet": {
                     "text": "And"
                   }
@@ -304,7 +304,7 @@
                 },
                 "region": {
                   "charLength": 23,
-                  "charOffset": 3565,
+                  "charOffset": 3559,
                   "snippet": {
                     "text": ".INV_BEPCat_AreaNegocio"
                   }
@@ -344,7 +344,7 @@
                 },
                 "region": {
                   "charLength": 1,
-                  "charOffset": 3554,
+                  "charOffset": 3548,
                   "snippet": {
                     "text": "="
                   }
@@ -384,7 +384,7 @@
                 },
                 "region": {
                   "charLength": 3,
-                  "charOffset": 3606,
+                  "charOffset": 3600,
                   "snippet": {
                     "text": "And"
                   }
@@ -9081,7 +9081,7 @@
               "properties": {
                 "componentType": "app",
                 "howToFix": [
-                  "Limite los datos recopilados del origen de datos actualizando la fórmula \"ClearCollect(Gpos; Equipos)\" para incluir una función de filtrado, como \"Filter\" o \"Search\"."
+                  "Limite los datos recopilados del origen de datos actualizando la fórmula \"ClearCollect(Gpos, Equipos)\" para incluir una función de filtrado, como \"Filter\" o \"Search\"."
                 ],
                 "level": "Medium",
                 "primaryCategory": "performance",
