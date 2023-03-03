@@ -323,7 +323,7 @@ INV_ComponenteSistema As screen:
         Color: =ColorValue(  INV_ColorFuente)
         Height: =35
         Size: =17
-        Text: ="Componentes del sistema  [ " & mySelectSystemDet.Name & "] ...QA-TEST-GITHUB"
+        Text: ="Componentes del sistema  [ " & mySelectSystemDet.Name & "] ...QA-TEST-RICARDO"
         Width: =1208
         X: =150
         ZIndex: =4
