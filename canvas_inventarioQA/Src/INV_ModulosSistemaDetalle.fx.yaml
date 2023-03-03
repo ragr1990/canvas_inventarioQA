@@ -690,7 +690,7 @@ INV_ModulosSistemaDetalle As screen:
         Color: =ColorValue(  INV_ColorFuente)
         Height: =35
         Size: =17
-        Text: ="Módulos del sistema [ " &mySelectSystemDet.Name & " ]"
+        Text: ="Módulos del sistema [ " &mySelectSystemDet.Name & " ] RAGR"
         Width: =1233
         X: =110
         ZIndex: =14
